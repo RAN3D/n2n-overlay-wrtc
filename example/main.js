@@ -1,9 +1,9 @@
 var NO = require('n2n-overlay-wrtc');
 
 // # create 3 peers 
-var n1 = new NO();
-var n2 = new NO();
-var n3 = new NO();
+var n1 = new NO({webrtc: {trickle:true}});
+var n2 = new NO({webrtc: {trickle:true}});
+var n3 = new NO({webrtc: {trickle:true}});
 
 var twoconnections = 2 * 2;
 
@@ -18,9 +18,7 @@ var callbacks = function(src, dest){
         onReady: function(){
             --twoconnections;
             console.log("Connection established");
-            if (twoconnections <=0){
-                setTimeout(function(){bridge();}, 1000);
-            };
+            if (twoconnections <=0){bridge();};
         }
     };
 };
