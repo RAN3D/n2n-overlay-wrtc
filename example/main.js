@@ -1,9 +1,11 @@
-var Neighborhood = require('neighborhood-wrtc');
+var NO = require('n2n-overlay-wrtc');
 
-// create 3 neighborhood tables without options
-var n1 = new Neighborhood();
-var n2 = new Neighborhood();
-var n3 = new Neighborhood();
+// # create 3 peers 
+var n1 = new NO();
+var n2 = new NO();
+var n3 = new NO();
+
+var twoconnections = 2 * 2;
 
 var callbacks = function(src, dest){
     return {
@@ -14,13 +16,25 @@ var callbacks = function(src, dest){
             dest.connection(offer);
         },
         onReady: function(){
+            --twoconnections;
             console.log("Connection established");
+            if (twoconnections <=0){
+                setTimeout(function(){bridge();}, 1000);
+            };
         }
     };
 };
 
 // #1 establishing a connection from n1 to n2
-n1.connection(callbacks(n1, n2));
+var id1 = n1.connection(callbacks(n1, n2));
 // #2 establishing a connection from n1 to n3
-n1.connection(callbacks(n1, n3));
+var id2 = n1.connection(callbacks(n1, n3));
 // > console: should see 4 "connection established" messages
+
+// #3 n1 chooses to connect n2 to n3
+function bridge(){
+//    console.log(n1);
+    entry1 = n1.outview.living.arr[0]; // ugly
+    entry2 = n1.outview.living.arr[1]; // probably better way
+    n1.connect(entry1.id, entry2.id);
+};
