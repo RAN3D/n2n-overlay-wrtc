@@ -16,12 +16,10 @@
     "author": "Chat-Wane",
     "license": "MIT",
     "dependencies": {
-        "neighborhood-wrtc": "0.0.x",
-        "sorted-cmp-array": "^2.0.1"
+        "neighborhood-wrtc": "0.0.x"
     },
     "bundledDependencies": [
-        "neighborhood-wrtc",
-        "sorted-cmp-array"
+        "neighborhood-wrtc"
     ],
     "devDependencies": {
         "browserify": "6.2.x"

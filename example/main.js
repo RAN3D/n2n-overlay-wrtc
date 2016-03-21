@@ -1,9 +1,11 @@
 var NO = require('n2n-overlay-wrtc');
 
+var opts = {webrtc: {trickle:false}};
+
 // # create 3 peers 
-var n1 = new NO({webrtc: {trickle:true}});
-var n2 = new NO({webrtc: {trickle:true}});
-var n3 = new NO({webrtc: {trickle:true}});
+var n1 = new NO(opts);
+var n2 = new NO(opts);
+var n3 = new NO(opts);
 
 var twoconnections = 2 * 2;
 
@@ -32,7 +34,8 @@ var id2 = n1.connection(callbacks(n1, n3));
 // #3 n1 chooses to connect n2 to n3
 function bridge(){
 //    console.log(n1);
-    entry1 = n1.outview.living.arr[0]; // ugly
-    entry2 = n1.outview.living.arr[1]; // probably better way
+    entry1 = n1.outview.living.ms.arr[0]; // ugly
+    entry2 = n1.outview.living.ms.arr[1]; // probably better way
+    console.log(entry1.id+ ' -> ' +entry2.id);
     n1.connect(entry1.id, entry2.id);
 };
