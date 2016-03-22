@@ -31,11 +31,17 @@ var id1 = n1.connection(callbacks(n1, n2));
 var id2 = n1.connection(callbacks(n1, n3));
 // > console: should see 4 "connection established" messages
 
-// #3 n1 chooses to connect n2 to n3
+// #3 n1 chooses to connect n2 to n3 (neighbor2neighbor connection)
 function bridge(){
 //    console.log(n1);
     entry1 = n1.outview.living.ms.arr[0]; // ugly
     entry2 = n1.outview.living.ms.arr[1]; // probably better way
     console.log(entry1.id+ ' -> ' +entry2.id);
     n1.connect(entry1.id, entry2.id);
+
+    // #4 add a direct connection from n2 to n1 (direct connection)
+    n2.connect(n1.outview.ID);
 };
+
+
+
