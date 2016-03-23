@@ -1,6 +1,6 @@
 var NO = require('n2n-overlay-wrtc');
 
-var opts = {webrtc: {trickle:false}};
+var opts = {webrtc: {trickle:true}};
 
 // # create 3 peers 
 var n1 = new NO(opts);
@@ -41,6 +41,7 @@ function bridge(){
 
     // #4 add a direct connection from n2 to n1 (direct connection)
     n2.connect(n1.outview.ID);
+    // n2.connect(n1.outview.ID); // x2 but no additionnal connection
 };
 
 
