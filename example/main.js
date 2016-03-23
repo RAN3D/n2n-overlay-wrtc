@@ -40,8 +40,10 @@ function bridge(){
     n1.connect(entry1.id, entry2.id);
 
     // #4 add a direct connection from n2 to n1 (direct connection)
+    n2.connect(null, n1.outview.ID);
+    n2.connect(null, n1.outview.ID); // x2 but no additionnal connection
+    // #5 add an arc from n1 to n2 at the initiative of n2
     n2.connect(n1.outview.ID);
-    // n2.connect(n1.outview.ID); // x2 but no additionnal connection
 };
 
 
