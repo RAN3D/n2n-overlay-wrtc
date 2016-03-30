@@ -21,7 +21,7 @@ Using bower: ```$ bower install n2n-overlay-wrtc```
 
 ## Usage
 
-```javascript
+```js
 var NO = require('n2n-overlay-wrtc');
 
 // #1 create a peer. See module neighborhood-wrtc for options
@@ -34,12 +34,34 @@ n1.connection(callbacksToSignaling);
 // accessible through socket2. If everything goes right, the former neighbor
 // has the latter neighbor in its outview. It is the responsibility of n1 to
 // not create self-loop
-n1.connect(idSocket1, idSocket2);
+// #A connect two neighbors
+n1.connect(idFrom, idTo);
 
-// #4 notification that a connection is ready. View is either
+// #B connect a neighbor to us, idTo is implicitely us
+n1.connect(idFrom);
+
+// #C add an arc to a neigbhor, idFrom is implicitely us
+n1.connect(null, idTo);
+
+// #4 remove an arc or completely leave the network
+// #A it removes an arc. If multiple occurrences of the arcs are found, the
+// socket is not destroyed.
+n1.disconnect(id);
+
+// #B remove everything
+n1.disconnect();
+```
+
+<br />
+
+```js
+// #1 notification that a connection is ready. View is either
 // 'inview' or 'outview'. Id is the identifier of the socket that is ready.
 n1.on('ready', function(id, view){
   // Maybe a special procedure when you establish
   // the very first connection.
 });
+
+// #2 send a message to a neighbor using its id
+var success = n1.send(id, message);
 ```
