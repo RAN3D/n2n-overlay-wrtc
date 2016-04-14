@@ -8,6 +8,8 @@ server. The peers of this project still require a signaling server for their
 entrance in the network. Afterwards, peers become signaling servers too, i.e.,
 they mediate connections between their direct neighbors.
 
+This module divides the entering arcs (inview) from the outgoing arcs (outview).
+
 The way connections are handled are left to the discretion of overlay protocols
 built on top of this module. A peer with two neighbors can ask to one of them to
 connect to the other. Several overlay network protocols use neighbor-to-neighbor
@@ -50,6 +52,18 @@ n1.disconnect(id);
 
 // #B remove everything
 n1.disconnect();
+
+// #5 get the element of the inview, or the outview, or an entry in particular
+var inview = n1.get('inview');
+var outview = n1.get('outview');
+var entry = n1.get(id);
+
+// #6 send a message to a neighbor using the identifier of the arcs
+// targeting a neighbor.
+var success = n1.send(id, message);
+
+// #7 retrieve the content of views as a string
+var s = n1.toString();
 ```
 
 <br />
@@ -62,6 +76,20 @@ n1.on('ready', function(id, view){
   // the very first connection.
 });
 
-// #2 send a message to a neighbor using its id
-var success = n1.send(id, message);
+// #2 a message has been receive from the identified arc 
+n1.on('receive', function(id, message){
+  // do something with the message
+});
+
+// #3 event emitted when an arc disconnect. It provides the identifier
+// of the disconnected arcs along with the view it comes from.
+n1.on('disconnect', function(id, view){
+  // update view
+});
+
+// #4 an arc failed to establish. The view where the fail happened is provided.
+n1.on('fail', function(view){
+  // do something accordingly
+});
 ```
+
