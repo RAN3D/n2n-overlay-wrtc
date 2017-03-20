@@ -1,31 +1,34 @@
 {
-    "name": "n2n-overlay-wrtc",
-    "version": "0.0.1",
-    "description": "A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.",
-    "main": "lib/n2n-overlay.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/chat-wane/n2n-overlay-wrtc.git/"
-    },
-    "keywords": [
-        "WebRTC",
-        "browser-to-browser communication",
-        "overlay network",
-        "distributed signaling server"
-    ],
-    "author": "Chat-Wane",
-    "license": "MIT",
-    "dependencies": {
-        "neighborhood-wrtc": "0.0.x"
-    },
-    "bundledDependencies": [
-        "neighborhood-wrtc"
-    ],
-    "devDependencies": {
-        "browserify": "6.2.x"
-    },
-    "scripts":{
-        "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc --debug > build/n2n-overlay-wrtc.bundle.debug.js",
-        "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc | uglifyjs > build/n2n-overlay-wrtc.bundle.js"
-    }
+  "name": "n2n-overlay-wrtc",
+  "version": "1.0.0",
+  "description": "A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.",
+  "main": "lib/n2n-overlay.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chat-wane/n2n-overlay-wrtc.git/"
+  },
+  "keywords": [
+    "WebRTC",
+    "browser-to-browser communication",
+    "overlay network",
+    "distributed signaling server"
+  ],
+  "author": "Chat-Wane",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "neighborhood-wrtc": "1.x.x"
+  },
+  "bundledDependencies": [
+    "neighborhood-wrtc"
+  ],
+  "devDependencies": {
+    "browserify": "6.2.x"
+  },
+  "scripts": {
+    "doc": "jsdoc -c .jsdoc.json README.md lib/",
+    "test": "npm run debug && npm run debug && npm run doc",
+    "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t babelify --presets es2015 --debug > build/n2n-overlay-wrtc.bundle.debug.js",
+    "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t babelify --presets es2015 > build/n2n-overlay-wrtc.bundle.js"
+  }
 }

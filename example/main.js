@@ -1,8 +1,13 @@
 var NO = require('n2n-overlay-wrtc');
 
-var opts = {webrtc: {trickle:true}};
+var opts = {
+  webrtc: {
+    trickle:true
+  },
+  verbose:true
+};
 
-// # create 3 peers 
+// # create 3 peers
 var n1 = new NO(opts);
 var n2 = new NO(opts);
 var n3 = new NO(opts);
@@ -44,6 +49,3 @@ function bridge(){
 //     // #5 add an arc from n1 to n2 at the initiative of n2
      n2.connect(n1.outview.ID);
 };
-
-
-
