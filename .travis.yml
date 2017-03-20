@@ -6,6 +6,6 @@ deploy:
   api_key: $NPM
   on:
     tags: true
-    repo: ran3d/n2n-overlay-wrtc
+    repo: RAN3D/n2n-overlay-wrtc
 notifications:
   email: false
