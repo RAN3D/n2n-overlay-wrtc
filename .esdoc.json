@@ -1,9 +1,0 @@
-{
-  "title": "N2N-Overlay-Wrtc",
-  "source":"./lib",
-  "destination":"./docs",
-  "coverage": false,
-  "access": ["public", "protected"],
-  "index": "./README.md",
-  "package": "./package.json"
-}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/n2n-overlay.js | N2N-Overlay-Wrtc API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/chat-wane/n2n-overlay-wrtc.git/" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html">Neighbor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/n2n-overlay.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+const Neighborhood = require(&apos;neighborhood-wrtc&apos;);
+const EventEmitter = require(&apos;events&apos;);
+const _ = require(&apos;lodash&apos;);
+
+const MForwardTo = require(&apos;./messages.js&apos;).MForwardTo;
+const MForwarded = require(&apos;./messages.js&apos;).MForwarded;
+const MConnectTo = require(&apos;./messages.js&apos;).MConnectTo;
+const MDirect = require(&apos;./messages.js&apos;).MDirect;
+
+
+/**
+ * A neighbor has an inview and an outview and is able to act as a bridge
+ * between its neighbors so they can establish their own communication channels
+ * @access public
+ * @extends {EventEmitter}
+ */
+class Neighbor extends EventEmitter {
+
+  /**
+   * @param {object} options options represented as an object (refer to neighborhood-wrtc for other options)
+   * @param {object} options.protocol Name of the protocol
+   * @param {object} options.inview Inview Socket
+   * @param {object} options.outview Outview Socket
+   *
+   */
+  constructor (options) {
+    super();
+
+    this.options = {
+      protocol: &apos;n2n-overlay-wrtc&apos;
+    };
+    this.options = _.merge(this.options, options);
+
+    // #1 dissociate entering arcs from outgoing arcs
+    this.inview = (this.options &amp;&amp; this.options.inview) || new Neighborhood(this.options);
+    this.outview = (this.options &amp;&amp; this.options.outview) || new Neighborhood(this.options);
+    // #2 concise access
+    this.i = this.inview;
+    this.o = this.outview;
+
+    const self = this;
+    // #A callbacks when there is a bridge to create a connection
+    this.callbacks = (id, message, view) =&gt; {
+        return {
+            onInitiate: (offer) =&gt; {
+                self.send(id, MForwardTo(message.from, message.to,
+                                         offer,
+                                         this.options.protocol));
+            },
+            onAccept: (offer) =&gt; {
+                self.send(id, MForwardTo(message.to, message.from,
+                                         offer,
+                                         this.options.protocol));
+            }
+        };
+    };
+    // #B callbacks when it establishes a connection to a neighbor, either
+    // this -&gt; neighbor or neigbhor -&gt; this. It is worth noting that if it
+    // a channel exists in the inview and we want to create an identical in the
+    // outview, a new channel must be created; for the peer that owns the arc
+    // in its outview can destroy it without warning.
+    this.directCallbacks = (id, idView, view) =&gt; {
+        return {
+            onInitiate: (offer) =&gt; {
+                self.send(id, MDirect(idView, offer, this.options.protocol));
+            },
+            onAccept: (offer) =&gt; {
+                self.send(id, MDirect(idView, offer, this.options.protocol));
+            }
+        };
+    };
+
+    // #C receive a message from an arc, it forwards it to a listener
+    // of this module, otherwise, it keeps and interprets it.
+    let receive = (id, message) =&gt; {
+        // #1 redirect
+        if (!message.protocol || message.protocol!==this.options.protocol){
+            self.emit(&apos;receive&apos;, id, message);
+            return; // ugly early return
+        }
+        // #2 otherwise, interpret
+        switch (message.type){
+        case &apos;MConnectTo&apos;: // #A a neighbor asks us to connect to a remote one
+            if (message.to &amp;&amp; message.from){
+                self.connection(this.callbacks(id, message, &apos;outview&apos;));
+            } else { // #B a neighbor asks us to connect to him
+                self.connection(this.directCallbacks(id, self.outview.ID,&apos;outview&apos;));
+            }
+            break;
+        case &apos;MForwardTo&apos;: // #C a message is to be forwarded to a neighbor
+            self.send(message.to, MForwarded(message.from, message.to, message.message, message.protocol));
+            break;
+        case &apos;MForwarded&apos;: // #D a message has been forwarded to us, deliver
+            self.inview.connection(this.callbacks(id, message, &apos;inview&apos;), message.message) || self.outview.connection(message.message);
+            break;
+        case &apos;MDirect&apos;: // #E a direct neigbhor sends offers to accept
+            self.inview.connection(this.directCallbacks(id, message.from, &apos;inview&apos;), message.message) || self.outview.connection(message.message);
+            break;
+        };
+    };
+
+    this.inview.on(&apos;receive&apos;, receive);
+    this.outview.on(&apos;receive&apos;, receive);
+
+    // #D an arc in one of the view is ready, redirect event
+    this.inview.on(&apos;ready-&apos;+this.options.protocol, (id) =&gt; self.emit(&apos;ready&apos;, id, &apos;inview&apos;));
+    this.outview.on(&apos;ready-&apos;+this.options.protocol, (id) =&gt; self.emit(&apos;ready&apos;, id, &apos;outview&apos;));
+
+    // #E a connection failed to establish
+    this.inview.on(&apos;fail&apos;, (reason) =&gt; this.emit(&apos;failed&apos;, &apos;i&apos;, &apos;inview&apos;, reason));
+		this.outview.on(&apos;fail&apos;, (reason) =&gt; this.emit(&apos;failed&apos;, &apos;o&apos;, &apos;outview&apos;, reason));
+
+    // #F an arc has been remove
+    this.inview.on(&apos;disconnect&apos;, (id) =&gt; self.emit(&apos;disconnect&apos;, id, &apos;inview&apos;));
+    this.outview.on(&apos;disconnect&apos;, (id) =&gt; self.emit(&apos;disconnect&apos;, id, &apos;outview&apos;));
+  }
+  /**
+   * connect the peers at the other ends of sockets identified
+   * @param {string} from the identifier of the socket leading to a peer which will add
+   * a socket in its outview
+   * @param {string} to the identifier of the socket leading to a peer which will add
+   * a socket in its inview
+   * @return {void}
+   */
+  connect (from, to){
+    if (!from &amp;&amp; to){
+        // #A only the &apos;to&apos; argument implicitly means from = this
+        // this -&gt; to
+        this.connection(this.directCallbacks( to, this.outview.ID, &apos;outview&apos;));
+    } else if (from &amp;&amp; !to){
+        // #B only the &apos;from&apos; argument implicitly means to = this
+        // from -&gt; this
+        this.send(from, MConnectTo(this.options.protocol));
+    } else {
+        // #C ask to the from-peer to the to-peer
+        // from -&gt; to
+        this.send(from, MConnectTo(this.options.protocol, from, to));
+    }
+  }
+
+  /**
+   * bootstrap the network, i.e. first join the network. This peer
+   * will add a peer which already belong to the network. The rest of
+   * protocol can be done inside the network with the function connect.
+   * @param {callback} callbacks see callbacks of neighborhood-wrtc
+   * @param {object} message see messages of neighborhood-wrtc
+   * @return {string} the id of the socket
+   */
+  connection (callbacks, message){
+    if (!message || (message &amp;&amp; message.type===&apos;MResponse&apos;)){
+        return this.outview.connection(callbacks, message, this.options.protocol);
+    } else {
+        return this.inview.connection(callbacks, message, this.options.protocol);
+    }
+  }
+  /**
+   * remove an arc of the outview or all arcs
+   * @param {string} id the arc to remove, if none, remove all arcs
+   */
+  disconnect (id) {
+    if (!id){
+        this.outview.disconnect();
+        this.inview.disconnect();
+        return true;
+    } else {
+        return this.outview.disconnect(id);
+    }
+  }
+
+
+
+  /**
+   * Send the message to the peer identified by id
+   * @param {string} id the identifier of the socket used to send the message
+   * @param {object} message the message to send
+   * @return {boolean} true if the message has been sent, false otherwise
+   */
+  send (id, message) {
+      return this.outview.send(id, message) || this.inview.send(id, message);
+  }
+
+  /**
+   * get the socket corresponding to the id in argument and views
+   * @param {string} idOrView string id or &apos;inview&apos; or &apos;outview&apos;
+   * @return a list of entries or an entry
+   */
+  get (idOrView) {
+    return  ((idOrView===&apos;inview&apos;) &amp;&amp; this.inview.living.ms.arr) ||// all inview
+    ((idOrView===&apos;outview&apos;) &amp;&amp; this.outview.living.ms.arr) || // all outview
+    (idOrView &amp;&amp; (this.outview.get(idOrView) ||
+                  this.inview.get(idOrView))); // cherry picking
+  }
+
+  /**
+   * simple string representing the in and out views
+   * @return {void} a string with in and out views
+   */
+  toString () {
+      var result = &apos;&apos;;
+      result += &apos;IDS [&apos; + this.inview.ID +&apos;, &apos;+ this.outview.ID +&apos;] &apos;;
+      result += &apos;In {&apos;;
+      var I = this.get(&apos;inview&apos;);
+      for (var i = 0; i &lt; I.length; ++i){
+          result +=  I[i].id + &apos; x&apos; + I[i].occ + &apos;; &apos;;
+      };
+      result += &apos;}  Out {&apos;;
+      var O = this.get(&apos;outview&apos;);
+      for (var i = 0; i &lt; O.length; ++i){
+          result +=  O[i].id + &apos; x&apos; + O[i].occ + &apos;; &apos;;
+      };
+      result += &apos;}&apos;;
+      return result;
+  }
+
+
+}
+
+export default Neighbor;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
