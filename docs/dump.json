@@ -1,0 +1,1515 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "lib/messages.js",
+    "content": "'use strict';\n\n/**\n * @access private\n */\nconst MConnectTo = (protocol, from, to) => {\n    return {\n      protocol,\n      type: 'MConnectTo',\n      from,\n      to\n    };\n};\n\n/**\n * @access private\n */\nconst MForwardTo = (from, to, message, protocol) => {\n    return {\n      protocol,\n      type: 'MForwardTo',\n      from,\n      to,\n      message\n    };\n};\n\n/**\n * @access private\n */\nconst MForwarded = (from, to, message, protocol) => {\n    return {\n      protocol: protocol,\n      type: 'MForwarded',\n      from: from,\n      to: to,\n      message: message\n    };\n};\n\n/**\n * @access private\n */\nconst MDirect = (from, message, protocol) => {\n    return {\n      protocol,\n      type: 'MDirect',\n      from,\n      message\n    };\n};\n\nexport { MConnectTo, MForwardTo, MForwarded, MDirect };\n",
+    "static": true,
+    "longname": "lib/messages.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "function",
+    "name": "MConnectTo",
+    "memberof": "lib/messages.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/messages.js~MConnectTo",
+    "access": "private",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages.js",
+    "importStyle": "{MConnectTo}",
+    "description": "",
+    "lineNumber": 6,
+    "params": [
+      {
+        "name": "protocol",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "from",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "to",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"protocol\": *, \"type\": string, \"from\": *, \"to\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 2,
+    "kind": "function",
+    "name": "MForwardTo",
+    "memberof": "lib/messages.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/messages.js~MForwardTo",
+    "access": "private",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages.js",
+    "importStyle": "{MForwardTo}",
+    "description": "",
+    "lineNumber": 18,
+    "params": [
+      {
+        "name": "from",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "to",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "message",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "protocol",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"protocol\": *, \"type\": string, \"from\": *, \"to\": *, \"message\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "function",
+    "name": "MForwarded",
+    "memberof": "lib/messages.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/messages.js~MForwarded",
+    "access": "private",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages.js",
+    "importStyle": "{MForwarded}",
+    "description": "",
+    "lineNumber": 31,
+    "params": [
+      {
+        "name": "from",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "to",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "message",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "protocol",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"protocol\": *, \"type\": string, \"from\": *, \"to\": *, \"message\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "function",
+    "name": "MDirect",
+    "memberof": "lib/messages.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/messages.js~MDirect",
+    "access": "private",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages.js",
+    "importStyle": "{MDirect}",
+    "description": "",
+    "lineNumber": 44,
+    "params": [
+      {
+        "name": "from",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "message",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "protocol",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"protocol\": *, \"type\": string, \"from\": *, \"message\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "file",
+    "name": "lib/n2n-overlay.js",
+    "content": "'use strict';\n\nconst Neighborhood = require('neighborhood-wrtc');\nconst EventEmitter = require('events');\nconst _ = require('lodash');\n\nconst MForwardTo = require('./messages.js').MForwardTo;\nconst MForwarded = require('./messages.js').MForwarded;\nconst MConnectTo = require('./messages.js').MConnectTo;\nconst MDirect = require('./messages.js').MDirect;\n\n\n/**\n * A neighbor has an inview and an outview and is able to act as a bridge\n * between its neighbors so they can establish their own communication channels\n * @access public\n * @extends {EventEmitter}\n */\nclass Neighbor extends EventEmitter {\n\n  /**\n   * @param {object} options options represented as an object (refer to neighborhood-wrtc for other options)\n   * @param {object} options.protocol Name of the protocol\n   * @param {object} options.inview Inview Socket\n   * @param {object} options.outview Outview Socket\n   *\n   */\n  constructor (options) {\n    super();\n\n    this.options = {\n      protocol: 'n2n-overlay-wrtc'\n    };\n    this.options = _.merge(this.options, options);\n\n    // #1 dissociate entering arcs from outgoing arcs\n    this.inview = (this.options && this.options.inview) || new Neighborhood(this.options);\n    this.outview = (this.options && this.options.outview) || new Neighborhood(this.options);\n    // #2 concise access\n    this.i = this.inview;\n    this.o = this.outview;\n\n    const self = this;\n    // #A callbacks when there is a bridge to create a connection\n    this.callbacks = (id, message, view) => {\n        return {\n            onInitiate: (offer) => {\n                self.send(id, MForwardTo(message.from, message.to,\n                                         offer,\n                                         this.options.protocol));\n            },\n            onAccept: (offer) => {\n                self.send(id, MForwardTo(message.to, message.from,\n                                         offer,\n                                         this.options.protocol));\n            }\n        };\n    };\n    // #B callbacks when it establishes a connection to a neighbor, either\n    // this -> neighbor or neigbhor -> this. It is worth noting that if it\n    // a channel exists in the inview and we want to create an identical in the\n    // outview, a new channel must be created; for the peer that owns the arc\n    // in its outview can destroy it without warning.\n    this.directCallbacks = (id, idView, view) => {\n        return {\n            onInitiate: (offer) => {\n                self.send(id, MDirect(idView, offer, this.options.protocol));\n            },\n            onAccept: (offer) => {\n                self.send(id, MDirect(idView, offer, this.options.protocol));\n            }\n        };\n    };\n\n    // #C receive a message from an arc, it forwards it to a listener\n    // of this module, otherwise, it keeps and interprets it.\n    let receive = (id, message) => {\n        // #1 redirect\n        if (!message.protocol || message.protocol!==this.options.protocol){\n            self.emit('receive', id, message);\n            return; // ugly early return\n        }\n        // #2 otherwise, interpret\n        switch (message.type){\n        case 'MConnectTo': // #A a neighbor asks us to connect to a remote one\n            if (message.to && message.from){\n                self.connection(this.callbacks(id, message, 'outview'));\n            } else { // #B a neighbor asks us to connect to him\n                self.connection(this.directCallbacks(id, self.outview.ID,'outview'));\n            }\n            break;\n        case 'MForwardTo': // #C a message is to be forwarded to a neighbor\n            self.send(message.to, MForwarded(message.from, message.to, message.message, message.protocol));\n            break;\n        case 'MForwarded': // #D a message has been forwarded to us, deliver\n            self.inview.connection(this.callbacks(id, message, 'inview'), message.message) || self.outview.connection(message.message);\n            break;\n        case 'MDirect': // #E a direct neigbhor sends offers to accept\n            self.inview.connection(this.directCallbacks(id, message.from, 'inview'), message.message) || self.outview.connection(message.message);\n            break;\n        };\n    };\n\n    this.inview.on('receive', receive);\n    this.outview.on('receive', receive);\n\n    // #D an arc in one of the view is ready, redirect event\n    this.inview.on('ready-'+this.options.protocol, (id) => self.emit('ready', id, 'inview'));\n    this.outview.on('ready-'+this.options.protocol, (id) => self.emit('ready', id, 'outview'));\n\n    // #E a connection failed to establish\n    this.inview.on('fail', (reason) => this.emit('failed', 'i', 'inview', reason));\n\t\tthis.outview.on('fail', (reason) => this.emit('failed', 'o', 'outview', reason));\n\n    // #F an arc has been remove\n    this.inview.on('disconnect', (id) => self.emit('disconnect', id, 'inview'));\n    this.outview.on('disconnect', (id) => self.emit('disconnect', id, 'outview'));\n  }\n  /**\n   * connect the peers at the other ends of sockets identified\n   * @param {string} from the identifier of the socket leading to a peer which will add\n   * a socket in its outview\n   * @param {string} to the identifier of the socket leading to a peer which will add\n   * a socket in its inview\n   * @return {void}\n   */\n  connect (from, to){\n    if (!from && to){\n        // #A only the 'to' argument implicitly means from = this\n        // this -> to\n        this.connection(this.directCallbacks( to, this.outview.ID, 'outview'));\n    } else if (from && !to){\n        // #B only the 'from' argument implicitly means to = this\n        // from -> this\n        this.send(from, MConnectTo(this.options.protocol));\n    } else {\n        // #C ask to the from-peer to the to-peer\n        // from -> to\n        this.send(from, MConnectTo(this.options.protocol, from, to));\n    }\n  }\n\n  /**\n   * bootstrap the network, i.e. first join the network. This peer\n   * will add a peer which already belong to the network. The rest of\n   * protocol can be done inside the network with the function connect.\n   * @param {callback} callbacks see callbacks of neighborhood-wrtc\n   * @param {object} message see messages of neighborhood-wrtc\n   * @return {string} the id of the socket\n   */\n  connection (callbacks, message){\n    if (!message || (message && message.type==='MResponse')){\n        return this.outview.connection(callbacks, message, this.options.protocol);\n    } else {\n        return this.inview.connection(callbacks, message, this.options.protocol);\n    }\n  }\n  /**\n   * remove an arc of the outview or all arcs\n   * @param {string} id the arc to remove, if none, remove all arcs\n   */\n  disconnect (id) {\n    if (!id){\n        this.outview.disconnect();\n        this.inview.disconnect();\n        return true;\n    } else {\n        return this.outview.disconnect(id);\n    }\n  }\n\n\n\n  /**\n   * Send the message to the peer identified by id\n   * @param {string} id the identifier of the socket used to send the message\n   * @param {object} message the message to send\n   * @return {boolean} true if the message has been sent, false otherwise\n   */\n  send (id, message) {\n      return this.outview.send(id, message) || this.inview.send(id, message);\n  }\n\n  /**\n   * get the socket corresponding to the id in argument and views\n   * @param {string} idOrView string id or 'inview' or 'outview'\n   * @return a list of entries or an entry\n   */\n  get (idOrView) {\n    return  ((idOrView==='inview') && this.inview.living.ms.arr) ||// all inview\n    ((idOrView==='outview') && this.outview.living.ms.arr) || // all outview\n    (idOrView && (this.outview.get(idOrView) ||\n                  this.inview.get(idOrView))); // cherry picking\n  }\n\n  /**\n   * simple string representing the in and out views\n   * @return {void} a string with in and out views\n   */\n  toString () {\n      var result = '';\n      result += 'IDS [' + this.inview.ID +', '+ this.outview.ID +'] ';\n      result += 'In {';\n      var I = this.get('inview');\n      for (var i = 0; i < I.length; ++i){\n          result +=  I[i].id + ' x' + I[i].occ + '; ';\n      };\n      result += '}  Out {';\n      var O = this.get('outview');\n      for (var i = 0; i < O.length; ++i){\n          result +=  O[i].id + ' x' + O[i].occ + '; ';\n      };\n      result += '}';\n      return result;\n  }\n\n\n}\n\nexport default Neighbor;\n",
+    "static": true,
+    "longname": "lib/n2n-overlay.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 6,
+    "kind": "variable",
+    "name": "Neighborhood",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~Neighborhood",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "variable",
+    "name": "EventEmitter",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~EventEmitter",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "variable",
+    "name": "_",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~_",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "variable",
+    "name": "MForwardTo",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~MForwardTo",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "variable",
+    "name": "MForwarded",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~MForwarded",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 11,
+    "kind": "variable",
+    "name": "MConnectTo",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~MConnectTo",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "variable",
+    "name": "MDirect",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~MDirect",
+    "access": null,
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "class",
+    "name": "Neighbor",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~Neighbor",
+    "access": "public",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": "Neighbor",
+    "description": "A neighbor has an inview and an outview and is able to act as a bridge\nbetween its neighbors so they can establish their own communication channels",
+    "lineNumber": 19,
+    "interface": false,
+    "extends": [
+      "EventEmitter"
+    ]
+  },
+  {
+    "__docId__": 14,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 28,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "options represented as an object (refer to neighborhood-wrtc for other options)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.protocol",
+        "description": "Name of the protocol"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.inview",
+        "description": "Inview Socket"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options.outview",
+        "description": "Outview Socket"
+      }
+    ]
+  },
+  {
+    "__docId__": 15,
+    "kind": "member",
+    "name": "options",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#options",
+    "access": null,
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "{\"protocol\": string}"
+      ]
+    }
+  },
+  {
+    "__docId__": 16,
+    "kind": "member",
+    "name": "options",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#options",
+    "access": null,
+    "description": null,
+    "lineNumber": 34,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 17,
+    "kind": "member",
+    "name": "inview",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#inview",
+    "access": null,
+    "description": null,
+    "lineNumber": 37,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 18,
+    "kind": "member",
+    "name": "outview",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#outview",
+    "access": null,
+    "description": null,
+    "lineNumber": 38,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "member",
+    "name": "i",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#i",
+    "access": null,
+    "description": null,
+    "lineNumber": 40,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "member",
+    "name": "o",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#o",
+    "access": null,
+    "description": null,
+    "lineNumber": 41,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 21,
+    "kind": "member",
+    "name": "callbacks",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#callbacks",
+    "access": null,
+    "description": null,
+    "lineNumber": 45,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "member",
+    "name": "directCallbacks",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#directCallbacks",
+    "access": null,
+    "description": null,
+    "lineNumber": 64,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "name": "connect",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#connect",
+    "access": null,
+    "description": "connect the peers at the other ends of sockets identified",
+    "lineNumber": 127,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "from",
+        "description": "the identifier of the socket leading to a peer which will add\na socket in its outview"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "to",
+        "description": "the identifier of the socket leading to a peer which will add\na socket in its inview"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "method",
+    "name": "connection",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#connection",
+    "access": null,
+    "description": "bootstrap the network, i.e. first join the network. This peer\nwill add a peer which already belong to the network. The rest of\nprotocol can be done inside the network with the function connect.",
+    "lineNumber": 151,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "callback"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callbacks",
+        "description": "see callbacks of neighborhood-wrtc"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "see messages of neighborhood-wrtc"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "the id of the socket"
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "name": "disconnect",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#disconnect",
+    "access": null,
+    "description": "remove an arc of the outview or all arcs",
+    "lineNumber": 162,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": "the arc to remove, if none, remove all arcs"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "name": "send",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#send",
+    "access": null,
+    "description": "Send the message to the peer identified by id",
+    "lineNumber": 180,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": "the identifier of the socket used to send the message"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "the message to send"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "true if the message has been sent, false otherwise"
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "name": "get",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#get",
+    "access": null,
+    "description": "get the socket corresponding to the id in argument and views",
+    "lineNumber": 189,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "idOrView",
+        "description": "string id or 'inview' or 'outview'"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "a list of entries or an entry"
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "name": "toString",
+    "memberof": "lib/n2n-overlay.js~Neighbor",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~Neighbor#toString",
+    "access": null,
+    "description": "simple string representing the in and out views",
+    "lineNumber": 200,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "void"
+      ],
+      "spread": false,
+      "description": "a string with in and out views"
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]

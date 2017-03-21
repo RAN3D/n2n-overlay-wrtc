@@ -24,7 +24,7 @@ Using bower: ```$ bower install n2n-overlay-wrtc```
 ## Usage
 
 ```js
-var NO = require('n2n-overlay-wrtc');
+var NO = require('n2n-overlay-wrtc').default;
 
 // #1 create a peer. See module neighborhood-wrtc for options
 var n1 = new NO(someOptions);
@@ -94,7 +94,7 @@ n1.on('fail', function(view){
 
 Example with a bridge (provided in example folder):
 ```js
-var NO = require('n2n-overlay-wrtc');
+var NO = require('n2n-overlay-wrtc').default;
 
 var opts = {
   webrtc: {

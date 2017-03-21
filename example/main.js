@@ -1,4 +1,4 @@
-var NO = require('n2n-overlay-wrtc');
+var NO = require('n2n-overlay-wrtc').default;
 
 var opts = {
   webrtc: {

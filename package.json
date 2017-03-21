@@ -23,14 +23,18 @@
     "neighborhood-wrtc"
   ],
   "devDependencies": {
+    "babel-preset-es2015": "^6.24.0",
     "babelify": "^7.3.0",
     "browserify": "6.2.x",
+    "esdoc": "^0.5.2",
     "jsdoc": "^3.4.3"
   },
   "scripts": {
-    "doc": "jsdoc -c .jsdoc.json README.md lib/",
-    "test": "npm run debug && npm run debug && npm run doc",
-    "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t babelify --presets es2015 --debug > build/n2n-overlay-wrtc.bundle.debug.js",
-    "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t babelify --presets es2015 > build/n2n-overlay-wrtc.bundle.js"
+    "esdoc": "esdoc && npm run esdoc:example",
+    "esdoc:example": "cp -R ./build ./example ./docs",
+    "test": "npm run all",
+    "all": "npm run debug && npm run debug && npm run esdoc",
+    "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js",
+    "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] > build/n2n-overlay-wrtc.bundle.js"
   }
 }
