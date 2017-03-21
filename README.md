@@ -21,6 +21,10 @@ Using npm: ```$ npm install n2n-overlay-wrtc```
 
 Using bower: ```$ bower install n2n-overlay-wrtc```
 
+## Documentation
+
+The documentation is avalaible [here](https://github.com/ran3d/n2n-overlay-wrtc.git) 
+
 ## Usage
 
 ```js
