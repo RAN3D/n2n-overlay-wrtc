@@ -23,7 +23,9 @@
     "neighborhood-wrtc"
   ],
   "devDependencies": {
-    "browserify": "6.2.x"
+    "babelify": "^7.3.0",
+    "browserify": "6.2.x",
+    "jsdoc": "^3.4.3"
   },
   "scripts": {
     "doc": "jsdoc -c .jsdoc.json README.md lib/",
