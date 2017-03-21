@@ -23,7 +23,7 @@ Using bower: ```$ bower install n2n-overlay-wrtc```
 
 ## Documentation
 
-The documentation is avalaible [here](https://ran3d.github.io/n2n-overlay-wrtc/) 
+The documentation is avalaible [here](https://ran3d.github.io/n2n-overlay-wrtc/)
 
 ## [Live Example](https://ran3d.github.io/n2n-overlay-wrtc/example/browser.html)
 
@@ -31,7 +31,7 @@ The documentation is avalaible [here](https://ran3d.github.io/n2n-overlay-wrtc/)
 ## Usage
 
 ```js
-var NO = require('n2n-overlay-wrtc').default;
+var NO = require('n2n-overlay-wrtc');
 
 // #1 create a peer. See module neighborhood-wrtc for options
 var n1 = new NO(someOptions);
@@ -101,7 +101,7 @@ n1.on('fail', function(view){
 
 Example with a bridge (provided in example folder):
 ```js
-var NO = require('n2n-overlay-wrtc').default;
+var NO = require('n2n-overlay-wrtc');
 
 var opts = {
   webrtc: {
