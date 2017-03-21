@@ -10,7 +10,7 @@ fi
 
 rev=$(git rev-parse --short HEAD)
 
-cd doc
+cd docs
 
 git init
 git config user.name "Grall Arnaud"
