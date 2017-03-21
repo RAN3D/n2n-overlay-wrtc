@@ -1,5 +1,9 @@
 language: node_js
 node_js: node
+
+script:
+  - npm test
+
 deploy:
   provider: npm
   email: grumpy.chat.wane@gmail.com
