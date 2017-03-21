@@ -23,7 +23,10 @@ Using bower: ```$ bower install n2n-overlay-wrtc```
 
 ## Documentation
 
-The documentation is avalaible [here](https://github.com/ran3d/n2n-overlay-wrtc.git) 
+The documentation is avalaible [here](https://ran3d.github.io/n2n-overlay-wrtc/) 
+
+## [Live Example](https://ran3d.github.io/n2n-overlay-wrtc/example/browser.html)
+
 
 ## Usage
 
