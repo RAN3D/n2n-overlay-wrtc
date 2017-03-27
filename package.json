@@ -1,40 +1,40 @@
 {
-  "name": "n2n-overlay-wrtc",
-  "version": "1.0.0",
-  "description": "A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.",
-  "main": "lib/n2n-overlay.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chat-wane/n2n-overlay-wrtc.git/"
-  },
-  "keywords": [
-    "WebRTC",
-    "browser-to-browser communication",
-    "overlay network",
-    "distributed signaling server"
-  ],
-  "author": "Chat-Wane",
-  "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.4",
-    "neighborhood-wrtc": "1.x.x"
-  },
-  "bundledDependencies": [
-    "neighborhood-wrtc"
-  ],
-  "devDependencies": {
-    "babel-preset-es2015": "^6.24.0",
-    "babelify": "^7.3.0",
-    "browserify": "6.2.x",
-    "esdoc": "^0.5.2",
-    "esdoc-node": "^1.0.1"
-  },
-  "scripts": {
-    "esdoc": "esdoc && npm run esdoc:example",
-    "esdoc:example": "cp -R ./build ./example ./docs",
-    "test": "npm run all",
-    "all": "npm run debug && npm run build && npm run esdoc",
-    "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js",
-    "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] > build/n2n-overlay-wrtc.bundle.js"
-  }
+    "name": "n2n-overlay-wrtc",
+    "version": "1.0.0",
+    "description": "A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.",
+    "main": "lib/n2n-overlay.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chat-wane/n2n-overlay-wrtc.git/"
+    },
+    "keywords": [
+        "WebRTC",
+        "browser-to-browser communication",
+        "overlay network",
+        "distributed signaling server"
+    ],
+    "author": "Chat-Wane",
+    "license": "MIT",
+    "dependencies": {
+        "lodash": "^4.17.4",
+        "neighborhood-wrtc": "git://github.com/ran3d/neighborhood-wrtc.git#merging"
+    },
+    "bundledDependencies": [
+        "neighborhood-wrtc"
+    ],
+    "devDependencies": {
+        "babel-preset-es2015": "^6.24.0",
+        "babelify": "^7.3.0",
+        "browserify": "6.2.x",
+        "esdoc": "^0.5.2",
+        "esdoc-node": "^1.0.1"
+    },
+    "scripts": {
+        "esdoc": "esdoc && npm run esdoc:example",
+        "esdoc:example": "cp -R ./build ./example ./docs",
+        "test": "npm run all",
+        "all": "npm run debug && npm run build && npm run esdoc",
+        "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js",
+        "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] > build/n2n-overlay-wrtc.bundle.js"
+    }
 }
