@@ -18,11 +18,11 @@ interactions to converge to a topology exposing the desired properties.
 ## Principle
 
 <p align='center'>
-<img src='../signal.png' width='300%' height='300%'> </img>
+<img src='./img/signal.png' width='300%' height='300%'> </img>
 </p>
 
 <p align='center'>
-<img src='../bridge.png' width='300%' height='300%'> </img>
+<img src='./img/bridge.png' width='300%' height='300%'> </img>
 </p>
 
 
