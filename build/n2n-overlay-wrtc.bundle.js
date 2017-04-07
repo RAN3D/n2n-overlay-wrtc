@@ -20400,7 +20400,7 @@ class Neighborhood {
                 (!entry.successful || entry.alreadyExists) &&
                     entry.socket && entry.socket.destroy();
                 !entry.successful &&
-                    this.protocols.get(protocolId)._failed(entry.peer, true);
+                    this.protocols.get(protocolId)._failed(entry.peer, false);
                 this.pending.delete(entry.tid);
             }, this.options.timeout);            
         };

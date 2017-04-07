@@ -15,6 +15,17 @@ built on top of this module. A peer with two neighbors can ask to one of them to
 connect to the other. Several overlay network protocols use neighbor-to-neighbor
 interactions to converge to a topology exposing the desired properties.
 
+## Principle
+
+<p align='center'>
+<img src='../signal.png' width='300%' height='300%'> </img>
+</p>
+
+<p align='center'>
+<img src='../bridge.png' width='300%' height='300%'> </img>
+</p>
+
+
 ## Installation
 
 Using npm: ```$ npm install n2n-overlay-wrtc```
