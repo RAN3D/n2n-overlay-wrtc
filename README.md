@@ -21,9 +21,24 @@ interactions to converge to a topology exposing the desired properties.
 <img src='./img/signal.png'> </img>
 </p>
 
+There exists a network comprising at least Peer ```:|```. Peer ```:]``` wants to
+join this network. ```:|``` knows it and opens an access to the network thanks
+to a signaling server. The signaling server is in charge of transmitting the
+necessary WebRTC data from both sides. The figure shows this protocol with the
+1->2->3->4 steps that can be repeated many times depending on network
+configurations. If the protocol is successful, it creates a direct
+browser-to-browser connection from ```:]``` to ```:|```.
+
 <p align='center'>
 <img src='./img/bridge.png'> </img>
 </p>
+
+Peers already in the network do not need to use a signaling server to establish
+connections, for each of them can act as a signaling server, i.e. as a bridge
+from a neighbor to another. In the figure, ```:3```, ```:]```, and ```:|``` are
+in the network. ```:3``` can establish a WebRTC connection to ```:|``` using
+```:]```. Such neighbor-to-neighbor connections are common in distributed
+peer-sampling protocols.
 
 
 ## Installation
