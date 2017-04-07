@@ -43,7 +43,7 @@ peer-sampling protocols.
 
 ## Installation
 
-Using npm: ```$ npm install n2n-overlay-wrtc```
+```$ npm install n2n-overlay-wrtc```
 
 ## API
 
