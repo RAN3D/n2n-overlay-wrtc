@@ -34,18 +34,22 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html">Neighbor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">messages</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mdirect.js~MDirect.html">MDirect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwarded.js~MForwarded.html">MForwarded</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwardto.js~MForwardTo.html">MForwardTo</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Neighbor from &apos;<span><a href="file/lib/n2n-overlay.js.html#lineNumber19">n2n-overlay-wrtc</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Neighbor from &apos;<span><a href="file/lib/n2n-overlay.js.html#lineNumber23">n2n-overlay-wrtc</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/lib/n2n-overlay.js.html#lineNumber19">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/lib/n2n-overlay.js.html#lineNumber23">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -65,8 +69,12 @@
 
   
   
-  <div class="description" data-ice="description"><p>A neighbor has an inview and an outview and is able to act as a bridge
-between its neighbors so they can establish their own communication channels</p>
+  <div class="description" data-ice="description"><p>A peer has an inview and an outview, i.e., tables containing sockets to
+communicate with remote peers. This module transforms a peer so it can act as
+a bridge between its direct neighbors. Consequently, these neighbors can
+create their own communication channels: necessary data to establish the 
+connection travel through the bridge; once the connection is successfully 
+established, they communicate using their own direct connection.</p>
 </div>
   
 
@@ -132,7 +140,7 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-callbacks">callbacks</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-II">II</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -159,7 +167,115 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-directCallbacks">directCallbacks</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-IO">IO</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-NI">NI</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-NO">NO</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-PEER">PEER</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-PID">PID</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -213,33 +329,6 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-inview">inview</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
           <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-o">o</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
@@ -267,34 +356,7 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-options">options</a></span></span><span data-ice="signature">: {&quot;protocol&quot;: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>}</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-outview">outview</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-member-options">options</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -328,13 +390,14 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-connect">connect</a></span></span><span data-ice="signature">(from: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, to: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>void</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-connect">connect</a></span></span><span data-ice="signature">(from: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span>MResponse</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>, to: <span>MRequest</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>connect the peers at the other ends of sockets identified</p>
+        <div data-ice="description"><p>Create an arc (establishes a WebRTC connection if need be) from &apos;from&apos; to
+&apos;to&apos;.</p>
 </div>
       </div>
     </td>
@@ -356,35 +419,7 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-connection">connection</a></span></span><span data-ice="signature">(callbacks: <span>callback</span>, message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>bootstrap the network, i.e.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-disconnect">disconnect</a></span></span><span data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-disconnect">disconnect</a></span></span><span data-ice="signature">(peerId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
@@ -412,13 +447,13 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-get">get</a></span></span><span data-ice="signature">(idOrView: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-getInview">getInview</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>get the socket corresponding to the id in argument and views</p>
+        <div data-ice="description"><p>Getter of the inview.</p>
 </div>
       </div>
     </td>
@@ -440,13 +475,13 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-send">send</a></span></span><span data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-getInviewId">getInviewId</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Send the message to the peer identified by id</p>
+        <div data-ice="description"><p>Getter of the inview ID.</p>
 </div>
       </div>
     </td>
@@ -468,13 +503,69 @@ between its neighbors so they can establish their own communication channels</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-toString">toString</a></span></span><span data-ice="signature">(): <span>void</span></span>
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-getOutview">getOutview</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>simple string representing the in and out views</p>
+        <div data-ice="description"><p>Getter of the outview.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-getOutviewId">getOutviewId</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Getter of the inview ID.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html#instance-method-send">send</a></span></span><span data-ice="signature">(peerId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, retry: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>promise</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Send a message using either the inview or the outview.</p>
 </div>
       </div>
     </td>
@@ -505,7 +596,7 @@ between its neighbors so they can establish their own communication channels</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber28">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber33">source</a></span></span>
     </span>
   </h3>
 
@@ -527,29 +618,32 @@ between its neighbors so they can establish their own communication channels</p>
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">options</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>options represented as an object (refer to neighborhood-wrtc for other options)</p>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>options represented as an object (refer to
+neighborhood-wrtc for other options).</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="1">
-      <td data-ice="name" data-depth="1">options.protocol</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Name of the protocol</p>
+      <td data-ice="name" data-depth="1">options.pid</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>The unique identifier of the protocol.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="1">
       <td data-ice="name" data-depth="1">options.inview</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Inview Socket</p>
+      <td data-ice="type"><span>Neighborhood</span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>The neighborhood used for inviews,
+i.e., incoming arcs.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="1">
       <td data-ice="name" data-depth="1">options.outview</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Outview Socket</p>
+      <td data-ice="type"><span>Neighborhood</span></td>
+      <td data-ice="appendix"><ul><li>optional</li></ul></td>
+      <td data-ice="description"><p>The neigbhorhood used for
+outviews, i.e., outgoing arcs.</p>
 </td>
     </tr>
 </tbody>
@@ -578,18 +672,18 @@ between its neighbors so they can establish their own communication channels</p>
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-callbacks">
+  <h3 data-ice="anchor" id="instance-member-II">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">callbacks</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">II</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber45">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -621,18 +715,190 @@ between its neighbors so they can establish their own communication channels</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-directCallbacks">
+  <h3 data-ice="anchor" id="instance-member-IO">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">directCallbacks</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">IO</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber49">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-NI">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">NI</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber41">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-NO">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">NO</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber44">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-PEER">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">PEER</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber50">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-PID">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">PID</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber39">source</a></span></span>
     </span>
   </h3>
 
@@ -675,50 +941,7 @@ between its neighbors so they can establish their own communication channels</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber40">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-inview">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">inview</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
@@ -761,7 +984,7 @@ between its neighbors so they can establish their own communication channels</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber41">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber54">source</a></span></span>
     </span>
   </h3>
 
@@ -800,54 +1023,11 @@ between its neighbors so they can establish their own communication channels</p>
     
     
     
-    <span data-ice="name">options</span><span data-ice="signature">: {&quot;protocol&quot;: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>}</span>
+    <span data-ice="name">options</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber31">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-outview">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">outview</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber37">source</a></span></span>
     </span>
   </h3>
 
@@ -889,18 +1069,19 @@ between its neighbors so they can establish their own communication channels</p>
     
     
     
-    <span data-ice="name">connect</span><span data-ice="signature">(from: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, to: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>void</span></span>
+    <span data-ice="name">connect</span><span data-ice="signature">(from: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span>MResponse</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>, to: <span>MRequest</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber127">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber251">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>connect the peers at the other ends of sockets identified</p>
+  <div data-ice="description"><p>Create an arc (establishes a WebRTC connection if need be) from &apos;from&apos; to
+&apos;to&apos;. (TODO) explain function args</p>
 </div>
 
   
@@ -915,18 +1096,18 @@ between its neighbors so they can establish their own communication channels</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">from</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span>MResponse</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the identifier of the socket leading to a peer which will add
-a socket in its outview</p>
+      <td data-ice="description"><p>The identifier of the peer
+that must initiate the connection. Null implicitely means this.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">to</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="type"><span>MRequest</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the identifier of the socket leading to a peer which will add
-a socket in its inview</p>
+      <td data-ice="description"><p>The identifier of the peer that must
+accept the connection. Null implicitely means this.</p>
 </td>
     </tr>
 </tbody>
@@ -934,102 +1115,7 @@ a socket in its inview</p>
 </div>
 </div>
 
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>void</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-connection">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">connection</span><span data-ice="signature">(callbacks: <span>callback</span>, message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber151">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>bootstrap the network, i.e. first join the network. This peer
-will add a peer which already belong to the network. The rest of
-protocol can be done inside the network with the function connect.</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">callbacks</td>
-      <td data-ice="type"><span>callback</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>see callbacks of neighborhood-wrtc</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">message</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>see messages of neighborhood-wrtc</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>the id of the socket</p>
-</td>
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
 
   
 
@@ -1054,11 +1140,11 @@ protocol can be done inside the network with the function connect.</p>
     
     
     
-    <span data-ice="name">disconnect</span><span data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
+    <span data-ice="name">disconnect</span><span data-ice="signature">(peerId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber293">source</a></span></span>
     </span>
   </h3>
 
@@ -1079,10 +1165,10 @@ protocol can be done inside the network with the function connect.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">id</td>
+      <td data-ice="name" data-depth="0">peerId</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the arc to remove, if none, remove all arcs</p>
+      <td data-ice="description"><p>The identifier of the arc to remove.</p>
 </td>
     </tr>
 </tbody>
@@ -1090,13 +1176,58 @@ protocol can be done inside the network with the function connect.</p>
 </div>
 </div>
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getInview">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">getInview</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber306">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Getter of the inview.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
   <div class="return-params" data-ice="returnParams">
     <h4>Return:</h4>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>A new map comprising {peerId =&gt; occurrences}.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1120,47 +1251,30 @@ protocol can be done inside the network with the function connect.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-get">
+  <h3 data-ice="anchor" id="instance-method-getInviewId">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">get</span><span data-ice="signature">(idOrView: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
+    <span data-ice="name">getInviewId</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber189">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber314">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>get the socket corresponding to the id in argument and views</p>
+  <div data-ice="description"><p>Getter of the inview ID.</p>
 </div>
 
   
 
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">idOrView</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>string id or &apos;inview&apos; or &apos;outview&apos;</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
+  <div data-ice="properties">
 </div>
 
   <div class="return-params" data-ice="returnParams">
@@ -1168,8 +1282,122 @@ protocol can be done inside the network with the function connect.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>a list of entries or an entry</p>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>The identifier of the inview.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getOutview">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">getOutview</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber322">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Getter of the outview.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>A new map comprising {peerId =&gt; occurrences}.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getOutviewId">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">getOutviewId</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber330">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Getter of the inview ID.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>The identifier of the outview.</p>
 </td>
         </tr>
       </tbody>
@@ -1201,18 +1429,18 @@ protocol can be done inside the network with the function connect.</p>
     
     
     
-    <span data-ice="name">send</span><span data-ice="signature">(id: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span data-ice="name">send</span><span data-ice="signature">(peerId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, retry: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>promise</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber180">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber213">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Send the message to the peer identified by id</p>
+  <div data-ice="description"><p>Send a message using either the inview or the outview.</p>
 </div>
 
   
@@ -1226,17 +1454,26 @@ protocol can be done inside the network with the function connect.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">id</td>
+      <td data-ice="name" data-depth="0">peerId</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the identifier of the socket used to send the message</p>
+      <td data-ice="description"><p>The identifier of the receiver.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">message</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the message to send</p>
+      <td data-ice="description"><p>The message to send.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">retry</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default:  0</li></ul></td>
+      <td data-ice="description"><p>Number of times it retries to send a
+message.</p>
 </td>
     </tr>
 </tbody>
@@ -1249,65 +1486,9 @@ protocol can be done inside the network with the function connect.</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>true if the message has been sent, false otherwise</p>
-</td>
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-toString">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">toString</span><span data-ice="signature">(): <span>void</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/lib/n2n-overlay.js.html#lineNumber200">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>simple string representing the in and out views</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type" data-ice="returnType"><span>void</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>a string with in and out views</p>
+          <td class="return-type" data-ice="returnType"><span>promise</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Promise that resolves if the message is sent, reject 
+otherwise.</p>
 </td>
         </tr>
       </tbody>

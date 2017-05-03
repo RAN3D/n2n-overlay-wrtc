@@ -6,6 +6,30 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "n2n-overlay-wrtc/lib/messages/mconnectto.js~mconnectto",
+    "class/lib/messages/mconnectto.js~MConnectTo.html",
+    "<span>MConnectTo</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc/lib/messages/mconnectto.js</span>",
+    "class"
+  ],
+  [
+    "n2n-overlay-wrtc/lib/messages/mdirect.js~mdirect",
+    "class/lib/messages/mdirect.js~MDirect.html",
+    "<span>MDirect</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc/lib/messages/mdirect.js</span>",
+    "class"
+  ],
+  [
+    "n2n-overlay-wrtc/lib/messages/mforwardto.js~mforwardto",
+    "class/lib/messages/mforwardto.js~MForwardTo.html",
+    "<span>MForwardTo</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc/lib/messages/mforwardto.js</span>",
+    "class"
+  ],
+  [
+    "n2n-overlay-wrtc/lib/messages/mforwarded.js~mforwarded",
+    "class/lib/messages/mforwarded.js~MForwarded.html",
+    "<span>MForwarded</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc/lib/messages/mforwarded.js</span>",
+    "class"
+  ],
+  [
     "n2n-overlay-wrtc~neighbor",
     "class/lib/n2n-overlay.js~Neighbor.html",
     "<span>Neighbor</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc</span>",
@@ -342,10 +366,124 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "lib/messages.js",
-    "file/lib/messages.js.html",
-    "lib/messages.js",
+    "lib/messages/mconnectto.js",
+    "file/lib/messages/mconnectto.js.html",
+    "lib/messages/mconnectto.js",
     "file"
+  ],
+  [
+    "lib/messages/mconnectto.js~mconnectto#constructor",
+    "class/lib/messages/mconnectto.js~MConnectTo.html#instance-constructor-constructor",
+    "lib/messages/mconnectto.js~MConnectTo#constructor",
+    "method"
+  ],
+  [
+    "lib/messages/mconnectto.js~mconnectto#from",
+    "class/lib/messages/mconnectto.js~MConnectTo.html#instance-member-from",
+    "lib/messages/mconnectto.js~MConnectTo#from",
+    "member"
+  ],
+  [
+    "lib/messages/mconnectto.js~mconnectto#to",
+    "class/lib/messages/mconnectto.js~MConnectTo.html#instance-member-to",
+    "lib/messages/mconnectto.js~MConnectTo#to",
+    "member"
+  ],
+  [
+    "lib/messages/mconnectto.js~mconnectto#type",
+    "class/lib/messages/mconnectto.js~MConnectTo.html#instance-member-type",
+    "lib/messages/mconnectto.js~MConnectTo#type",
+    "member"
+  ],
+  [
+    "lib/messages/mdirect.js",
+    "file/lib/messages/mdirect.js.html",
+    "lib/messages/mdirect.js",
+    "file"
+  ],
+  [
+    "lib/messages/mdirect.js~mdirect#constructor",
+    "class/lib/messages/mdirect.js~MDirect.html#instance-constructor-constructor",
+    "lib/messages/mdirect.js~MDirect#constructor",
+    "method"
+  ],
+  [
+    "lib/messages/mdirect.js~mdirect#type",
+    "class/lib/messages/mdirect.js~MDirect.html#instance-member-type",
+    "lib/messages/mdirect.js~MDirect#type",
+    "member"
+  ],
+  [
+    "lib/messages/mforwarded.js",
+    "file/lib/messages/mforwarded.js.html",
+    "lib/messages/mforwarded.js",
+    "file"
+  ],
+  [
+    "lib/messages/mforwarded.js~mforwarded#constructor",
+    "class/lib/messages/mforwarded.js~MForwarded.html#instance-constructor-constructor",
+    "lib/messages/mforwarded.js~MForwarded#constructor",
+    "method"
+  ],
+  [
+    "lib/messages/mforwarded.js~mforwarded#from",
+    "class/lib/messages/mforwarded.js~MForwarded.html#instance-member-from",
+    "lib/messages/mforwarded.js~MForwarded#from",
+    "member"
+  ],
+  [
+    "lib/messages/mforwarded.js~mforwarded#message",
+    "class/lib/messages/mforwarded.js~MForwarded.html#instance-member-message",
+    "lib/messages/mforwarded.js~MForwarded#message",
+    "member"
+  ],
+  [
+    "lib/messages/mforwarded.js~mforwarded#to",
+    "class/lib/messages/mforwarded.js~MForwarded.html#instance-member-to",
+    "lib/messages/mforwarded.js~MForwarded#to",
+    "member"
+  ],
+  [
+    "lib/messages/mforwarded.js~mforwarded#type",
+    "class/lib/messages/mforwarded.js~MForwarded.html#instance-member-type",
+    "lib/messages/mforwarded.js~MForwarded#type",
+    "member"
+  ],
+  [
+    "lib/messages/mforwardto.js",
+    "file/lib/messages/mforwardto.js.html",
+    "lib/messages/mforwardto.js",
+    "file"
+  ],
+  [
+    "lib/messages/mforwardto.js~mforwardto#constructor",
+    "class/lib/messages/mforwardto.js~MForwardTo.html#instance-constructor-constructor",
+    "lib/messages/mforwardto.js~MForwardTo#constructor",
+    "method"
+  ],
+  [
+    "lib/messages/mforwardto.js~mforwardto#from",
+    "class/lib/messages/mforwardto.js~MForwardTo.html#instance-member-from",
+    "lib/messages/mforwardto.js~MForwardTo#from",
+    "member"
+  ],
+  [
+    "lib/messages/mforwardto.js~mforwardto#message",
+    "class/lib/messages/mforwardto.js~MForwardTo.html#instance-member-message",
+    "lib/messages/mforwardto.js~MForwardTo#message",
+    "member"
+  ],
+  [
+    "lib/messages/mforwardto.js~mforwardto#to",
+    "class/lib/messages/mforwardto.js~MForwardTo.html#instance-member-to",
+    "lib/messages/mforwardto.js~MForwardTo#to",
+    "member"
+  ],
+  [
+    "lib/messages/mforwardto.js~mforwardto#type",
+    "class/lib/messages/mforwardto.js~MForwardTo.html#instance-member-type",
+    "lib/messages/mforwardto.js~MForwardTo#type",
+    "member"
   ],
   [
     "lib/n2n-overlay.js",
@@ -354,9 +492,39 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "lib/n2n-overlay.js~neighbor#callbacks",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-callbacks",
-    "lib/n2n-overlay.js~Neighbor#callbacks",
+    "lib/n2n-overlay.js~neighbor#ii",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-II",
+    "lib/n2n-overlay.js~Neighbor#II",
+    "member"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#io",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-IO",
+    "lib/n2n-overlay.js~Neighbor#IO",
+    "member"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#ni",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-NI",
+    "lib/n2n-overlay.js~Neighbor#NI",
+    "member"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#no",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-NO",
+    "lib/n2n-overlay.js~Neighbor#NO",
+    "member"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#peer",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-PEER",
+    "lib/n2n-overlay.js~Neighbor#PEER",
+    "member"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#pid",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-PID",
+    "lib/n2n-overlay.js~Neighbor#PID",
     "member"
   ],
   [
@@ -366,22 +534,10 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/n2n-overlay.js~neighbor#connection",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-connection",
-    "lib/n2n-overlay.js~Neighbor#connection",
-    "method"
-  ],
-  [
     "lib/n2n-overlay.js~neighbor#constructor",
     "class/lib/n2n-overlay.js~Neighbor.html#instance-constructor-constructor",
     "lib/n2n-overlay.js~Neighbor#constructor",
     "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#directcallbacks",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-directCallbacks",
-    "lib/n2n-overlay.js~Neighbor#directCallbacks",
-    "member"
   ],
   [
     "lib/n2n-overlay.js~neighbor#disconnect",
@@ -390,21 +546,33 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/n2n-overlay.js~neighbor#get",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-get",
-    "lib/n2n-overlay.js~Neighbor#get",
+    "lib/n2n-overlay.js~neighbor#getinview",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getInview",
+    "lib/n2n-overlay.js~Neighbor#getInview",
+    "method"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#getinviewid",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getInviewId",
+    "lib/n2n-overlay.js~Neighbor#getInviewId",
+    "method"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#getoutview",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getOutview",
+    "lib/n2n-overlay.js~Neighbor#getOutview",
+    "method"
+  ],
+  [
+    "lib/n2n-overlay.js~neighbor#getoutviewid",
+    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getOutviewId",
+    "lib/n2n-overlay.js~Neighbor#getOutviewId",
     "method"
   ],
   [
     "lib/n2n-overlay.js~neighbor#i",
     "class/lib/n2n-overlay.js~Neighbor.html#instance-member-i",
     "lib/n2n-overlay.js~Neighbor#i",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#inview",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-inview",
-    "lib/n2n-overlay.js~Neighbor#inview",
     "member"
   ],
   [
@@ -420,21 +588,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "lib/n2n-overlay.js~neighbor#outview",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-outview",
-    "lib/n2n-overlay.js~Neighbor#outview",
-    "member"
-  ],
-  [
     "lib/n2n-overlay.js~neighbor#send",
     "class/lib/n2n-overlay.js~Neighbor.html#instance-method-send",
     "lib/n2n-overlay.js~Neighbor#send",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#tostring",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-toString",
-    "lib/n2n-overlay.js~Neighbor#toString",
     "method"
   ]
 ]

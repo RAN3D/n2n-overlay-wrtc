@@ -34,6 +34,10 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/n2n-overlay.js~Neighbor.html">Neighbor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EventEmitter">EventEmitter</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">messages</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mdirect.js~MDirect.html">MDirect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwarded.js~MForwarded.html">MForwarded</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwardto.js~MForwardTo.html">MForwardTo</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -41,222 +45,338 @@
 <div class="content" data-ice="content"><h1 data-ice="title">lib/n2n-overlay.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
 
+const debug = require(&apos;debug&apos;)(&apos;n2n-overlay-wrtc&apos;);
 const Neighborhood = require(&apos;neighborhood-wrtc&apos;);
 const EventEmitter = require(&apos;events&apos;);
 const _ = require(&apos;lodash&apos;);
+const uuid = require(&apos;uuid/v4&apos;);
 
-const MForwardTo = require(&apos;./messages.js&apos;).MForwardTo;
-const MForwarded = require(&apos;./messages.js&apos;).MForwarded;
-const MConnectTo = require(&apos;./messages.js&apos;).MConnectTo;
-const MDirect = require(&apos;./messages.js&apos;).MDirect;
 
+const MForwardTo = require(&apos;./messages/mforwardto.js&apos;);
+const MForwarded = require(&apos;./messages/mforwarded.js&apos;);
+const MConnectTo = require(&apos;./messages/mconnectto.js&apos;);
+const MDirect = require(&apos;./messages/mdirect.js&apos;);
 
 /**
- * A neighbor has an inview and an outview and is able to act as a bridge
- * between its neighbors so they can establish their own communication channels
- * @access public
- * @extends {EventEmitter}
+ * A peer has an inview and an outview, i.e., tables containing sockets to
+ * communicate with remote peers. This module transforms a peer so it can act as
+ * a bridge between its direct neighbors. Consequently, these neighbors can
+ * create their own communication channels: necessary data to establish the 
+ * connection travel through the bridge; once the connection is successfully 
+ * established, they communicate using their own direct connection.
  */
 class Neighbor extends EventEmitter {
+    /**
+     * @param {object} [options] options represented as an object (refer to
+     * neighborhood-wrtc for other options).
+     * @param {string} [options.pid] The unique identifier of the protocol.
+     * @param {Neighborhood} [options.inview] The neighborhood used for inviews,
+     * i.e., incoming arcs.
+     * @param {Neighborhood} [options.outview] The neigbhorhood used for
+     * outviews, i.e., outgoing arcs.
+     */
+    constructor (options = {}) {
+        super();
 
-  /**
-   * @param {object} options options represented as an object (refer to neighborhood-wrtc for other options)
-   * @param {object} options.protocol Name of the protocol
-   * @param {object} options.inview Inview Socket
-   * @param {object} options.outview Outview Socket
-   *
-   */
-  constructor (options) {
-    super();
-
-    this.options = {
-      protocol: &apos;n2n-overlay-wrtc&apos;
-    };
-    this.options = _.merge(this.options, options);
-
-    // #1 dissociate entering arcs from outgoing arcs
-    this.inview = (this.options &amp;&amp; this.options.inview) || new Neighborhood(this.options);
-    this.outview = (this.options &amp;&amp; this.options.outview) || new Neighborhood(this.options);
-    // #2 concise access
-    this.i = this.inview;
-    this.o = this.outview;
-
-    const self = this;
-    // #A callbacks when there is a bridge to create a connection
-    this.callbacks = (id, message, view) =&gt; {
-        return {
-            onInitiate: (offer) =&gt; {
-                self.send(id, MForwardTo(message.from, message.to,
-                                         offer,
-                                         this.options.protocol));
-            },
-            onAccept: (offer) =&gt; {
-                self.send(id, MForwardTo(message.to, message.from,
-                                         offer,
-                                         this.options.protocol));
-            }
-        };
-    };
-    // #B callbacks when it establishes a connection to a neighbor, either
-    // this -&gt; neighbor or neigbhor -&gt; this. It is worth noting that if it
-    // a channel exists in the inview and we want to create an identical in the
-    // outview, a new channel must be created; for the peer that owns the arc
-    // in its outview can destroy it without warning.
-    this.directCallbacks = (id, idView, view) =&gt; {
-        return {
-            onInitiate: (offer) =&gt; {
-                self.send(id, MDirect(idView, offer, this.options.protocol));
-            },
-            onAccept: (offer) =&gt; {
-                self.send(id, MDirect(idView, offer, this.options.protocol));
-            }
-        };
+        // #0 process the options
+        this.options = _.merge( { pid: uuid(), peer: uuid() }, options);
+        // #1 initialize unmutable protocolId
+        this.PID = this.options.pid;
+        // #2 initialize the neighborhoods /!\ i.peer and o.peer must be &#x2260;
+        this.NI = this.options.inview ||
+            new Neighborhood( _.merge(_.merge( {}, this.options),
+                                      {peer: this.options.peer+&apos;-I&apos;}) );
+        this.NO = this.options.outview ||
+            new Neighborhood( _.merge(_.merge( {}, this.options),
+                                      {peer: this.options.peer+&apos;-O&apos;}) );
+        // #3 initialize the interfaces
+        this.II = this.NI.register(this);
+        this.IO = this.NO.register(this);
+        this.PEER = this.II.peer + &apos;|&apos; + this.IO.peer;
+        debug(&apos;[%s] registered to ==&gt; %s ==&gt;&apos;, this.PID, this.PEER);
+        // #4 intialize the tables
+        this.i = new Map();
+        this.o = new Map();
     };
 
-    // #C receive a message from an arc, it forwards it to a listener
-    // of this module, otherwise, it keeps and interprets it.
-    let receive = (id, message) =&gt; {
-        // #1 redirect
-        if (!message.protocol || message.protocol!==this.options.protocol){
-            self.emit(&apos;receive&apos;, id, message);
-            return; // ugly early return
-        }
-        // #2 otherwise, interpret
-        switch (message.type){
-        case &apos;MConnectTo&apos;: // #A a neighbor asks us to connect to a remote one
-            if (message.to &amp;&amp; message.from){
-                self.connection(this.callbacks(id, message, &apos;outview&apos;));
-            } else { // #B a neighbor asks us to connect to him
-                self.connection(this.directCallbacks(id, self.outview.ID,&apos;outview&apos;));
-            }
-            break;
-        case &apos;MForwardTo&apos;: // #C a message is to be forwarded to a neighbor
-            self.send(message.to, MForwarded(message.from, message.to, message.message, message.protocol));
-            break;
-        case &apos;MForwarded&apos;: // #D a message has been forwarded to us, deliver
-            self.inview.connection(this.callbacks(id, message, &apos;inview&apos;), message.message) || self.outview.connection(message.message);
-            break;
-        case &apos;MDirect&apos;: // #E a direct neigbhor sends offers to accept
-            self.inview.connection(this.directCallbacks(id, message.from, &apos;inview&apos;), message.message) || self.outview.connection(message.message);
-            break;
+    /**
+     * @private
+     * The getter of the identifier of this protocol.
+     * @returns {string} The identifier of this protocol.
+     */
+    _pid () {
+        return this.PID;
+    };
+    
+    /**
+     * @private
+     * Behavior when this protocol receives a message from peerId.
+     * @param {string} peerId The identifier of the peer that we received a 
+     * message from.
+     * @param {object} message The message received.
+     */
+    _received (peerId, message) {
+        if (message.type) {
+            if (message.type === &apos;MConnectTo&apos; ||
+                message.type === &apos;MForwarded&apos; ||
+                message.type === &apos;MForwardTo&apos;) {
+                this._bridge(peerId, message);
+            } else if (message.type === &apos;MResponse&apos; ||
+                       message.type === &apos;MRequest&apos; ||
+                       message.type === &apos;MDirect&apos;) {
+                this._direct(peerId, message);
+            } else {
+                this.emit(&apos;receive&apos;, peerId, message);
+            };
+        } else {
+            this.emit(&apos;receive&apos;, peerId, message);
         };
     };
 
-    this.inview.on(&apos;receive&apos;, receive);
-    this.outview.on(&apos;receive&apos;, receive);
 
-    // #D an arc in one of the view is ready, redirect event
-    this.inview.on(&apos;ready-&apos;+this.options.protocol, (id) =&gt; self.emit(&apos;ready&apos;, id, &apos;inview&apos;));
-    this.outview.on(&apos;ready-&apos;+this.options.protocol, (id) =&gt; self.emit(&apos;ready&apos;, id, &apos;outview&apos;));
+    /**
+     * @private
+     * Behavior when this protocol receives a stream from peerId.
+     * @param {string} peerId The identifier of the peer that we received a 
+     * message from.
+     * @param {object} stream The stream received.
+     */
+    _streamed (peerId, stream) {
+        this.emit(&apos;stream&apos;, peerId, stream);
+    };
 
-    // #E a connection failed to establish
-    this.inview.on(&apos;fail&apos;, (reason) =&gt; this.emit(&apos;failed&apos;, &apos;i&apos;, &apos;inview&apos;, reason));
-		this.outview.on(&apos;fail&apos;, (reason) =&gt; this.emit(&apos;failed&apos;, &apos;o&apos;, &apos;outview&apos;, reason));
+    
+    /**
+     * @private
+     * Update the local view.
+     * @param {string} peerId The identifier of the peer reachable through the
+     * newly added arc.
+     * @param {boolean} isOutgoing State if the added arc is outgoing or not.
+     */
+    _connected (peerId, isOutgoing) {
+        if (isOutgoing){
+            if (!this.o.has(peerId)){
+                this.o.set(peerId, 0);
+            };
+            this.o.set(peerId, this.o.get(peerId) + 1 );
+            this.emit(&apos;open&apos;, peerId); // only consider outgoing arcs
+        } else {
+            if (!this.i.has(peerId)){
+                this.i.set(peerId, 0);
+            };
+            this.i.set(peerId, this.i.get(peerId) + 1 );
+        };
+    };
 
-    // #F an arc has been remove
-    this.inview.on(&apos;disconnect&apos;, (id) =&gt; self.emit(&apos;disconnect&apos;, id, &apos;inview&apos;));
-    this.outview.on(&apos;disconnect&apos;, (id) =&gt; self.emit(&apos;disconnect&apos;, id, &apos;outview&apos;));
-  }
-  /**
-   * connect the peers at the other ends of sockets identified
-   * @param {string} from the identifier of the socket leading to a peer which will add
-   * a socket in its outview
-   * @param {string} to the identifier of the socket leading to a peer which will add
-   * a socket in its inview
-   * @return {void}
-   */
-  connect (from, to){
-    if (!from &amp;&amp; to){
-        // #A only the &apos;to&apos; argument implicitly means from = this
-        // this -&gt; to
-        this.connection(this.directCallbacks( to, this.outview.ID, &apos;outview&apos;));
-    } else if (from &amp;&amp; !to){
-        // #B only the &apos;from&apos; argument implicitly means to = this
-        // from -&gt; this
-        this.send(from, MConnectTo(this.options.protocol));
-    } else {
-        // #C ask to the from-peer to the to-peer
-        // from -&gt; to
-        this.send(from, MConnectTo(this.options.protocol, from, to));
+    /**
+     * @private
+     * Update the local view.
+     * @param {string} peerId The identifier of the peer that removed an arc.
+     */
+    _disconnected (peerId) {
+        if (this.o.has(peerId)){
+            this.o.set(peerId, this.o.get(peerId) - 1 );
+            (this.o.get(peerId) &lt;= 0) &amp;&amp; this.o.delete(peerId);
+            this.emit(&apos;close&apos;, peerId); // only outview
+        } else if (this.i.has(peerId)){
+            this.i.set(peerId, this.i.get(peerId) - 1 );
+            (this.i.get(peerId) &lt;= 0) &amp;&amp; this.i.delete(peerId);
+        };
+    };
+
+    /**
+     * @private
+     * Notify failure
+     * @param {string} peerId The identifier of the peer we failed to establish
+     * a connection with.
+     * @param {boolean} isOutgoing State whether or not the failed arc was 
+     * supposed to be an outgoing arc.
+     */
+    _failed (peerId, isOutgoing) {
+        // only takes into account the outgoing arcs
+        isOutgoing &amp;&amp; this.emit(&apos;fail&apos;, peerId);
     }
-  }
+    
 
-  /**
-   * bootstrap the network, i.e. first join the network. This peer
-   * will add a peer which already belong to the network. The rest of
-   * protocol can be done inside the network with the function connect.
-   * @param {callback} callbacks see callbacks of neighborhood-wrtc
-   * @param {object} message see messages of neighborhood-wrtc
-   * @return {string} the id of the socket
-   */
-  connection (callbacks, message){
-    if (!message || (message &amp;&amp; message.type===&apos;MResponse&apos;)){
-        return this.outview.connection(callbacks, message, this.options.protocol);
-    } else {
-        return this.inview.connection(callbacks, message, this.options.protocol);
+    /**
+     * @private
+     * Function that execute to bridge a connection establishement between two
+     * peers: we start from (i -&gt; b -&gt; a) to get (i -&gt; b -&gt; a) and (i -&gt; a).
+     * @param {string} peerId The identifier of the peer that sent us the 
+     * message
+     * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.
+     */
+    _bridge (peerId, msg) {
+        // #1 we are the initiator
+        (msg.type === &apos;MConnectTo&apos;) &amp;&amp; this.IO.connect( (req) =&gt; {
+            this.send(peerId, new MForwardTo(msg.from, msg.to, req));
+        });
+        // #2 we are the bridge
+        (msg.type === &apos;MForwardTo&apos;) &amp;&amp;
+            this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message));
+        // #3 we are the acceptor
+        (msg.type === &apos;MForwarded&apos;) &amp;&amp; (msg.message.type === &apos;MRequest&apos;) &amp;&amp;
+            this.II.connect( (res) =&gt; {
+                this.send(peerId, new MForwardTo(msg.to, msg.from, res));
+            }, msg.message );
+        // #4 reapplies #2
+        // #5 we are the finalizor
+        (msg.type === &apos;MForwarded&apos;) &amp;&amp; (msg.message.type === &apos;MResponse&apos;) &amp;&amp;
+            this.IO.connect( msg.message );
+    };
+
+    /**
+     * @private
+     * Create a connection with a neighbor: from (i -&gt; a) we obtain 
+     * either (i &lt;-&gt; a) or (i =&gt; a). In the former case, assuming that Peer a 
+     * does not already have a connection to Peer i, it must create a WebRTC 
+     * connection to a. In the latter case, Peer i only duplicates its arc to
+     * Peer a. Thus, it must disconnect twice to truly destroy the connection.
+     * @param {string} peerId The identifier of the peer that we received a
+     * message from.
+     * @param {string} message The received message.
+     */ 
+    _direct(peerId, message){
+        (message.type === &apos;MDirect&apos;) &amp;&amp;
+            this.IO.connect( (req) =&gt; this.send(peerId, req) );
+        (message.type === &apos;MRequest&apos;) &amp;&amp;
+            this.II.connect( (res) =&gt; this.send(peerId, res), message);
+        (message.type === &apos;MResponse&apos;) &amp;&amp;
+            this.IO.connect( message );
+    };
+
+    
+    /**
+     * Send a message using either the inview or the outview.
+     * @param {string} peerId The identifier of the receiver.
+     * @param {object} message The message to send.
+     * @param {number} [retry = 0] Number of times it retries to send a
+     * message.
+     * @return {promise} Promise that resolves if the message is sent, reject 
+     * otherwise.
+     */
+    send(peerId, message, retry = 0){
+        let promise;
+        // #1 normal behavior
+        if (this.i.has(peerId)) {
+            promise = this.II.send(peerId, message, retry);
+        } else if (this.o.has(peerId)) {
+            promise = this.IO.send(peerId, message, retry);
+        } else {
+            // #2 last chance behavior
+            promise = new Promise( (resolve, reject) =&gt; {
+                const _send = (r) =&gt; {
+                    this.IO.send(peerId, message, 0)
+                        .then( () =&gt; resolve() )
+                        .catch( (e) =&gt; this.II.send(peerId, message, 0)
+                                .then( () =&gt; resolve() )
+                                .catch( (e) =&gt; {
+                                    if (r&lt;retry){
+                                        setTimeout( () =&gt; {
+                                            _send (r+1);
+                                        }, 1000);
+                                    } else {
+                                        reject(e);
+                                    }
+                                }));};
+                _send(0);
+            });
+        };
+        return promise;
+    };
+
+    /**
+     * Create an arc (establishes a WebRTC connection if need be) from &apos;from&apos; to
+     * &apos;to&apos;. (TODO) explain function args
+     * @param {function|MResponse|string|null} from The identifier of the peer
+     * that must initiate the connection. Null implicitely means this.
+     * @param {MRequest|string|null} to The identifier of the peer that must
+     * accept the connection. Null implicitely means this.
+     */
+    connect (arg1 = null, arg2 = null) {
+        // #1 handle bootstrap using other communication channels than our
+        // own.
+        if (typeof arg1 === &apos;function&apos; &amp;&amp; arg2 === null) {
+            this.IO.connect( (req) =&gt; arg1(req) ); // arg1: callback
+        } else if (typeof arg1 === &apos;function&apos; &amp;&amp; arg2 !== null) {
+            debug(&apos;[%s] %s &lt;&#x3C0;= ??? =&#x3C0;= %s&apos;,
+                  this.PID, this.getInviewId(), arg2.peer);
+            this.II.connect( (res) =&gt; arg1(res), arg2); // arg1: cb; arg2: msg
+        } else if (arg1 !== null &amp;&amp; typeof arg1 === &apos;object&apos; &amp;&amp; arg2 === null) {
+            this.IO.connect( arg1 ); // arg1: msg
+        } else {
+            // #2 handle n2n connections
+            // #A replace our own identifier by null
+            if (arg1!==null &amp;&amp; (arg1===this.IO.peer || arg1===this.II.peer)) {
+                arg1 = null;
+            };
+            if (arg2!==null &amp;&amp; (arg2===this.IO.peer || arg2===this.II.peer)) {
+                arg2 = null;
+            };
+            
+            if (arg1 !== null &amp;&amp; arg2 !== null){ 
+                // #1 arg1: from; arg2: to
+                // from -&gt; this -&gt; to  creates  from -&gt; to
+                debug(&apos;[%s] %s =&#x3C0;= %s =&#x3C0;&gt; %s&apos;, this.PID, arg1, this.PEER, arg2);
+                this.send(arg1, new MConnectTo(arg1, arg2));
+            } else if (arg1 !== null) {
+                // #2 arg1: from
+                // from -&gt; this  becomes  from =&gt; this
+                this.send(arg1, new MDirect());
+            } else if (arg2 !== null) {
+                // #3 arg2: to
+                // this -&gt; to becomes this =&gt; to
+                this._direct(arg2, new MDirect()); // emulate a MDirect receipt
+            };
+        };        
+    };
+
+    /**
+     * remove an arc of the outview or all arcs
+     * @param {string} peerId The identifier of the arc to remove.
+     */
+    disconnect (peerId) {
+        if (typeof peerId === &apos;undefined&apos;) {
+            this.II.disconnect();
+            this.IO.disconnect();
+        } else {
+            this.IO.disconnect(peerId);
+        };
     }
-  }
-  /**
-   * remove an arc of the outview or all arcs
-   * @param {string} id the arc to remove, if none, remove all arcs
-   */
-  disconnect (id) {
-    if (!id){
-        this.outview.disconnect();
-        this.inview.disconnect();
-        return true;
-    } else {
-        return this.outview.disconnect(id);
-    }
-  }
 
+    /**
+     * Getter of the inview.
+     * @returns {Map} A new map comprising {peerId =&gt; occurrences}.
+     */
+    getInview () {
+        return new Map(this.i);
+    };
 
+    /**
+     * Getter of the inview ID.
+     * @returns {string} The identifier of the inview.
+     */
+    getInviewId () {
+        return this.NI.PEER;
+    };
 
-  /**
-   * Send the message to the peer identified by id
-   * @param {string} id the identifier of the socket used to send the message
-   * @param {object} message the message to send
-   * @return {boolean} true if the message has been sent, false otherwise
-   */
-  send (id, message) {
-      return this.outview.send(id, message) || this.inview.send(id, message);
-  }
+    /**
+     * Getter of the outview.
+     * @returns {Map} A new map comprising {peerId =&gt; occurrences}.
+     */
+    getOutview () {
+        return new Map(this.o);
+    };
 
-  /**
-   * get the socket corresponding to the id in argument and views
-   * @param {string} idOrView string id or &apos;inview&apos; or &apos;outview&apos;
-   * @return a list of entries or an entry
-   */
-  get (idOrView) {
-    return  ((idOrView===&apos;inview&apos;) &amp;&amp; this.inview.living.ms.arr) ||// all inview
-    ((idOrView===&apos;outview&apos;) &amp;&amp; this.outview.living.ms.arr) || // all outview
-    (idOrView &amp;&amp; (this.outview.get(idOrView) ||
-                  this.inview.get(idOrView))); // cherry picking
-  }
+    /**
+     * Getter of the inview ID.
+     * @returns {string} The identifier of the outview.
+     */
+    getOutviewId () {
+        return this.NO.PEER;
+    };
 
-  /**
-   * simple string representing the in and out views
-   * @return {void} a string with in and out views
-   */
-  toString () {
-      var result = &apos;&apos;;
-      result += &apos;IDS [&apos; + this.inview.ID +&apos;, &apos;+ this.outview.ID +&apos;] &apos;;
-      result += &apos;In {&apos;;
-      var I = this.get(&apos;inview&apos;);
-      for (var i = 0; i &lt; I.length; ++i){
-          result +=  I[i].id + &apos; x&apos; + I[i].occ + &apos;; &apos;;
-      };
-      result += &apos;}  Out {&apos;;
-      var O = this.get(&apos;outview&apos;);
-      for (var i = 0; i &lt; O.length; ++i){
-          result +=  O[i].id + &apos; x&apos; + O[i].occ + &apos;; &apos;;
-      };
-      result += &apos;}&apos;;
-      return result;
-  }
-
-
-}
+};
 
 module.exports = Neighbor;
 </code></pre>
