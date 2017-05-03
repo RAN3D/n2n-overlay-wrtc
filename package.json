@@ -19,7 +19,7 @@
         "lodash": "^4.17.4",
         "uuid": "^3.0.1",
         "debug": "^2.6.1",
-        "neighborhood-wrtc": "git://github.com/ran3d/neighborhood-wrtc.git#merging"
+        "neighborhood-wrtc": "^2.0.x"
     },
     "bundledDependencies": [
         "neighborhood-wrtc",
