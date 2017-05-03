@@ -36,7 +36,7 @@
     },
     "scripts": {
         "esdoc": "esdoc && npm run esdoc:example",
-        "esdoc:example": "cp -R ./build ./example ./docs",
+        "esdoc:example": "cp -R ./build ./example ./img ./docs",
         "test": "npm run all",
         "all": "npm run debug && npm run build && npm run esdoc",
         "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js",
