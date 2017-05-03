@@ -1,4 +1,4 @@
-# n2n-overlay-wrtc
+# n2n-overlay-wrtc [![Build Status](https://travis-ci.org/RAN3D/n2n-overlay-wrtc.svg?branch=master)](https://travis-ci.org/RAN3D/n2n-overlay-wrtc)
 
 This project aims to ease the creation of overlay networks on top of
 WebRTC. Additional WebRTC-specific constraints make such projects more difficult
