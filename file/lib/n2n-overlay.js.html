@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/ran3d/n2n-overlay-wrtc.git/" class="repo-url-github">Repository</a>
+  <a data-ice="repoURL" href="https://github.com/ran3d/n2n-overlay-wrtc" class="repo-url-github">Repository</a>
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -48,7 +48,7 @@
 const debug = require(&apos;debug&apos;)(&apos;n2n-overlay-wrtc&apos;);
 const Neighborhood = require(&apos;neighborhood-wrtc&apos;);
 const EventEmitter = require(&apos;events&apos;);
-const _ = require(&apos;lodash&apos;);
+const merge = require(&apos;lodash.merge&apos;);
 const uuid = require(&apos;uuid/v4&apos;);
 
 
@@ -81,18 +81,18 @@ class Neighbor extends EventEmitter {
         super();
 
         // #0 process the options
-        this.options = _.merge( { pid: uuid(),
+        this.options = merge( { pid: uuid(),
                                   peer: uuid(),
                                   retry: 5 }, options);
         // #1 initialize unmutable protocolId
         this.PID = this.options.pid;
         // #2 initialize the neighborhoods /!\ i.peer and o.peer must be &#x2260;
         this.NI = this.options.inview ||
-            new Neighborhood( _.merge(_.merge( {}, this.options),
-                                      {peer: this.options.peer+&apos;-I&apos;}) );
+            new Neighborhood( merge(merge( {}, this.options),
+                                    {peer: this.options.peer+&apos;-I&apos;}) );
         this.NO = this.options.outview ||
-            new Neighborhood( _.merge(_.merge( {}, this.options),
-                                      {peer: this.options.peer+&apos;-O&apos;}) );
+            new Neighborhood( merge(merge( {}, this.options),
+                                    {peer: this.options.peer+&apos;-O&apos;}) );
         // #3 initialize the interfaces
         this.II = this.NI.register(this);
         this.IO = this.NO.register(this);
