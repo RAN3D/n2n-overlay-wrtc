@@ -1,11 +1,5 @@
 window.esdocSearchIndex = [
   [
-    "n2n-overlay-wrtc~eventemitter",
-    "variable/index.html#static-variable-EventEmitter",
-    "<span>EventEmitter</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc</span>",
-    "variable"
-  ],
-  [
     "n2n-overlay-wrtc/lib/messages/mconnectto.js~mconnectto",
     "class/lib/messages/mconnectto.js~MConnectTo.html",
     "<span>MConnectTo</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc/lib/messages/mconnectto.js</span>",
@@ -27,12 +21,6 @@ window.esdocSearchIndex = [
     "n2n-overlay-wrtc/lib/messages/mforwarded.js~mforwarded",
     "class/lib/messages/mforwarded.js~MForwarded.html",
     "<span>MForwarded</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc/lib/messages/mforwarded.js</span>",
-    "class"
-  ],
-  [
-    "n2n-overlay-wrtc~neighbor",
-    "class/lib/n2n-overlay.js~Neighbor.html",
-    "<span>Neighbor</span> <span class=\"search-result-import-path\">n2n-overlay-wrtc</span>",
     "class"
   ],
   [
@@ -484,113 +472,5 @@ window.esdocSearchIndex = [
     "class/lib/messages/mforwardto.js~MForwardTo.html#instance-member-type",
     "lib/messages/mforwardto.js~MForwardTo#type",
     "member"
-  ],
-  [
-    "lib/n2n-overlay.js",
-    "file/lib/n2n-overlay.js.html",
-    "lib/n2n-overlay.js",
-    "file"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#ii",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-II",
-    "lib/n2n-overlay.js~Neighbor#II",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#io",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-IO",
-    "lib/n2n-overlay.js~Neighbor#IO",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#ni",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-NI",
-    "lib/n2n-overlay.js~Neighbor#NI",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#no",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-NO",
-    "lib/n2n-overlay.js~Neighbor#NO",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#peer",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-PEER",
-    "lib/n2n-overlay.js~Neighbor#PEER",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#pid",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-PID",
-    "lib/n2n-overlay.js~Neighbor#PID",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#connect",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-connect",
-    "lib/n2n-overlay.js~Neighbor#connect",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#constructor",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-constructor-constructor",
-    "lib/n2n-overlay.js~Neighbor#constructor",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#disconnect",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-disconnect",
-    "lib/n2n-overlay.js~Neighbor#disconnect",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#getinview",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getInview",
-    "lib/n2n-overlay.js~Neighbor#getInview",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#getinviewid",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getInviewId",
-    "lib/n2n-overlay.js~Neighbor#getInviewId",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#getoutview",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getOutview",
-    "lib/n2n-overlay.js~Neighbor#getOutview",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#getoutviewid",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-getOutviewId",
-    "lib/n2n-overlay.js~Neighbor#getOutviewId",
-    "method"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#i",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-i",
-    "lib/n2n-overlay.js~Neighbor#i",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#o",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-o",
-    "lib/n2n-overlay.js~Neighbor#o",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#options",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-member-options",
-    "lib/n2n-overlay.js~Neighbor#options",
-    "member"
-  ],
-  [
-    "lib/n2n-overlay.js~neighbor#send",
-    "class/lib/n2n-overlay.js~Neighbor.html#instance-method-send",
-    "lib/n2n-overlay.js~Neighbor#send",
-    "method"
   ]
 ]
