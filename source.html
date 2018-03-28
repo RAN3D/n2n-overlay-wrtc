@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="">
-  <title data-ice="title">Source | N2N-Overlay-Wrtc API Document</title>
+  <title data-ice="title">Source | n2n-overlay-wrtc</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
-  
-  
   <script src="script/manual.js"></script>
-</head>
+<meta name="description" content="A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network."><meta property="twitter:card" content="summary"><meta property="twitter:title" content="n2n-overlay-wrtc"><meta property="twitter:description" content="A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network."></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -19,7 +17,6 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/ran3d/n2n-overlay-wrtc" class="repo-url-github">Repository</a>
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -27,12 +24,13 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-</header>
+<a style="position:relative; top:3px;" href="https://github.com/ran3d/n2n-overlay-wrtc"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">messages</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/n2n-overlay.js~N2N.html">N2N</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#messages">messages</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mdirect.js~MDirect.html">MDirect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwarded.js~MForwarded.html">MForwarded</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwardto.js~MForwardTo.html">MForwardTo</a></span></span></li>
@@ -40,9 +38,9 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1>Source <span data-ice="totalCoverageCount" class="total-coverage-count"></span></h1>
+<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">24/47</span></h1>
 
-<table class="files-summary" data-ice="files" data-use-coverage="false">
+<table class="files-summary" data-ice="files" data-use-coverage="true">
   <thead>
     <tr>
       <td>File</td>
@@ -56,43 +54,51 @@
   <tbody>
     
   <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/lib/messages/mconnectto.js.html">lib/messages/mconnectto.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/lib/messages/mconnectto.js.html#errorLines=15,16,17">lib/messages/mconnectto.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></td>
-      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td class="coverage"><span data-ice="coverage">40 %</span><span data-ice="coverageCount" class="coverage-count">2/5</span></td>
       <td style="display: none;" data-ice="size">504 byte</td>
       <td style="display: none;" data-ice="lines">21</td>
-      <td style="display: none;" data-ice="updated">2018-03-04 14:11:00 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2018-03-04 19:57:54 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/lib/messages/mdirect.js.html">lib/messages/mdirect.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/lib/messages/mdirect.js.html#errorLines=8,9">lib/messages/mdirect.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/lib/messages/mdirect.js~MDirect.html">MDirect</a></span></td>
-      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td class="coverage"><span data-ice="coverage">33 %</span><span data-ice="coverageCount" class="coverage-count">1/3</span></td>
       <td style="display: none;" data-ice="size">268 byte</td>
       <td style="display: none;" data-ice="lines">13</td>
-      <td style="display: none;" data-ice="updated">2018-03-04 14:11:00 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2018-03-04 19:57:54 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/lib/messages/mforwarded.js.html">lib/messages/mforwarded.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/lib/messages/mforwarded.js.html#errorLines=14,15,16,17">lib/messages/mforwarded.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/lib/messages/mforwarded.js~MForwarded.html">MForwarded</a></span></td>
-      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td class="coverage"><span data-ice="coverage">33 %</span><span data-ice="coverageCount" class="coverage-count">2/6</span></td>
       <td style="display: none;" data-ice="size">545 byte</td>
       <td style="display: none;" data-ice="lines">21</td>
-      <td style="display: none;" data-ice="updated">2018-03-04 14:11:00 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2018-03-04 19:57:54 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/lib/messages/mforwardto.js.html">lib/messages/mforwardto.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/lib/messages/mforwardto.js.html#errorLines=13,14,15,16">lib/messages/mforwardto.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/lib/messages/mforwardto.js~MForwardTo.html">MForwardTo</a></span></td>
-      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td class="coverage"><span data-ice="coverage">33 %</span><span data-ice="coverageCount" class="coverage-count">2/6</span></td>
       <td style="display: none;" data-ice="size">514 byte</td>
       <td style="display: none;" data-ice="lines">20</td>
-      <td style="display: none;" data-ice="updated">2018-03-04 14:11:00 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2018-03-04 19:57:54 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/lib/n2n-overlay.js.html#errorLines=3,39,43,45,48,52,53,54,57,58">lib/n2n-overlay.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="class/lib/n2n-overlay.js~N2N.html">N2N</a></span></td>
+      <td class="coverage"><span data-ice="coverage">62 %</span><span data-ice="coverageCount" class="coverage-count">17/27</span></td>
+      <td style="display: none;" data-ice="size">13170 byte</td>
+      <td style="display: none;" data-ice="lines">349</td>
+      <td style="display: none;" data-ice="updated">2018-03-04 19:57:54 (UTC)</td>
     </tr>
 </tbody>
 </table>
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
 </footer>
 
 <script src="script/search_index.js"></script>

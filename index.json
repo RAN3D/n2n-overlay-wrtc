@@ -1,0 +1,1805 @@
+[
+  {
+    "__docId__": 1,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Infinity",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~NaN",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~undefined",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~null",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~object",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~function",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~boolean",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Symbol",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Error",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~EvalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~InternalError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~RangeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~ReferenceError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~SyntaxError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~TypeError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~URIError",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~number",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Date",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~String",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~string",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~RegExp",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Int8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint8Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint8ClampedArray",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Int16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint16Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Int32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Uint32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Float32Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Float64Array",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Map",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Set",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~WeakMap",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~WeakSet",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~ArrayBuffer",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~DataView",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~JSON",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Promise",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Generator",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~GeneratorFunction",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Reflect",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "lib/.external-ecmascript.js",
+    "static": true,
+    "longname": "lib/.external-ecmascript.js~Proxy",
+    "access": "public",
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "lib/messages/mconnectto.js",
+    "content": "'use strict';\n\n/**\n * Message that requires from-peer to initiate a WebRTC connection with to\n * to-peer.\n */\nclass MConnectTo {\n    /**\n     * @param {string} from The identifier of the peer that should initiate the\n     * WebRTC connection.\n     * @param {string} to The identifier of the peer that should accept the\n     * WebRTC connection.\n     */\n    constructor (from, to) {\n        this.from = from;\n        this.to = to;\n        this.type = 'MConnectTo';\n    };\n};\n\nmodule.exports = MConnectTo;\n",
+    "static": true,
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mconnectto.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "class",
+    "name": "MConnectTo",
+    "memberof": "lib/messages/mconnectto.js",
+    "static": true,
+    "longname": "lib/messages/mconnectto.js~MConnectTo",
+    "access": "public",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages/mconnectto.js",
+    "importStyle": "MConnectTo",
+    "description": "Message that requires from-peer to initiate a WebRTC connection with to\nto-peer.",
+    "lineNumber": 7,
+    "interface": false
+  },
+  {
+    "__docId__": 50,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/messages/mconnectto.js~MConnectTo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/messages/mconnectto.js~MConnectTo#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "from",
+        "description": "The identifier of the peer that should initiate the\nWebRTC connection."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "to",
+        "description": "The identifier of the peer that should accept the\nWebRTC connection."
+      }
+    ]
+  },
+  {
+    "__docId__": 51,
+    "kind": "member",
+    "name": "from",
+    "memberof": "lib/messages/mconnectto.js~MConnectTo",
+    "static": false,
+    "longname": "lib/messages/mconnectto.js~MConnectTo#from",
+    "access": "public",
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 52,
+    "kind": "member",
+    "name": "to",
+    "memberof": "lib/messages/mconnectto.js~MConnectTo",
+    "static": false,
+    "longname": "lib/messages/mconnectto.js~MConnectTo#to",
+    "access": "public",
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "member",
+    "name": "type",
+    "memberof": "lib/messages/mconnectto.js~MConnectTo",
+    "static": false,
+    "longname": "lib/messages/mconnectto.js~MConnectTo#type",
+    "access": "public",
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 54,
+    "kind": "file",
+    "name": "lib/messages/mdirect.js",
+    "content": "'use strict';\n\n/**\n * Messages traveling between two direct neighbors. It requests from the\n * receiving peer that it initiates a connection with the emitter.\n */\nclass MDirect {\n    constructor () {\n        this.type = 'MDirect';\n    };\n};\n\nmodule.exports = MDirect;\n",
+    "static": true,
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mdirect.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 55,
+    "kind": "class",
+    "name": "MDirect",
+    "memberof": "lib/messages/mdirect.js",
+    "static": true,
+    "longname": "lib/messages/mdirect.js~MDirect",
+    "access": "public",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages/mdirect.js",
+    "importStyle": "MDirect",
+    "description": "Messages traveling between two direct neighbors. It requests from the\nreceiving peer that it initiates a connection with the emitter.",
+    "lineNumber": 7,
+    "interface": false
+  },
+  {
+    "__docId__": 56,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/messages/mdirect.js~MDirect",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/messages/mdirect.js~MDirect#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "member",
+    "name": "type",
+    "memberof": "lib/messages/mdirect.js~MDirect",
+    "static": false,
+    "longname": "lib/messages/mdirect.js~MDirect#type",
+    "access": "public",
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "file",
+    "name": "lib/messages/mforwarded.js",
+    "content": "'use strict';\n\n/**\n * Message piggybacking another message that has been forwarded by an\n * intermediate peer.\n */\nclass MForwarded {\n    /**\n     * @param {string} from The departure of the piggybacked message.\n     * @param {string} to The arrival of the piggybacked message.\n     * @param {object} message The piggybacked message to deliver.\n     */\n    constructor (from, to, message) {\n        this.from = from;\n        this.to = to;\n        this.message = message;\n        this.type = 'MForwarded';\n    };\n};\n\nmodule.exports = MForwarded;\n",
+    "static": true,
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mforwarded.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 59,
+    "kind": "class",
+    "name": "MForwarded",
+    "memberof": "lib/messages/mforwarded.js",
+    "static": true,
+    "longname": "lib/messages/mforwarded.js~MForwarded",
+    "access": "public",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages/mforwarded.js",
+    "importStyle": "MForwarded",
+    "description": "Message piggybacking another message that has been forwarded by an\nintermediate peer.",
+    "lineNumber": 7,
+    "interface": false
+  },
+  {
+    "__docId__": 60,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/messages/mforwarded.js~MForwarded",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/messages/mforwarded.js~MForwarded#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "from",
+        "description": "The departure of the piggybacked message."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "to",
+        "description": "The arrival of the piggybacked message."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "The piggybacked message to deliver."
+      }
+    ]
+  },
+  {
+    "__docId__": 61,
+    "kind": "member",
+    "name": "from",
+    "memberof": "lib/messages/mforwarded.js~MForwarded",
+    "static": false,
+    "longname": "lib/messages/mforwarded.js~MForwarded#from",
+    "access": "public",
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 62,
+    "kind": "member",
+    "name": "to",
+    "memberof": "lib/messages/mforwarded.js~MForwarded",
+    "static": false,
+    "longname": "lib/messages/mforwarded.js~MForwarded#to",
+    "access": "public",
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "member",
+    "name": "message",
+    "memberof": "lib/messages/mforwarded.js~MForwarded",
+    "static": false,
+    "longname": "lib/messages/mforwarded.js~MForwarded#message",
+    "access": "public",
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 64,
+    "kind": "member",
+    "name": "type",
+    "memberof": "lib/messages/mforwarded.js~MForwarded",
+    "static": false,
+    "longname": "lib/messages/mforwarded.js~MForwarded#type",
+    "access": "public",
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 65,
+    "kind": "file",
+    "name": "lib/messages/mforwardto.js",
+    "content": "'use strict';\n\n/**\n * Message that asks a peer to forward the piggybacked message to to-peer.\n */\nclass MForwardTo {\n    /**\n     * @param {string} from The departure of the message.\n     * @param {string} to The arrival of the piggybacked message.\n     * @param {object} message The message to piggyback.\n     */\n    constructor (from, to, message) {\n        this.from = from;\n        this.to = to;\n        this.message = message;\n        this.type = 'MForwardTo';        \n    };\n};\n\nmodule.exports = MForwardTo;\n",
+    "static": true,
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mforwardto.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 66,
+    "kind": "class",
+    "name": "MForwardTo",
+    "memberof": "lib/messages/mforwardto.js",
+    "static": true,
+    "longname": "lib/messages/mforwardto.js~MForwardTo",
+    "access": "public",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc/lib/messages/mforwardto.js",
+    "importStyle": "MForwardTo",
+    "description": "Message that asks a peer to forward the piggybacked message to to-peer.",
+    "lineNumber": 6,
+    "interface": false
+  },
+  {
+    "__docId__": 67,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/messages/mforwardto.js~MForwardTo",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/messages/mforwardto.js~MForwardTo#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 12,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "from",
+        "description": "The departure of the message."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "to",
+        "description": "The arrival of the piggybacked message."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "The message to piggyback."
+      }
+    ]
+  },
+  {
+    "__docId__": 68,
+    "kind": "member",
+    "name": "from",
+    "memberof": "lib/messages/mforwardto.js~MForwardTo",
+    "static": false,
+    "longname": "lib/messages/mforwardto.js~MForwardTo#from",
+    "access": "public",
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "member",
+    "name": "to",
+    "memberof": "lib/messages/mforwardto.js~MForwardTo",
+    "static": false,
+    "longname": "lib/messages/mforwardto.js~MForwardTo#to",
+    "access": "public",
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "member",
+    "name": "message",
+    "memberof": "lib/messages/mforwardto.js~MForwardTo",
+    "static": false,
+    "longname": "lib/messages/mforwardto.js~MForwardTo#message",
+    "access": "public",
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 71,
+    "kind": "member",
+    "name": "type",
+    "memberof": "lib/messages/mforwardto.js~MForwardTo",
+    "static": false,
+    "longname": "lib/messages/mforwardto.js~MForwardTo#type",
+    "access": "public",
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 72,
+    "kind": "file",
+    "name": "lib/n2n-overlay.js",
+    "content": "'use strict';\n\nconst debug = (require('debug'))('n2n-overlay-wrtc');\nconst Neighborhood = require('neighborhood-wrtc');\nconst EventEmitter = require('events');\nconst merge = require('lodash.merge');\nconst uuid = require('uuid/v4');\n\n\nconst MForwardTo = require('./messages/mforwardto.js');\nconst MForwarded = require('./messages/mforwarded.js');\nconst MConnectTo = require('./messages/mconnectto.js');\nconst MDirect = require('./messages/mdirect.js');\n\n/**\n * A peer has an inview and an outview, i.e., tables containing sockets to\n * communicate with remote peers. This module transforms a peer so it can act as\n * a bridge between its direct neighbors. Consequently, these neighbors can\n * create their own communication channels: necessary data to establish the\n * connection travel through the bridge; once the connection is successfully\n * established, they communicate using their own direct connection.\n */\nclass N2N extends EventEmitter {\n    /**\n     * @param {object} [options] options represented as an object (refer to\n     * neighborhood-wrtc for other options).\n     * @param {string} [options.pid] The unique identifier of the protocol.\n     * @param {number} [options.retry = 5] The number of times it tries to send\n     * a message.\n     * @param {Neighborhood} [options.inview] The neighborhood used for inviews,\n     * i.e., incoming arcs.\n     * @param {Neighborhood} [options.outview] The neigbhorhood used for\n     * outviews, i.e., outgoing arcs.\n     */\n    constructor (options = {}) {\n        super();\n\n        // #0 process the options\n        this.options = merge( { pid: uuid(),\n                                  peer: uuid(),\n                                  retry: 5 }, options);\n        // #1 initialize unmutable protocolId\n        this.PID = this.options.pid;\n        // #2 initialize the neighborhoods /!\\ i.peer and o.peer must be ≠\n        this.NI = this.options.inview ||\n            new Neighborhood( merge(merge( {}, this.options),\n                                    {peer: this.options.peer+'-I'}) );\n        this.NO = this.options.outview ||\n            new Neighborhood( merge(merge( {}, this.options),\n                                    {peer: this.options.peer+'-O'}) );\n        // #3 initialize the interfaces\n        this.II = this.NI.register(this);\n        this.IO = this.NO.register(this);\n        this.PEER = this.II.peer + '|' + this.IO.peer;\n        debug('[%s] registered to ==> %s ==>', this.PID, this.PEER);\n        // #4 intialize the tables\n        this.i = new Map();\n        this.o = new Map();\n    };\n\n    /**\n     * @private The getter of the identifier of this protocol.\n     * @returns {string} The identifier of this protocol.\n     */\n    _pid () {\n        return this.PID;\n    };\n\n    /**\n     * @private Behavior when this protocol receives a message from peerId.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {object} message The message received.\n     */\n    _received (peerId, message) {\n        if (message.type) {\n            if (message.type === 'MConnectTo' ||\n                message.type === 'MForwarded' ||\n                message.type === 'MForwardTo') {\n                this._bridge(peerId, message);\n            } else if (message.type === 'MResponse' ||\n                       message.type === 'MRequest' ||\n                       message.type === 'MDirect') {\n                this._direct(peerId, message);\n            } else {\n                this.emit('receive', peerId, message);\n            };\n        } else {\n            this.emit('receive', peerId, message);\n        };\n    };\n\n\n    /**\n     * @private Behavior when this protocol receives a stream from peerId.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {object} stream The stream received.\n     */\n    _streamed (peerId, stream) {\n        this.emit('stream', peerId, stream);\n    };\n\n\n    /**\n     * @private Update the local view.\n     * @param {string} peerId The identifier of the peer reachable through the\n     * newly added arc.\n     * @param {boolean} isOutgoing State if the added arc is outgoing or not.\n     */\n    _connected (peerId, isOutgoing) {\n        if (isOutgoing){\n            if (!this.o.has(peerId)){\n                this.o.set(peerId, 0);\n            };\n            this.o.set(peerId, this.o.get(peerId) + 1 );\n            this.emit('open', peerId); // only consider outgoing arcs\n        } else {\n            if (!this.i.has(peerId)){\n                this.i.set(peerId, 0);\n            };\n            this.i.set(peerId, this.i.get(peerId) + 1 );\n        };\n    };\n\n    /**\n     * @private Update the local view.\n     * @param {string} peerId The identifier of the peer that removed an arc.\n     */\n    _disconnected (peerId) {\n        if (this.o.has(peerId)){\n            this.o.set(peerId, this.o.get(peerId) - 1 );\n            (this.o.get(peerId) <= 0) && this.o.delete(peerId);\n            this.emit('close', peerId); // only outview\n        } else if (this.i.has(peerId)){\n            this.i.set(peerId, this.i.get(peerId) - 1 );\n            (this.i.get(peerId) <= 0) && this.i.delete(peerId);\n        };\n    };\n\n    /**\n     * @private Notify failure\n     * @param {string} peerId The identifier of the peer we failed to establish\n     * a connection with.\n     * @param {boolean} isOutgoing State whether or not the failed arc was\n     * supposed to be an outgoing arc.\n     */\n    _failed (peerId, isOutgoing) {\n        // only takes into account the outgoing arcs\n        isOutgoing && this.emit('fail', peerId);\n    }\n\n\n    /**\n     * @private Function that execute to bridge a connection establishement\n     * between two peers: we start from (i -> b -> a) to get (i -> b -> a) and\n     * (i -> a).\n     * @param {string} peerId The identifier of the peer that sent us the\n     * message\n     * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.\n     */\n    _bridge (peerId, msg) {\n        if (msg.type && msg.type === 'MConnectTo') {\n            // #1 we are the initiator\n            this.IO.connect( (req) => {\n                this.send(peerId, new MForwardTo(msg.from, msg.to, req),\n                          this.options.retry)\n                    .catch( (e) => { }); // nothing on catch\n            });\n        } else if (msg.type && msg.type === 'MForwardTo') {\n            // #2 we are the bridge\n            this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message),\n                      this.options.retry)\n                .catch( (e) => { }); // nothing on catch\n        } else if (msg.type && msg.type === 'MForwarded' &&\n                   msg.message.type === 'MRequest') {\n            // #3 we are the acceptor\n            this.II.connect( (res) => {\n                this.send(peerId, new MForwardTo(msg.to, msg.from, res),\n                          this.options.retry)\n                    .catch( (e) => { }); // nothing on catch\n            }, msg.message );\n            // #4 reapplies #2\n        } else if (msg.type && msg.type === 'MForwarded' &&\n                   msg.message.type === 'MResponse') {\n            // #5 we are the finalizor\n            this.IO.connect( msg.message );\n        };\n    };\n\n    /**\n     * @private Create a connection with a neighbor: from (i -> a) we obtain\n     * either (i <-> a) or (i => a). In the former case, assuming that Peer a\n     * does not already have a connection to Peer i, it must create a WebRTC\n     * connection to a. In the latter case, Peer i only duplicates its arc to\n     * Peer a. Thus, it must disconnect twice to truly destroy the connection.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {string} message The received message.\n     */\n    _direct(peerId, message){\n        (message.type === 'MDirect') &&\n            this.IO.connect( (req) => {\n                this.send(peerId, req, this.options.retry).catch( (e) => { });\n            });\n        (message.type === 'MRequest') &&\n            this.II.connect( (res) => {\n                this.send(peerId, res, this.options.retry).catch( (e) => { });\n            }, message);\n        (message.type === 'MResponse') &&\n            this.IO.connect( message );\n    };\n\n\n    /**\n     * Send a message using either the inview or the outview.\n     * @param {string} peerId The identifier of the receiver.\n     * @param {object} message The message to send.\n     * @param {number} [retry = 0] Number of times it retries to send a\n     * message.\n     * @return {promise} Promise that resolves if the message is sent, reject\n     * otherwise.\n     */\n    send(peerId, message, retry = 0){\n        let promise;\n        // #1 normal behavior\n        if (this.i.has(peerId)) {\n            promise = this.II.send(peerId, message, retry);\n        } else if (this.o.has(peerId)) {\n            promise = this.IO.send(peerId, message, retry);\n        } else {\n            // #2 last chance behavior\n            promise = new Promise( (resolve, reject) => {\n                const _send = (r) => {\n                    this.IO.send(peerId, message, 0)\n                        .then( () => resolve() )\n                        .catch( (e) => this.II.send(peerId, message, 0)\n                                .then( () => resolve() )\n                                .catch( (e) => {\n                                    if (r<retry){\n                                        setTimeout( () => {\n                                            _send (r+1);\n                                        }, 1000);\n                                    } else {\n                                        reject(e);\n                                    }\n                                }));};\n                _send(0);\n            });\n        };\n        return promise;\n    };\n\n    /**\n     * Create an arc (establishes a WebRTC connection if need be) from 'from' to\n     * 'to'. (TODO) explain function args\n     * @param {function|MResponse|string|null} from - The identifier of the peer\n     * that must initiate the connection. Null implicitely means this.\n     * @param {MRequest|string|null} to - The identifier of the peer that must\n     * accept the connection. Null implicitely means this.\n     */\n    connect (from = null, to = null) {\n        // #1 handle bootstrap using other communication channels than our\n        // own.\n        if (typeof arg1 === 'function' && arg2 === null) {\n            this.IO.connect( (req) => arg1(req) ); // arg1: callback\n        } else if (typeof arg1 === 'function' && arg2 !== null) {\n            debug('[%s] %s <π= ??? =π= %s',\n                  this.PID, this.getInviewId(), arg2.peer);\n            this.II.connect( (res) => arg1(res), arg2); // arg1: cb; arg2: msg\n        } else if (arg1 !== null && typeof arg1 === 'object' && arg2 === null) {\n            this.IO.connect( arg1 ); // arg1: msg\n        } else {\n            // #2 handle n2n connections\n            // #A replace our own identifier by null\n            if (arg1!==null && (arg1===this.IO.peer || arg1===this.II.peer)) {\n                arg1 = null;\n            };\n            if (arg2!==null && (arg2===this.IO.peer || arg2===this.II.peer)) {\n                arg2 = null;\n            };\n\n            if (arg1 !== null && arg2 !== null){\n                // #1 arg1: from; arg2: to\n                // from -> this -> to  creates  from -> to\n                debug('[%s] %s =π= %s =π> %s', this.PID, arg1, this.PEER, arg2);\n                this.send(arg1, new MConnectTo(arg1, arg2),\n                          this.options.retry).catch( (e) => { } );\n            } else if (arg1 !== null) {\n                // #2 arg1: from\n                // from -> this  becomes  from => this\n                this.send(arg1, new MDirect(),\n                          this.options.retry).catch( (e) => { } );\n            } else if (arg2 !== null) {\n                // #3 arg2: to\n                // this -> to becomes this => to\n                this._direct(arg2, new MDirect()); // emulate a MDirect receipt\n            };\n        };\n    };\n\n    /**\n     * Remove an arc of the outview or all arcs\n     * @param {string} peerId The identifier of the arc to remove.\n     */\n    disconnect (peerId) {\n        if (typeof peerId === 'undefined') {\n            this.II.disconnect();\n            this.IO.disconnect();\n        } else {\n            this.IO.disconnect(peerId);\n        };\n    }\n\n    /**\n     * Getter of the inview.\n     * @returns {Map} A new map comprising {peerId => occurrences}.\n     */\n    getInview () {\n        return new Map(this.i);\n    };\n\n    /**\n     * Getter of the inview ID.\n     * @returns {string} The identifier of the inview.\n     */\n    getInviewId () {\n        return this.NI.PEER;\n    };\n\n    /**\n     * Getter of the outview.\n     * @returns {Map} A new map comprising {peerId => occurrences}.\n     */\n    getOutview () {\n        return new Map(this.o);\n    };\n\n    /**\n     * Getter of the inview ID.\n     * @returns {string} The identifier of the outview.\n     */\n    getOutviewId () {\n        return this.NO.PEER;\n    };\n\n};\n\nmodule.exports = N2N;\n",
+    "static": true,
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/n2n-overlay.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 73,
+    "kind": "variable",
+    "name": "debug",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~debug",
+    "access": "public",
+    "export": false,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "class",
+    "name": "N2N",
+    "memberof": "lib/n2n-overlay.js",
+    "static": true,
+    "longname": "lib/n2n-overlay.js~N2N",
+    "access": "public",
+    "export": true,
+    "importPath": "n2n-overlay-wrtc",
+    "importStyle": "N2N",
+    "description": "A peer has an inview and an outview, i.e., tables containing sockets to\ncommunicate with remote peers. This module transforms a peer so it can act as\na bridge between its direct neighbors. Consequently, these neighbors can\ncreate their own communication channels: necessary data to establish the\nconnection travel through the bridge; once the connection is successfully\nestablished, they communicate using their own direct connection.",
+    "lineNumber": 23,
+    "interface": false,
+    "extends": [
+      "events~EventEmitter"
+    ]
+  },
+  {
+    "__docId__": 75,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 35,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "options represented as an object (refer to\nneighborhood-wrtc for other options)."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.pid",
+        "description": "The unique identifier of the protocol."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 5",
+        "defaultRaw": 5,
+        "name": "options.retry",
+        "description": "The number of times it tries to send\na message."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Neighborhood"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.inview",
+        "description": "The neighborhood used for inviews,\ni.e., incoming arcs."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Neighborhood"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.outview",
+        "description": "The neigbhorhood used for\noutviews, i.e., outgoing arcs."
+      }
+    ]
+  },
+  {
+    "__docId__": 76,
+    "kind": "member",
+    "name": "options",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#options",
+    "access": "public",
+    "description": null,
+    "lineNumber": 39,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 77,
+    "kind": "member",
+    "name": "PID",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#PID",
+    "access": "public",
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "member",
+    "name": "NI",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#NI",
+    "access": "public",
+    "description": null,
+    "lineNumber": 45,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "member",
+    "name": "NO",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#NO",
+    "access": "public",
+    "description": null,
+    "lineNumber": 48,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 80,
+    "kind": "member",
+    "name": "II",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#II",
+    "access": "public",
+    "description": null,
+    "lineNumber": 52,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 81,
+    "kind": "member",
+    "name": "IO",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#IO",
+    "access": "public",
+    "description": null,
+    "lineNumber": 53,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 82,
+    "kind": "member",
+    "name": "PEER",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#PEER",
+    "access": "public",
+    "description": null,
+    "lineNumber": 54,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 83,
+    "kind": "member",
+    "name": "i",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#i",
+    "access": "public",
+    "description": null,
+    "lineNumber": 57,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 84,
+    "kind": "member",
+    "name": "o",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#o",
+    "access": "public",
+    "description": null,
+    "lineNumber": 58,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 85,
+    "kind": "method",
+    "name": "_pid",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_pid",
+    "access": "private",
+    "description": "",
+    "lineNumber": 65,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The identifier of this protocol."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The identifier of this protocol."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 86,
+    "kind": "method",
+    "name": "_received",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_received",
+    "access": "private",
+    "description": "",
+    "lineNumber": 75,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer that we received a\nmessage from."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "The message received."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 87,
+    "kind": "method",
+    "name": "_streamed",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_streamed",
+    "access": "private",
+    "description": "",
+    "lineNumber": 100,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer that we received a\nmessage from."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "stream",
+        "description": "The stream received."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 88,
+    "kind": "method",
+    "name": "_connected",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_connected",
+    "access": "private",
+    "description": "",
+    "lineNumber": 111,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer reachable through the\nnewly added arc."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "isOutgoing",
+        "description": "State if the added arc is outgoing or not."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 89,
+    "kind": "method",
+    "name": "_disconnected",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_disconnected",
+    "access": "private",
+    "description": "",
+    "lineNumber": 130,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer that removed an arc."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 90,
+    "kind": "method",
+    "name": "_failed",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_failed",
+    "access": "private",
+    "description": "",
+    "lineNumber": 148,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer we failed to establish\na connection with."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "isOutgoing",
+        "description": "State whether or not the failed arc was\nsupposed to be an outgoing arc."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 91,
+    "kind": "method",
+    "name": "_bridge",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_bridge",
+    "access": "private",
+    "description": "",
+    "lineNumber": 162,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer that sent us the\nmessage"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "MConnectTo",
+          "MForwardTo",
+          "MForwarded"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "msg",
+        "description": "The message received."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 92,
+    "kind": "method",
+    "name": "_direct",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#_direct",
+    "access": "private",
+    "description": "",
+    "lineNumber": 201,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the peer that we received a\nmessage from."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "The received message."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 93,
+    "kind": "method",
+    "name": "send",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#send",
+    "access": "public",
+    "description": "Send a message using either the inview or the outview.",
+    "lineNumber": 224,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the receiver."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "message",
+        "description": "The message to send."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 0",
+        "defaultRaw": 0,
+        "name": "retry",
+        "description": "Number of times it retries to send a\nmessage."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "promise"
+      ],
+      "spread": false,
+      "description": "Promise that resolves if the message is sent, reject\notherwise."
+    }
+  },
+  {
+    "__docId__": 94,
+    "kind": "method",
+    "name": "connect",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#connect",
+    "access": "public",
+    "description": "Create an arc (establishes a WebRTC connection if need be) from 'from' to\n'to'. (TODO) explain function args",
+    "lineNumber": 262,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function",
+          "MResponse",
+          "string",
+          "null"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "from",
+        "description": "The identifier of the peer\nthat must initiate the connection. Null implicitely means this."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "MRequest",
+          "string",
+          "null"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "to",
+        "description": "The identifier of the peer that must\naccept the connection. Null implicitely means this."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 95,
+    "kind": "method",
+    "name": "disconnect",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#disconnect",
+    "access": "public",
+    "description": "Remove an arc of the outview or all arcs",
+    "lineNumber": 306,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the arc to remove."
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 96,
+    "kind": "method",
+    "name": "getInview",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#getInview",
+    "access": "public",
+    "description": "Getter of the inview.",
+    "lineNumber": 319,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Map} A new map comprising {peerId => occurrences}."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Map"
+      ],
+      "spread": false,
+      "description": "A new map comprising {peerId => occurrences}."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 97,
+    "kind": "method",
+    "name": "getInviewId",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#getInviewId",
+    "access": "public",
+    "description": "Getter of the inview ID.",
+    "lineNumber": 327,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The identifier of the inview."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The identifier of the inview."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 98,
+    "kind": "method",
+    "name": "getOutview",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#getOutview",
+    "access": "public",
+    "description": "Getter of the outview.",
+    "lineNumber": 335,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Map} A new map comprising {peerId => occurrences}."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Map"
+      ],
+      "spread": false,
+      "description": "A new map comprising {peerId => occurrences}."
+    },
+    "params": []
+  },
+  {
+    "__docId__": 99,
+    "kind": "method",
+    "name": "getOutviewId",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#getOutviewId",
+    "access": "public",
+    "description": "Getter of the inview ID.",
+    "lineNumber": 343,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} The identifier of the outview."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The identifier of the outview."
+    },
+    "params": []
+  },
+  {
+    "kind": "index",
+    "content": "# n2n-overlay-wrtc [![Build Status](https://travis-ci.org/RAN3D/n2n-overlay-wrtc.svg?branch=master)](https://travis-ci.org/RAN3D/n2n-overlay-wrtc)\n\nThis project aims to ease the creation of overlay networks on top of\nWebRTC. Additional WebRTC-specific constraints make such projects more difficult\nthan they should be. For instance, establishing a connection requires a\nround-trip of \"offers\". Such messages usually transit a dedicated signaling\nserver. The peers of this project still require a signaling server for their\nentrance in the network. Afterwards, peers become signaling servers too, i.e.,\nthey mediate connections between their direct neighbors.\n\nThis module divides the entering arcs (inview) from the outgoing arcs (outview).\n\nThe way connections are handled are left to the discretion of overlay protocols\nbuilt on top of this module. A peer with two neighbors can ask to one of them to\nconnect to the other. Several overlay network protocols use neighbor-to-neighbor\ninteractions to converge to a topology exposing the desired properties.\n\n## Principle\n\n<p align='center'>\n<img src='./img/signal.png'> </img>\n</p>\n\nThere exists a network comprising at least Peer ```:|```. Peer ```:]``` wants to\njoin this network. ```:|``` knows it and opens an access to the network thanks\nto a signaling server. The signaling server is in charge of transmitting the\nnecessary WebRTC data from both sides. The figure shows this protocol with the\n1->2->3->4 steps that can be repeated many times depending on network\nconfigurations. If the protocol is successful, it creates a direct\nbrowser-to-browser connection from ```:]``` to ```:|```.\n\n<p align='center'>\n<img src='./img/bridge.png'> </img>\n</p>\n\nPeers already in the network do not need to use a signaling server to establish\nconnections, for each of them can act as a signaling server, i.e. as a bridge\nfrom a neighbor to another. In the figure, ```:3```, ```:]```, and ```:|``` are\nin the network. ```:3``` can establish a WebRTC connection to ```:|``` using\n```:]```. Such neighbor-to-neighbor connections are common in distributed\npeer-sampling protocols.\n\n\n## Installation\n\n```$ npm install n2n-overlay-wrtc```\n\n## API\n\nThe API is avalaible [here](https://ran3d.github.io/n2n-overlay-wrtc/)\n\n## Example\n\nA live example is available\n[here](https://ran3d.github.io/n2n-overlay-wrtc/example/browser.html).\n\nThe module [spray-wrtc](https://github.com/ran3d/spray-wrtc) extends\nn2n-overlay-wrtc to implement a random peer-sampling protocol.\n\n",
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "packageJSON",
+    "content": "{\n    \"name\": \"n2n-overlay-wrtc\",\n    \"version\": \"2.0.4\",\n    \"description\": \"A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.\",\n    \"main\": \"lib/n2n-overlay.js\",\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/ran3d/n2n-overlay-wrtc\"\n    },\n    \"keywords\": [\n        \"WebRTC\",\n        \"browser-to-browser communication\",\n        \"overlay network\",\n        \"distributed signaling server\"\n    ],\n    \"author\": \"Chat-Wane\",\n    \"license\": \"MIT\",\n    \"dependencies\": {\n        \"debug\": \"^3.1.0\",\n        \"lodash\": \"^4.17.5\",\n        \"neighborhood-wrtc\": \"^2.0.x\",\n        \"uuid\": \"^3.2.1\"\n    },\n    \"bundledDependencies\": [\n        \"neighborhood-wrtc\",\n        \"lodash\",\n        \"uuid\",\n        \"debug\"\n    ],\n    \"devDependencies\": {\n        \"babel-core\": \"^6.26.0\",\n        \"babel-preset-es2015\": \"^6.24.1\",\n        \"babelify\": \"^8.0.0\",\n        \"browserify\": \"^16.1.1\",\n        \"esdoc\": \"^1.0.4\",\n        \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n        \"esdoc-node\": \"^1.0.3\",\n        \"esdoc-standard-plugin\": \"^1.0.0\"\n    },\n    \"scripts\": {\n        \"esdoc\": \"esdoc && npm run esdoc:example\",\n        \"esdoc:example\": \"cp -R ./build ./example ./img ./docs\",\n        \"test\": \"npm run all\",\n        \"all\": \"npm run debug && npm run build && npm run esdoc\",\n        \"debug\": \"browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js\",\n        \"build\": \"browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ es2015 ] ] > build/n2n-overlay-wrtc.bundle.js\"\n    }\n}\n",
+    "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/package.json",
+    "name": "package.json",
+    "static": true,
+    "access": "public"
+  }
+]

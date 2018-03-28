@@ -1,0 +1,60 @@
+{
+  "coverage": "51.06%",
+  "expectCount": 47,
+  "actualCount": 24,
+  "files": {
+    "lib/messages/mconnectto.js": {
+      "expectCount": 5,
+      "actualCount": 2,
+      "undocumentLines": [
+        15,
+        16,
+        17
+      ]
+    },
+    "lib/messages/mdirect.js": {
+      "expectCount": 3,
+      "actualCount": 1,
+      "undocumentLines": [
+        8,
+        9
+      ]
+    },
+    "lib/messages/mforwarded.js": {
+      "expectCount": 6,
+      "actualCount": 2,
+      "undocumentLines": [
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "lib/messages/mforwardto.js": {
+      "expectCount": 6,
+      "actualCount": 2,
+      "undocumentLines": [
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    "lib/n2n-overlay.js": {
+      "expectCount": 27,
+      "actualCount": 17,
+      "undocumentLines": [
+        3,
+        39,
+        43,
+        45,
+        48,
+        52,
+        53,
+        54,
+        57,
+        58
+      ]
+    }
+  }
+}

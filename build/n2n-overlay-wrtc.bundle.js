@@ -2272,7 +2272,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":10,"_process":35}],10:[function(require,module,exports){
+},{"./debug":10,"_process":33}],10:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -5805,7 +5805,7 @@ module.exports = MSend;
 },{}],31:[function(require,module,exports){
 'use strict';
 
-const debug = require('debug')('neighborhood-wrtc');
+const debug = (require('debug'))('neighborhood-wrtc');
 
 const merge = require('lodash.merge');
 const uuid = require('uuid/v4');
@@ -5833,7 +5833,7 @@ class Neighborhood {
     /**
      * @param {object} [options] the options available to the connections, e.g.
      * timeout before
-     * @param {object} [options.socketClass] simple-peer default socket class (usefull if you need to change the type of socket) 
+     * @param {object} [options.socketClass] simple-peer default socket class (usefull if you need to change the type of socket)
      * @param {object} [options.config] simple-peer options
      * @param {number} [options.timeout = 60000] Time to wait (in milliseconds)
      * before neighborhood-wrtc assumes that a connection establishment failed,
@@ -6278,400 +6278,7 @@ class Neighborhood {
 
 module.exports = Neighborhood;
 
-},{"./arcstore.js":19,"./entries/edying.js":20,"./entries/epending.js":22,"./exceptions/exincompletemessage.js":23,"./exceptions/exlatemessage.js":24,"./exceptions/exprotocolexists.js":25,"./interfaces/ineighborhood.js":27,"./messages/mrequest.js":28,"./messages/mresponse.js":29,"./messages/msend.js":30,"debug":32,"lodash.merge":17,"simple-peer":47,"uuid/v4":52}],32:[function(require,module,exports){
-(function (process){
-/**
- * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = require('./debug');
-exports.log = log;
-exports.formatArgs = formatArgs;
-exports.save = save;
-exports.load = load;
-exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
-
-/**
- * Colors.
- */
-
-exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
-];
-
-/**
- * Currently only WebKit-based Web Inspectors, Firefox >= v31,
- * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
- *
- * TODO: add a `localStorage` variable to explicitly enable/disable colors
- */
-
-function useColors() {
-  // NB: In an Electron preload script, document will be defined but not fully
-  // initialized. Since we know we're in Chrome, we'll just detect this case
-  // explicitly
-  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-    return true;
-  }
-
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
-    // double check webkit in userAgent just in case we are in a worker
-    (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
-}
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
-
-/**
- * Colorize log arguments if enabled.
- *
- * @api public
- */
-
-function formatArgs(args) {
-  var useColors = this.useColors;
-
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
-
-  if (!useColors) return;
-
-  var c = 'color: ' + this.color;
-  args.splice(1, 0, c, 'color: inherit')
-
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-zA-Z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
-}
-
-/**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
- *
- * @api public
- */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
-
-/**
- * Save `namespaces`.
- *
- * @param {String} namespaces
- * @api private
- */
-
-function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
-}
-
-/**
- * Load `namespaces`.
- *
- * @return {String} returns the previously persisted debug modes
- * @api private
- */
-
-function load() {
-  var r;
-  try {
-    r = exports.storage.debug;
-  } catch(e) {}
-
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = process.env.DEBUG;
-  }
-
-  return r;
-}
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
-
-/**
- * Localstorage attempts to return the localstorage.
- *
- * This is necessary because safari throws
- * when a user disables cookies/localstorage
- * and you attempt to access it.
- *
- * @return {LocalStorage}
- * @api private
- */
-
-function localstorage() {
-  try {
-    return window.localStorage;
-  } catch (e) {}
-}
-
-}).call(this,require('_process'))
-},{"./debug":33,"_process":35}],33:[function(require,module,exports){
-
-/**
- * This is the common logic for both the Node.js and web browser
- * implementations of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
-exports.coerce = coerce;
-exports.disable = disable;
-exports.enable = enable;
-exports.enabled = enabled;
-exports.humanize = require('ms');
-
-/**
- * The currently active debug mode names, and names to skip.
- */
-
-exports.names = [];
-exports.skips = [];
-
-/**
- * Map of special "%n" handling functions, for the debug "format" argument.
- *
- * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
- */
-
-exports.formatters = {};
-
-/**
- * Previous log timestamp.
- */
-
-var prevTime;
-
-/**
- * Select a color.
- * @param {String} namespace
- * @return {Number}
- * @api private
- */
-
-function selectColor(namespace) {
-  var hash = 0, i;
-
-  for (i in namespace) {
-    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
-    hash |= 0; // Convert to 32bit integer
-  }
-
-  return exports.colors[Math.abs(hash) % exports.colors.length];
-}
-
-/**
- * Create a debugger with the given `namespace`.
- *
- * @param {String} namespace
- * @return {Function}
- * @api public
- */
-
-function createDebug(namespace) {
-
-  function debug() {
-    // disabled?
-    if (!debug.enabled) return;
-
-    var self = debug;
-
-    // set `diff` timestamp
-    var curr = +new Date();
-    var ms = curr - (prevTime || curr);
-    self.diff = ms;
-    self.prev = prevTime;
-    self.curr = curr;
-    prevTime = curr;
-
-    // turn the `arguments` into a proper Array
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-
-    args[0] = exports.coerce(args[0]);
-
-    if ('string' !== typeof args[0]) {
-      // anything else let's inspect with %O
-      args.unshift('%O');
-    }
-
-    // apply any `formatters` transformations
-    var index = 0;
-    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
-      // if we encounter an escaped % then don't increase the array index
-      if (match === '%%') return match;
-      index++;
-      var formatter = exports.formatters[format];
-      if ('function' === typeof formatter) {
-        var val = args[index];
-        match = formatter.call(self, val);
-
-        // now we need to remove `args[index]` since it's inlined in the `format`
-        args.splice(index, 1);
-        index--;
-      }
-      return match;
-    });
-
-    // apply env-specific formatting (colors, etc.)
-    exports.formatArgs.call(self, args);
-
-    var logFn = debug.log || exports.log || console.log.bind(console);
-    logFn.apply(self, args);
-  }
-
-  debug.namespace = namespace;
-  debug.enabled = exports.enabled(namespace);
-  debug.useColors = exports.useColors();
-  debug.color = selectColor(namespace);
-
-  // env-specific initialization logic for debug instances
-  if ('function' === typeof exports.init) {
-    exports.init(debug);
-  }
-
-  return debug;
-}
-
-/**
- * Enables a debug mode by namespaces. This can include modes
- * separated by a colon and wildcards.
- *
- * @param {String} namespaces
- * @api public
- */
-
-function enable(namespaces) {
-  exports.save(namespaces);
-
-  exports.names = [];
-  exports.skips = [];
-
-  var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-  var len = split.length;
-
-  for (var i = 0; i < len; i++) {
-    if (!split[i]) continue; // ignore empty strings
-    namespaces = split[i].replace(/\*/g, '.*?');
-    if (namespaces[0] === '-') {
-      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-    } else {
-      exports.names.push(new RegExp('^' + namespaces + '$'));
-    }
-  }
-}
-
-/**
- * Disable debug output.
- *
- * @api public
- */
-
-function disable() {
-  exports.enable('');
-}
-
-/**
- * Returns true if the given mode name is enabled, false otherwise.
- *
- * @param {String} name
- * @return {Boolean}
- * @api public
- */
-
-function enabled(name) {
-  var i, len;
-  for (i = 0, len = exports.skips.length; i < len; i++) {
-    if (exports.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (i = 0, len = exports.names.length; i < len; i++) {
-    if (exports.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Coerce `val`.
- *
- * @param {Mixed} val
- * @return {Mixed}
- * @api private
- */
-
-function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
-}
-
-},{"ms":18}],34:[function(require,module,exports){
+},{"./arcstore.js":19,"./entries/edying.js":20,"./entries/epending.js":22,"./exceptions/exincompletemessage.js":23,"./exceptions/exlatemessage.js":24,"./exceptions/exprotocolexists.js":25,"./interfaces/ineighborhood.js":27,"./messages/mrequest.js":28,"./messages/mresponse.js":29,"./messages/msend.js":30,"debug":9,"lodash.merge":17,"simple-peer":45,"uuid/v4":50}],32:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6719,7 +6326,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 
 }).call(this,require('_process'))
-},{"_process":35}],35:[function(require,module,exports){
+},{"_process":33}],33:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -6905,7 +6512,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],36:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -6947,7 +6554,7 @@ function randomBytes (size, cb) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":35,"safe-buffer":46}],37:[function(require,module,exports){
+},{"_process":33,"safe-buffer":44}],35:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7072,7 +6679,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":39,"./_stream_writable":41,"core-util-is":8,"inherits":14,"process-nextick-args":34}],38:[function(require,module,exports){
+},{"./_stream_readable":37,"./_stream_writable":39,"core-util-is":8,"inherits":14,"process-nextick-args":32}],36:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7120,7 +6727,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":40,"core-util-is":8,"inherits":14}],39:[function(require,module,exports){
+},{"./_stream_transform":38,"core-util-is":8,"inherits":14}],37:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -8138,7 +7745,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":37,"./internal/streams/BufferList":42,"./internal/streams/destroy":43,"./internal/streams/stream":44,"_process":35,"core-util-is":8,"events":11,"inherits":14,"isarray":16,"process-nextick-args":34,"safe-buffer":46,"string_decoder/":48,"util":6}],40:[function(require,module,exports){
+},{"./_stream_duplex":35,"./internal/streams/BufferList":40,"./internal/streams/destroy":41,"./internal/streams/stream":42,"_process":33,"core-util-is":8,"events":11,"inherits":14,"isarray":16,"process-nextick-args":32,"safe-buffer":44,"string_decoder/":46,"util":6}],38:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8353,7 +7960,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":37,"core-util-is":8,"inherits":14}],41:[function(require,module,exports){
+},{"./_stream_duplex":35,"core-util-is":8,"inherits":14}],39:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -9033,7 +8640,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":37,"./internal/streams/destroy":43,"./internal/streams/stream":44,"_process":35,"core-util-is":8,"inherits":14,"process-nextick-args":34,"safe-buffer":46,"util-deprecate":49}],42:[function(require,module,exports){
+},{"./_stream_duplex":35,"./internal/streams/destroy":41,"./internal/streams/stream":42,"_process":33,"core-util-is":8,"inherits":14,"process-nextick-args":32,"safe-buffer":44,"util-deprecate":47}],40:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9113,7 +8720,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":46,"util":6}],43:[function(require,module,exports){
+},{"safe-buffer":44,"util":6}],41:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -9188,10 +8795,10 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":34}],44:[function(require,module,exports){
+},{"process-nextick-args":32}],42:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":11}],45:[function(require,module,exports){
+},{"events":11}],43:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -9200,7 +8807,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":37,"./lib/_stream_passthrough.js":38,"./lib/_stream_readable.js":39,"./lib/_stream_transform.js":40,"./lib/_stream_writable.js":41}],46:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":35,"./lib/_stream_passthrough.js":36,"./lib/_stream_readable.js":37,"./lib/_stream_transform.js":38,"./lib/_stream_writable.js":39}],44:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -9264,7 +8871,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":7}],47:[function(require,module,exports){
+},{"buffer":7}],45:[function(require,module,exports){
 (function (Buffer){
 module.exports = Peer
 
@@ -9475,10 +9082,10 @@ Peer.prototype.signal = function (data) {
       self._pendingCandidates = []
 
       if (self._pc.remoteDescription.type === 'offer') self._createAnswer()
-    }, function (err) { self._destroy(err) })
+    }, function (err) { self.destroy(err) })
   }
   if (!data.sdp && !data.candidate) {
-    self._destroy(new Error('signal() called with invalid signal data'))
+    self.destroy(new Error('signal() called with invalid signal data'))
   }
 }
 
@@ -9488,10 +9095,10 @@ Peer.prototype._addIceCandidate = function (candidate) {
     self._pc.addIceCandidate(
       new self._wrtc.RTCIceCandidate(candidate),
       noop,
-      function (err) { self._destroy(err) }
+      function (err) { self.destroy(err) }
     )
   } catch (err) {
-    self._destroy(new Error('error adding candidate: ' + err.message))
+    self.destroy(new Error('error adding candidate: ' + err.message))
   }
 }
 
@@ -9504,15 +9111,17 @@ Peer.prototype.send = function (chunk) {
   self._channel.send(chunk)
 }
 
-Peer.prototype.destroy = function (onclose) {
+// TODO: Delete this method once readable-stream is updated to contain a default
+// implementation of destroy() that automatically calls _destroy()
+// See: https://github.com/nodejs/readable-stream/issues/283
+Peer.prototype.destroy = function (err) {
   var self = this
-  self._destroy(null, onclose)
+  self._destroy(err, function () {})
 }
 
-Peer.prototype._destroy = function (err, onclose) {
+Peer.prototype._destroy = function (err, cb) {
   var self = this
   if (self.destroyed) return
-  if (onclose) self.once('close', onclose)
 
   self._debug('destroy (error: %s)', err && (err.message || err))
 
@@ -9570,6 +9179,7 @@ Peer.prototype._destroy = function (err, onclose) {
 
   if (err) self.emit('error', err)
   self.emit('close')
+  cb()
 }
 
 Peer.prototype._setupData = function (event) {
@@ -9578,7 +9188,7 @@ Peer.prototype._setupData = function (event) {
     // In some situations `pc.createDataChannel()` returns `undefined` (in wrtc),
     // which is invalid behavior. Handle it gracefully.
     // See: https://github.com/feross/simple-peer/issues/163
-    return self._destroy(new Error('Data channel event is missing `channel` property'))
+    return self.destroy(new Error('Data channel event is missing `channel` property'))
   }
 
   self._channel = event.channel
@@ -9603,7 +9213,7 @@ Peer.prototype._setupData = function (event) {
     self._onChannelClose()
   }
   self._channel.onerror = function (err) {
-    self._destroy(err)
+    self.destroy(err)
   }
 }
 
@@ -9617,7 +9227,7 @@ Peer.prototype._write = function (chunk, encoding, cb) {
     try {
       self.send(chunk)
     } catch (err) {
-      return self._destroy(err)
+      return self.destroy(err)
     }
     if (self._channel.bufferedAmount > MAX_BUFFERED_AMOUNT) {
       self._debug('start backpressure: bufferedAmount %d', self._channel.bufferedAmount)
@@ -9648,7 +9258,7 @@ Peer.prototype._onFinish = function () {
   // TODO: is there a more reliable way to accomplish this?
   function destroySoon () {
     setTimeout(function () {
-      self._destroy()
+      self.destroy()
     }, 1000)
   }
 }
@@ -9669,7 +9279,7 @@ Peer.prototype._createOffer = function () {
     }
 
     function onError (err) {
-      self._destroy(err)
+      self.destroy(err)
     }
 
     function sendOffer () {
@@ -9680,7 +9290,7 @@ Peer.prototype._createOffer = function () {
         sdp: signal.sdp
       })
     }
-  }, function (err) { self._destroy(err) }, self.offerConstraints)
+  }, function (err) { self.destroy(err) }, self.offerConstraints)
 }
 
 Peer.prototype._createAnswer = function () {
@@ -9699,7 +9309,7 @@ Peer.prototype._createAnswer = function () {
     }
 
     function onError (err) {
-      self._destroy(err)
+      self.destroy(err)
     }
 
     function sendAnswer () {
@@ -9710,7 +9320,7 @@ Peer.prototype._createAnswer = function () {
         sdp: signal.sdp
       })
     }
-  }, function (err) { self._destroy(err) }, self.answerConstraints)
+  }, function (err) { self.destroy(err) }, self.answerConstraints)
 }
 
 Peer.prototype._onIceStateChange = function () {
@@ -9736,17 +9346,17 @@ Peer.prototype._onIceStateChange = function () {
       // If user has set `opt.reconnectTimer`, allow time for ICE to attempt a reconnect
       clearTimeout(self._reconnectTimeout)
       self._reconnectTimeout = setTimeout(function () {
-        self._destroy()
+        self.destroy()
       }, self.reconnectTimer)
     } else {
-      self._destroy()
+      self.destroy()
     }
   }
   if (iceConnectionState === 'failed') {
-    self._destroy(new Error('Ice connection failed.'))
+    self.destroy(new Error('Ice connection failed.'))
   }
   if (iceConnectionState === 'closed') {
-    self._destroy()
+    self.destroy()
   }
 }
 
@@ -9909,7 +9519,7 @@ Peer.prototype._maybeReady = function () {
         try {
           self.send(self._chunk)
         } catch (err) {
-          return self._destroy(err)
+          return self.destroy(err)
         }
         self._chunk = null
         self._debug('sent chunk from "write before connect"')
@@ -9934,10 +9544,11 @@ Peer.prototype._maybeReady = function () {
 }
 
 Peer.prototype._onInterval = function () {
-  if (!this._cb || !this._channel || this._channel.bufferedAmount > MAX_BUFFERED_AMOUNT) {
+  var self = this
+  if (!self._cb || !self._channel || self._channel.bufferedAmount > MAX_BUFFERED_AMOUNT) {
     return
   }
-  this._onChannelBufferedAmountLow()
+  self._onChannelBufferedAmountLow()
 }
 
 Peer.prototype._onSignalingStateChange = function () {
@@ -9993,7 +9604,7 @@ Peer.prototype._onChannelClose = function () {
   var self = this
   if (self.destroyed) return
   self._debug('on channel close')
-  self._destroy()
+  self.destroy()
 }
 
 Peer.prototype._onAddStream = function (event) {
@@ -10072,7 +9683,7 @@ Peer.prototype._transformConstraints = function (constraints) {
 function noop () {}
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":7,"debug":9,"get-browser-rtc":12,"inherits":14,"randombytes":36,"readable-stream":45}],48:[function(require,module,exports){
+},{"buffer":7,"debug":9,"get-browser-rtc":12,"inherits":14,"randombytes":34,"readable-stream":43}],46:[function(require,module,exports){
 'use strict';
 
 var Buffer = require('safe-buffer').Buffer;
@@ -10345,7 +9956,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":46}],49:[function(require,module,exports){
+},{"safe-buffer":44}],47:[function(require,module,exports){
 (function (global){
 
 /**
@@ -10416,7 +10027,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -10441,7 +10052,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],51:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -10475,7 +10086,7 @@ if (getRandomValues) {
   };
 }
 
-},{}],52:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -10506,7 +10117,7 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
-},{"./lib/bytesToUuid":50,"./lib/rng":51}],"n2n-overlay-wrtc":[function(require,module,exports){
+},{"./lib/bytesToUuid":48,"./lib/rng":49}],"n2n-overlay-wrtc":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10534,13 +10145,13 @@ var MDirect = require('./messages/mdirect.js');
  * A peer has an inview and an outview, i.e., tables containing sockets to
  * communicate with remote peers. This module transforms a peer so it can act as
  * a bridge between its direct neighbors. Consequently, these neighbors can
- * create their own communication channels: necessary data to establish the 
- * connection travel through the bridge; once the connection is successfully 
+ * create their own communication channels: necessary data to establish the
+ * connection travel through the bridge; once the connection is successfully
  * established, they communicate using their own direct connection.
  */
 
-var Neighbor = function (_EventEmitter) {
-    _inherits(Neighbor, _EventEmitter);
+var N2N = function (_EventEmitter) {
+    _inherits(N2N, _EventEmitter);
 
     /**
      * @param {object} [options] options represented as an object (refer to
@@ -10553,13 +10164,13 @@ var Neighbor = function (_EventEmitter) {
      * @param {Neighborhood} [options.outview] The neigbhorhood used for
      * outviews, i.e., outgoing arcs.
      */
-    function Neighbor() {
+    function N2N() {
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-        _classCallCheck(this, Neighbor);
+        _classCallCheck(this, N2N);
 
         // #0 process the options
-        var _this = _possibleConstructorReturn(this, (Neighbor.__proto__ || Object.getPrototypeOf(Neighbor)).call(this));
+        var _this = _possibleConstructorReturn(this, (N2N.__proto__ || Object.getPrototypeOf(N2N)).call(this));
 
         _this.options = merge({ pid: uuid(),
             peer: uuid(),
@@ -10580,7 +10191,7 @@ var Neighbor = function (_EventEmitter) {
         return _this;
     }
 
-    _createClass(Neighbor, [{
+    _createClass(N2N, [{
         key: '_pid',
 
 
@@ -10597,7 +10208,7 @@ var Neighbor = function (_EventEmitter) {
 
         /**
          * @private Behavior when this protocol receives a message from peerId.
-         * @param {string} peerId The identifier of the peer that we received a 
+         * @param {string} peerId The identifier of the peer that we received a
          * message from.
          * @param {object} message The message received.
          */
@@ -10620,7 +10231,7 @@ var Neighbor = function (_EventEmitter) {
 
         /**
          * @private Behavior when this protocol receives a stream from peerId.
-         * @param {string} peerId The identifier of the peer that we received a 
+         * @param {string} peerId The identifier of the peer that we received a
          * message from.
          * @param {object} stream The stream received.
          */
@@ -10677,7 +10288,7 @@ var Neighbor = function (_EventEmitter) {
          * @private Notify failure
          * @param {string} peerId The identifier of the peer we failed to establish
          * a connection with.
-         * @param {boolean} isOutgoing State whether or not the failed arc was 
+         * @param {boolean} isOutgoing State whether or not the failed arc was
          * supposed to be an outgoing arc.
          */
         value: function _failed(peerId, isOutgoing) {
@@ -10689,7 +10300,7 @@ var Neighbor = function (_EventEmitter) {
          * @private Function that execute to bridge a connection establishement
          * between two peers: we start from (i -> b -> a) to get (i -> b -> a) and
          * (i -> a).
-         * @param {string} peerId The identifier of the peer that sent us the 
+         * @param {string} peerId The identifier of the peer that sent us the
          * message
          * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.
          */
@@ -10753,7 +10364,7 @@ var Neighbor = function (_EventEmitter) {
          * @param {object} message The message to send.
          * @param {number} [retry = 0] Number of times it retries to send a
          * message.
-         * @return {promise} Promise that resolves if the message is sent, reject 
+         * @return {promise} Promise that resolves if the message is sent, reject
          * otherwise.
          */
         value: function send(peerId, message) {
@@ -10799,14 +10410,14 @@ var Neighbor = function (_EventEmitter) {
         /**
          * Create an arc (establishes a WebRTC connection if need be) from 'from' to
          * 'to'. (TODO) explain function args
-         * @param {function|MResponse|string|null} from The identifier of the peer
+         * @param {function|MResponse|string|null} from - The identifier of the peer
          * that must initiate the connection. Null implicitely means this.
-         * @param {MRequest|string|null} to The identifier of the peer that must
+         * @param {MRequest|string|null} to - The identifier of the peer that must
          * accept the connection. Null implicitely means this.
          */
         value: function connect() {
-            var arg1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-            var arg2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+            var from = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+            var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
             // #1 handle bootstrap using other communication channels than our
             // own.
@@ -10909,11 +10520,11 @@ var Neighbor = function (_EventEmitter) {
         }
     }]);
 
-    return Neighbor;
+    return N2N;
 }(EventEmitter);
 
 ;
 
-module.exports = Neighbor;
+module.exports = N2N;
 
-},{"./messages/mconnectto.js":1,"./messages/mdirect.js":2,"./messages/mforwarded.js":3,"./messages/mforwardto.js":4,"debug":9,"events":11,"lodash.merge":17,"neighborhood-wrtc":31,"uuid/v4":52}]},{},[]);
+},{"./messages/mconnectto.js":1,"./messages/mdirect.js":2,"./messages/mforwarded.js":3,"./messages/mforwardto.js":4,"debug":9,"events":11,"lodash.merge":17,"neighborhood-wrtc":31,"uuid/v4":50}]},{},[]);

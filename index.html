@@ -3,14 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl">
-  <title data-ice="title">N2N-Overlay-Wrtc API Document</title>
+  <title data-ice="title">Home | n2n-overlay-wrtc</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
-  
-  
   <script src="script/manual.js"></script>
-</head>
+<meta name="description" content="A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network."><meta property="twitter:card" content="summary"><meta property="twitter:title" content="n2n-overlay-wrtc"><meta property="twitter:description" content="A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network."></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -19,7 +17,6 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/ran3d/n2n-overlay-wrtc" class="repo-url-github">Repository</a>
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -27,12 +24,13 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-</header>
+<a style="position:relative; top:3px;" href="https://github.com/ran3d/n2n-overlay-wrtc"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">messages</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/n2n-overlay.js~N2N.html">N2N</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#messages">messages</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mconnectto.js~MConnectTo.html">MConnectTo</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mdirect.js~MDirect.html">MDirect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwarded.js~MForwarded.html">MForwarded</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/messages/mforwardto.js~MForwardTo.html">MForwardTo</a></span></span></li>
@@ -40,8 +38,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="n2n-overlay-wrtc-build-status-https-travis-ci-org-ran3d-n2n-overlay-wrtc-svg-branch-master-https-travis-ci-org-ran3d-n2n-overlay-wrtc-">n2n-overlay-wrtc <a href="https://travis-ci.org/RAN3D/n2n-overlay-wrtc"><img src="https://travis-ci.org/RAN3D/n2n-overlay-wrtc.svg?branch=master" alt="Build Status"></a></h1>
-<p>This project aims to ease the creation of overlay networks on top of
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="n2n-overlay-wrtc--a-href--https---travis-ci-org-ran3d-n2n-overlay-wrtc---img-src--https---travis-ci-org-ran3d-n2n-overlay-wrtc-svg-branch-master--alt--build-status----a-">n2n-overlay-wrtc <a href="https://travis-ci.org/RAN3D/n2n-overlay-wrtc"><img src="https://travis-ci.org/RAN3D/n2n-overlay-wrtc.svg?branch=master" alt="Build Status"></a></h1><p>This project aims to ease the creation of overlay networks on top of
 WebRTC. Additional WebRTC-specific constraints make such projects more difficult
 than they should be. For instance, establishing a connection requires a
 round-trip of &quot;offers&quot;. Such messages usually transit a dedicated signaling
@@ -53,8 +50,7 @@ they mediate connections between their direct neighbors.</p>
 built on top of this module. A peer with two neighbors can ask to one of them to
 connect to the other. Several overlay network protocols use neighbor-to-neighbor
 interactions to converge to a topology exposing the desired properties.</p>
-<h2 id="principle">Principle</h2>
-<p></p><p>
+<h2 id="principle">Principle</h2><p></p><p>
 <img src="./img/signal.png"> 
 </p>
 
@@ -77,12 +73,9 @@ from a neighbor to another. In the figure, <code>:3</code>, <code>:]</code>, and
 in the network. <code>:3</code> can establish a WebRTC connection to <code>:|</code> using
 <code>:]</code>. Such neighbor-to-neighbor connections are common in distributed
 peer-sampling protocols.</p>
-<h2 id="installation">Installation</h2>
-<p><code>$ npm install n2n-overlay-wrtc</code></p>
-<h2 id="api">API</h2>
-<p>The API is avalaible <a href="https://ran3d.github.io/n2n-overlay-wrtc/">here</a></p>
-<h2 id="example">Example</h2>
-<p>A live example is available
+<h2 id="installation">Installation</h2><p><code>$ npm install n2n-overlay-wrtc</code></p>
+<h2 id="api">API</h2><p>The API is avalaible <a href="https://ran3d.github.io/n2n-overlay-wrtc/">here</a></p>
+<h2 id="example">Example</h2><p>A live example is available
 <a href="https://ran3d.github.io/n2n-overlay-wrtc/example/browser.html">here</a>.</p>
 <p>The module <a href="https://github.com/ran3d/spray-wrtc">spray-wrtc</a> extends
 n2n-overlay-wrtc to implement a random peer-sampling protocol.</p>
@@ -90,7 +83,7 @@ n2n-overlay-wrtc to implement a random peer-sampling protocol.</p>
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
 </footer>
 
 <script src="script/search_index.js"></script>
