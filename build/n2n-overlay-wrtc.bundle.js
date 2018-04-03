@@ -1,4 +1,4 @@
-require=(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10421,40 +10421,40 @@ var N2N = function (_EventEmitter) {
 
             // #1 handle bootstrap using other communication channels than our
             // own.
-            if (typeof arg1 === 'function' && arg2 === null) {
+            if (typeof from === 'function' && to === null) {
                 this.IO.connect(function (req) {
-                    return arg1(req);
-                }); // arg1: callback
-            } else if (typeof arg1 === 'function' && arg2 !== null) {
-                debug('[%s] %s <π= ??? =π= %s', this.PID, this.getInviewId(), arg2.peer);
+                    return from(req);
+                }); // from: callback
+            } else if (typeof from === 'function' && to !== null) {
+                debug('[%s] %s <π= ??? =π= %s', this.PID, this.getInviewId(), to.peer);
                 this.II.connect(function (res) {
-                    return arg1(res);
-                }, arg2); // arg1: cb; arg2: msg
-            } else if (arg1 !== null && (typeof arg1 === 'undefined' ? 'undefined' : _typeof(arg1)) === 'object' && arg2 === null) {
-                this.IO.connect(arg1); // arg1: msg
+                    return from(res);
+                }, to); // from: cb; to: msg
+            } else if (from !== null && (typeof from === 'undefined' ? 'undefined' : _typeof(from)) === 'object' && to === null) {
+                this.IO.connect(from); // from: msg
             } else {
                 // #2 handle n2n connections
                 // #A replace our own identifier by null
-                if (arg1 !== null && (arg1 === this.IO.peer || arg1 === this.II.peer)) {
-                    arg1 = null;
+                if (from !== null && (from === this.IO.peer || from === this.II.peer)) {
+                    from = null;
                 };
-                if (arg2 !== null && (arg2 === this.IO.peer || arg2 === this.II.peer)) {
-                    arg2 = null;
+                if (to !== null && (to === this.IO.peer || to === this.II.peer)) {
+                    to = null;
                 };
 
-                if (arg1 !== null && arg2 !== null) {
+                if (from !== null && to !== null) {
                     // #1 arg1: from; arg2: to
                     // from -> this -> to  creates  from -> to
-                    debug('[%s] %s =π= %s =π> %s', this.PID, arg1, this.PEER, arg2);
-                    this.send(arg1, new MConnectTo(arg1, arg2), this.options.retry).catch(function (e) {});
-                } else if (arg1 !== null) {
+                    debug('[%s] %s =π= %s =π> %s', this.PID, from, this.PEER, to);
+                    this.send(from, new MConnectTo(from, to), this.options.retry).catch(function (e) {});
+                } else if (from !== null) {
                     // #2 arg1: from
                     // from -> this  becomes  from => this
-                    this.send(arg1, new MDirect(), this.options.retry).catch(function (e) {});
-                } else if (arg2 !== null) {
+                    this.send(from, new MDirect(), this.options.retry).catch(function (e) {});
+                } else if (to !== null) {
                     // #3 arg2: to
                     // this -> to becomes this => to
-                    this._direct(arg2, new MDirect()); // emulate a MDirect receipt
+                    this._direct(to, new MDirect()); // emulate a MDirect receipt
                 };
             };
         }

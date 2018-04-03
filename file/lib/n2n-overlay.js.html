@@ -303,39 +303,39 @@ class N2N extends EventEmitter {
     connect (from = null, to = null) {
         // #1 handle bootstrap using other communication channels than our
         // own.
-        if (typeof arg1 === &apos;function&apos; &amp;&amp; arg2 === null) {
-            this.IO.connect( (req) =&gt; arg1(req) ); // arg1: callback
-        } else if (typeof arg1 === &apos;function&apos; &amp;&amp; arg2 !== null) {
+        if (typeof from === &apos;function&apos; &amp;&amp; to === null) {
+            this.IO.connect( (req) =&gt; from(req) ); // from: callback
+        } else if (typeof from === &apos;function&apos; &amp;&amp; to !== null) {
             debug(&apos;[%s] %s &lt;&#x3C0;= ??? =&#x3C0;= %s&apos;,
-                  this.PID, this.getInviewId(), arg2.peer);
-            this.II.connect( (res) =&gt; arg1(res), arg2); // arg1: cb; arg2: msg
-        } else if (arg1 !== null &amp;&amp; typeof arg1 === &apos;object&apos; &amp;&amp; arg2 === null) {
-            this.IO.connect( arg1 ); // arg1: msg
+                  this.PID, this.getInviewId(), to.peer);
+            this.II.connect( (res) =&gt; from(res), to); // from: cb; to: msg
+        } else if (from !== null &amp;&amp; typeof from === &apos;object&apos; &amp;&amp; to === null) {
+            this.IO.connect( from ); // from: msg
         } else {
             // #2 handle n2n connections
             // #A replace our own identifier by null
-            if (arg1!==null &amp;&amp; (arg1===this.IO.peer || arg1===this.II.peer)) {
-                arg1 = null;
+            if (from!==null &amp;&amp; (from===this.IO.peer || from===this.II.peer)) {
+                from = null;
             };
-            if (arg2!==null &amp;&amp; (arg2===this.IO.peer || arg2===this.II.peer)) {
-                arg2 = null;
+            if (to!==null &amp;&amp; (to===this.IO.peer || to===this.II.peer)) {
+                to = null;
             };
 
-            if (arg1 !== null &amp;&amp; arg2 !== null){
+            if (from !== null &amp;&amp; to !== null){
                 // #1 arg1: from; arg2: to
                 // from -&gt; this -&gt; to  creates  from -&gt; to
-                debug(&apos;[%s] %s =&#x3C0;= %s =&#x3C0;&gt; %s&apos;, this.PID, arg1, this.PEER, arg2);
-                this.send(arg1, new MConnectTo(arg1, arg2),
+                debug(&apos;[%s] %s =&#x3C0;= %s =&#x3C0;&gt; %s&apos;, this.PID, from, this.PEER, to);
+                this.send(from, new MConnectTo(from, to),
                           this.options.retry).catch( (e) =&gt; { } );
-            } else if (arg1 !== null) {
+            } else if (from !== null) {
                 // #2 arg1: from
                 // from -&gt; this  becomes  from =&gt; this
-                this.send(arg1, new MDirect(),
+                this.send(from, new MDirect(),
                           this.options.retry).catch( (e) =&gt; { } );
-            } else if (arg2 !== null) {
+            } else if (to !== null) {
                 // #3 arg2: to
                 // this -&gt; to becomes this =&gt; to
-                this._direct(arg2, new MDirect()); // emulate a MDirect receipt
+                this._direct(to, new MDirect()); // emulate a MDirect receipt
             };
         };
     };
