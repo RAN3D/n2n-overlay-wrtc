@@ -10621,7 +10621,6 @@ var N2N = function (_EventEmitter) {
 
             var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-            console.log(arguments, this);
             var promise = void 0;
             // #1 normal behavior
             if (this.i.has(peerId)) {

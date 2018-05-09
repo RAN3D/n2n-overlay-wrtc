@@ -263,7 +263,6 @@ class N2N extends EventEmitter {
      * otherwise.
      */
     send(peerId, message, retry = 0){
-      console.log(arguments, this)
         let promise;
         // #1 normal behavior
         if (this.i.has(peerId)) {
