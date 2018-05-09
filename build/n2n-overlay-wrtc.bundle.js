@@ -10621,6 +10621,7 @@ var N2N = function (_EventEmitter) {
 
             var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
+            console.log(arguments, this);
             var promise = void 0;
             // #1 normal behavior
             if (this.i.has(peerId)) {
@@ -10628,27 +10629,37 @@ var N2N = function (_EventEmitter) {
             } else if (this.o.has(peerId)) {
                 promise = this.IO.send(peerId, message, retry);
             } else {
-                // #2 last chance behavior
-                promise = new Promise(function (resolve, reject) {
-                    var _send = function _send(r) {
-                        _this4.IO.send(peerId, message, 0).then(function () {
-                            return resolve();
-                        }).catch(function (e) {
-                            return _this4.II.send(peerId, message, 0).then(function () {
+                // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id
+                var root = peerId.substr(0, peerId.length - 2);
+                var inv = root + '-I';
+                var out = root + '-O';
+                if (this.o.has(inv)) {
+                    promise = this.IO.send(inv, message, retry);
+                } else if (this.i.has(out)) {
+                    promise = this.II.send(out, message, retry);
+                } else {
+                    // #2 last chance behavior
+                    promise = new Promise(function (resolve, reject) {
+                        var _send = function _send(r) {
+                            _this4.IO.send(peerId, message, 0).then(function () {
                                 return resolve();
                             }).catch(function (e) {
-                                if (r < retry) {
-                                    setTimeout(function () {
-                                        _send(r + 1);
-                                    }, 1000);
-                                } else {
-                                    reject(e);
-                                }
+                                return _this4.II.send(peerId, message, 0).then(function () {
+                                    return resolve();
+                                }).catch(function (e) {
+                                    if (r < retry) {
+                                        setTimeout(function () {
+                                            _send(r + 1);
+                                        }, 1000);
+                                    } else {
+                                        reject(e);
+                                    }
+                                });
                             });
-                        });
-                    };
-                    _send(0);
-                });
+                        };
+                        _send(0);
+                    });
+                }
             };
             return promise;
         }
