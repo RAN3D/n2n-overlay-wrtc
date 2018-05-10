@@ -10730,7 +10730,8 @@ var N2N = function (_EventEmitter) {
                 this.II.disconnect();
                 this.IO.disconnect();
             } else {
-                this.IO.disconnect(peerId);
+                if (this.i.has(peerId)) this.II.disconnect(peerId);
+                if (this.o.has(peerId)) this.IO.disconnect(peerId);
             };
         }
 
