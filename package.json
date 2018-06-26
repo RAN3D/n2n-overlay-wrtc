@@ -17,8 +17,8 @@
     "license": "MIT",
     "dependencies": {
         "debug": "^3.1.0",
-        "lodash": "^4.17.5",
-        "neighborhood-wrtc": "^2.0.6",
+        "lodash": "^4.17.10",
+        "neighborhood-wrtc": "^3.0.0",
         "uuid": "^3.2.1"
     },
     "bundledDependencies": [
@@ -28,21 +28,26 @@
         "debug"
     ],
     "devDependencies": {
-        "babel-core": "^6.26.0",
-        "babel-preset-env": "^1.6.1",
+        "babel-core": "^6.26.3",
+        "babel-preset-env": "^1.7.0",
         "babelify": "^8.0.0",
-        "browserify": "^16.1.1",
-        "esdoc": "^1.0.4",
+        "browserify": "^16.2.2",
+        "esdoc": "^1.1.0",
         "esdoc-ecmascript-proposal-plugin": "^1.0.0",
         "esdoc-node": "^1.0.3",
-        "esdoc-standard-plugin": "^1.0.0"
+        "esdoc-standard-plugin": "^1.0.0",
+        "snazzy": "^7.1.1",
+        "standard": "^11.0.1"
     },
     "scripts": {
+        "lint": "standard \"./lib/**/*.js\" \"./example/*.js\" --verbose | snazzy",
+        "fix": "standard --fix --verbose \"./example/*.js\" \"./lib/**/*.js\" | snazzy ",
         "esdoc": "esdoc && npm run esdoc:example",
         "esdoc:example": "cp -R ./build ./example ./img ./docs",
         "test": "npm run all",
-        "all": "npm run debug && npm run build && npm run esdoc",
+        "all": "npm run lint && npm run all:build && npm run esdoc",
         "debug": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js",
-        "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] > build/n2n-overlay-wrtc.bundle.js"
+        "build": "browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] > build/n2n-overlay-wrtc.bundle.js",
+        "all:build": "npm run build && npm run debug"
     }
 }

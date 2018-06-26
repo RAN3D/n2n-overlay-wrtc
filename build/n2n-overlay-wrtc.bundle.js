@@ -1,6 +1,5 @@
 require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
-
 /**
  * Message that requires from-peer to initiate a WebRTC connection with to
  * to-peer.
@@ -10,11 +9,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var MConnectTo =
 /**
- * @param {string} from The identifier of the peer that should initiate the
- * WebRTC connection.
- * @param {string} to The identifier of the peer that should accept the
- * WebRTC connection.
- */
+   * @param {string} from The identifier of the peer that should initiate the
+   * WebRTC connection.
+   * @param {string} to The identifier of the peer that should accept the
+   * WebRTC connection.
+   */
 function MConnectTo(from, to) {
   _classCallCheck(this, MConnectTo);
 
@@ -29,7 +28,6 @@ module.exports = MConnectTo;
 
 },{}],2:[function(require,module,exports){
 'use strict';
-
 /**
  * Messages traveling between two direct neighbors. It requests from the
  * receiving peer that it initiates a connection with the emitter.
@@ -38,9 +36,9 @@ module.exports = MConnectTo;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MDirect = function MDirect() {
-    _classCallCheck(this, MDirect);
+  _classCallCheck(this, MDirect);
 
-    this.type = 'MDirect';
+  this.type = 'MDirect';
 };
 
 ;
@@ -49,7 +47,6 @@ module.exports = MDirect;
 
 },{}],3:[function(require,module,exports){
 'use strict';
-
 /**
  * Message piggybacking another message that has been forwarded by an
  * intermediate peer.
@@ -59,10 +56,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var MForwarded =
 /**
- * @param {string} from The departure of the piggybacked message.
- * @param {string} to The arrival of the piggybacked message.
- * @param {object} message The piggybacked message to deliver.
- */
+   * @param {string} from The departure of the piggybacked message.
+   * @param {string} to The arrival of the piggybacked message.
+   * @param {object} message The piggybacked message to deliver.
+   */
 function MForwarded(from, to, message) {
   _classCallCheck(this, MForwarded);
 
@@ -78,7 +75,6 @@ module.exports = MForwarded;
 
 },{}],4:[function(require,module,exports){
 'use strict';
-
 /**
  * Message that asks a peer to forward the piggybacked message to to-peer.
  */
@@ -87,10 +83,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var MForwardTo =
 /**
- * @param {string} from The departure of the message.
- * @param {string} to The arrival of the piggybacked message.
- * @param {object} message The message to piggyback.
- */
+   * @param {string} from The departure of the message.
+   * @param {string} to The arrival of the piggybacked message.
+   * @param {object} message The message to piggyback.
+   */
 function MForwardTo(from, to, message) {
   _classCallCheck(this, MForwardTo);
 
@@ -2307,7 +2303,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":10,"_process":32}],10:[function(require,module,exports){
+},{"./debug":10,"_process":33}],10:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -2965,24 +2961,28 @@ EventEmitter.prototype.removeAllListeners =
       return this;
     };
 
-EventEmitter.prototype.listeners = function listeners(type) {
-  var evlistener;
-  var ret;
-  var events = this._events;
+function _listeners(target, type, unwrap) {
+  var events = target._events;
 
   if (!events)
-    ret = [];
-  else {
-    evlistener = events[type];
-    if (!evlistener)
-      ret = [];
-    else if (typeof evlistener === 'function')
-      ret = [evlistener.listener || evlistener];
-    else
-      ret = unwrapListeners(evlistener);
-  }
+    return [];
 
-  return ret;
+  var evlistener = events[type];
+  if (!evlistener)
+    return [];
+
+  if (typeof evlistener === 'function')
+    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+
+  return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+}
+
+EventEmitter.prototype.listeners = function listeners(type) {
+  return _listeners(this, type, true);
+};
+
+EventEmitter.prototype.rawListeners = function rawListeners(type) {
+  return _listeners(this, type, false);
 };
 
 EventEmitter.listenerCount = function(emitter, type) {
@@ -5692,11 +5692,13 @@ class INeighborhood {
      * module.
      * @param {function} send The send function provided by this module.
      */
-  constructor (peerId, connect, disconnect, send) {
+  constructor (peerId, connect, disconnect, send, stream, neighbours) {
     this.peer = peerId
     this.connect = connect
     this.disconnect = disconnect
     this.send = send
+    this.stream = stream
+    this.neighbours = neighbours
   };
 
   /**
@@ -5733,11 +5735,54 @@ class INeighborhood {
   send (peerId, message, retry) {
     return this.send(peerId, message)
   };
+
+  /**
+   * Send a MediaStream (see MediaStream API) to a peerId neighbour
+   * @param  {[type]} peerId The identifier of the remote peer.
+   * @param  {[type]} media  MediaStream
+   * @param  {[type]} [retry=0]  Retry few times to send the message before
+   * @return {promise}        Resolved when the stream has been well sent.
+   */
+  stream (peerId, media, retry) {
+    return this.stream(peerId, media)
+  }
+
+  /**
+   * Return an array of neighbours including peerName and sockets and protocols with occurences
+   * @return {Array<ELiving>} {peer: String, socket: SimplePeer, protocols: Map}
+   */
+  neighbours () {
+    return this.neighbours()
+  }
 };
 
 module.exports = INeighborhood
 
 },{}],27:[function(require,module,exports){
+'use strict'
+
+/**
+ * Message sent when protocolId wishes to send payload. It is a basic
+ * encapsualtion of protocolId.
+ */
+class MInternalSend {
+  /**
+     * @param {string} peerId The identifier of the peer that sent the message
+     * @param {string} protocolId The identifier of the protocol that sent the
+     * message
+     * @param {object} payload The payload of the message.
+     */
+  constructor (peerId, protocolId, payload) {
+    this.peer = peerId
+    this.pid = protocolId
+    this.payload = payload
+    this.type = 'MInternalSend'
+  };
+};
+
+module.exports = MInternalSend
+
+},{}],28:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5767,7 +5812,7 @@ class MRequest {
 
 module.exports = MRequest
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5796,7 +5841,7 @@ class MResponse {
 
 module.exports = MResponse
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5820,7 +5865,7 @@ class MSend {
 
 module.exports = MSend
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict'
 
 const debug = (require('debug'))('neighborhood-wrtc')
@@ -5838,6 +5883,7 @@ const INeighborhood = require('./interfaces/ineighborhood.js')
 const MResponse = require('./messages/mresponse.js')
 const MRequest = require('./messages/mrequest.js')
 const MSend = require('./messages/msend.js')
+const MInternalSend = require('./messages/minternalsend.js')
 
 // const ExLateMessage = require('./exceptions/exlatemessage.js')
 const ExProtocolExists = require('./exceptions/exprotocolexists.js')
@@ -5867,7 +5913,7 @@ class Neighborhood {
     this.options = {
       socketClass: Socket,
       peer: uuid(),
-      config: { iceServers: [], trickle: true, initiator: false },
+      config: { trickle: true, initiator: false },
       timeout: 1 * 60 * 1000,
       pendingTimeout: 10 * 1000,
       encoding: (d) => { return JSON.stringify(d) },
@@ -5907,7 +5953,9 @@ class Neighborhood {
         this.PEER,
         this._connect.bind(this, protocol._pid()),
         this._disconnect.bind(this, protocol._pid()),
-        this._send.bind(this, protocol._pid())
+        this._send.bind(this, protocol._pid()),
+        this._stream.bind(this, protocol._pid()),
+        this._neighbours.bind(this)
       )
     } else {
       throw new ExProtocolExists(protocol._pid())
@@ -5999,7 +6047,11 @@ class Neighborhood {
 
     socket.on('data', (d) => {
       let msg = this.decode(d)
-      this.protocols.get(msg.pid)._received(msg.peer, msg.payload)
+      if (msg.type === 'MInternalSend') {
+        this._receiveInternalMessage(msg)
+      } else {
+        this.protocols.get(msg.pid)._received(msg.peer, msg.payload)
+      }
     })
     socket.on('stream', (s) => {
       this.protocols.get(entry.pid)._streamed(entry.peer, s)
@@ -6012,8 +6064,8 @@ class Neighborhood {
     })
     // #4 send offer message using sender
     socket.on('signal', (offer) => {
-      if (socket.connected && socket._isNegotiating) {
-        sender(new MRequest(entry.tid, this.PEER, protocolId, offer, 'renegociate'))
+      if (socket.connected && !socket._isNegociating) {
+        this._sendRenegociateRequest(new MRequest(entry.tid, this.PEER, protocolId, offer, 'renegociate'), entry.peer)
       } else {
         sender(new MRequest(entry.tid, this.PEER, protocolId, offer))
       }
@@ -6211,7 +6263,11 @@ class Neighborhood {
 
         socket.on('data', (d) => {
           let msg = this.decode(d)
-          this.protocols.get(msg.pid)._received(msg.peer, msg.payload)
+          if (msg.type === 'MInternalSend') {
+            this._receiveInternalMessage(msg)
+          } else {
+            this.protocols.get(msg.pid)._received(msg.peer, msg.payload)
+          }
         })
         socket.on('stream', (s) => {
           this.protocols.get(entry.pid)._streamed(entry.peer, s)
@@ -6225,7 +6281,7 @@ class Neighborhood {
         // #4 send offer message using sender
         socket.on('signal', (offer) => {
           if (socket.connected && !socket._isNegotiating) {
-            sender(new MResponse(entry.tid, this.PEER, protocolId, offer, 'renegociate'))
+            this._sendRenegociateResponse(new MResponse(entry.tid, this.PEER, protocolId, offer, 'renegociate'), entry.peer)
           } else {
             sender(new MResponse(entry.tid, this.PEER, protocolId, offer))
           }
@@ -6315,7 +6371,6 @@ class Neighborhood {
         entry = this.dying.get(peerId) // (TODO) warn: not safe
       };
       if (entry === null) {
-        // console.log(protocolId, peerId, message, retry, this.living.store.size, this.dying.size)
         reject(new Error('peer not found: ' + peerId))
       }
       // #2 define the recursive sending function
@@ -6342,6 +6397,129 @@ class Neighborhood {
     })
   };
 
+  _stream (protocolId, peerId, media, retry = 0) {
+    return new Promise((resolve, reject) => {
+      // #1 get the proper entry in the tables
+      let entry = null
+      if (this.living.contains(peerId)) {
+        entry = this.living.get(peerId)
+      } else if (this.dying.has(peerId)) {
+        entry = this.dying.get(peerId) // (TODO) warn: not safe
+      };
+      if (entry === null) {
+        this.living.store.forEach(elem => {
+          debug(elem.peer)
+        })
+        reject(new Error('peer not found: ' + peerId))
+      }
+      // #2 define the recursive sending function
+      let __send = (r) => {
+        try {
+          entry.socket.addStream(media)
+          debug('[%s] --- MEDIA msg --> %s:%s',
+            this.PEER, peerId, protocolId)
+          resolve()
+        } catch (e) {
+          debug('[%s] -X- MEDIA msg -X> %s:%s',
+            this.PEER, peerId, protocolId)
+          if (r < retry) {
+            setTimeout(() => { __send(r + 1) }, 1000)
+          } else {
+            reject(e)
+          };
+        };
+      }
+      // #3 start to send
+      __send(0)
+    })
+  }
+
+  _sendRenegociateRequest (request, to, retry = 0) {
+    return new Promise((resolve, reject) => {
+      // #1 get the proper entry in the tables
+      let entry = null
+      if (this.living.contains(to)) {
+        entry = this.living.get(to)
+      } else if (this.dying.has(to)) {
+        entry = this.dying.get(to) // (TODO) warn: not safe
+      };
+      if (entry === null) {
+        this.living.store.forEach(elem => {
+          debug(elem.peer)
+        })
+        reject(new Error('peer not found: ' + to))
+      }
+      // #2 define the recursive sending function
+      let __send = (r) => {
+        try {
+          entry.socket.send(this.encode(new MInternalSend(this.PEER, null, request)))
+          debug('[%s] --- MEDIA Internal Renegociate msg --> %s:%s',
+            this.PEER, to)
+          resolve()
+        } catch (e) {
+          debug('[%s] -X- MEDIA Internal Renegociate msg -X> %s:%s',
+            this.PEER, to)
+          if (r < retry) {
+            setTimeout(() => { __send(r + 1) }, 1000)
+          } else {
+            reject(e)
+          };
+        };
+      }
+      // #3 start to send
+      __send(0)
+    })
+  }
+
+  _sendRenegociateResponse (response, to, retry = 0) {
+    return new Promise((resolve, reject) => {
+      // #1 get the proper entry in the tables
+      let entry = null
+      if (this.living.contains(to)) {
+        entry = this.living.get(to)
+      } else if (this.dying.has(to)) {
+        entry = this.dying.get(to) // (TODO) warn: not safe
+      };
+      if (entry === null) {
+        this.living.store.forEach(elem => {
+          debug(elem.peer)
+        })
+        reject(new Error('peer not found: ' + to))
+      }
+      // #2 define the recursive sending function
+      let __send = (r) => {
+        try {
+          entry.socket.send(this.encode(new MInternalSend(this.PEER, null, response)))
+          debug('[%s] --- MEDIA Internal Renegociate msg --> %s:%s',
+            this.PEER, to)
+          resolve()
+        } catch (e) {
+          debug('[%s] -X- MEDIA Internal Renegociate msg -X> %s:%s',
+            this.PEER, to)
+          if (r < retry) {
+            setTimeout(() => { __send(r + 1) }, 1000)
+          } else {
+            reject(e)
+          };
+        };
+      }
+      // #3 start to send
+      __send(0)
+    })
+  }
+
+  _receiveInternalMessage (msg) {
+    this.living.get(msg.peer).socket.signal(msg.payload.offer)
+  }
+
+  _neighbours () {
+    const neigh = []
+    this.living.store.forEach(elem => {
+      neigh.push(elem)
+    })
+    return neigh
+  }
+
   _checkPendingEntry (entry) {
     if (this.pending.has(entry.tid)) {
       if (entry.peer === null) {
@@ -6357,7 +6535,7 @@ class Neighborhood {
 
 module.exports = Neighborhood
 
-},{"./arcstore.js":19,"./entries/edying.js":20,"./entries/epending.js":22,"./exceptions/exincompletemessage.js":23,"./exceptions/exprotocolexists.js":24,"./interfaces/ineighborhood.js":26,"./messages/mrequest.js":27,"./messages/mresponse.js":28,"./messages/msend.js":29,"debug":9,"lodash.merge":17,"simple-peer":44,"uuid/v4":49}],31:[function(require,module,exports){
+},{"./arcstore.js":19,"./entries/edying.js":20,"./entries/epending.js":22,"./exceptions/exincompletemessage.js":23,"./exceptions/exprotocolexists.js":24,"./interfaces/ineighborhood.js":26,"./messages/minternalsend.js":27,"./messages/mrequest.js":28,"./messages/mresponse.js":29,"./messages/msend.js":30,"debug":9,"lodash.merge":17,"simple-peer":45,"uuid/v4":51}],32:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6405,7 +6583,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 
 }).call(this,require('_process'))
-},{"_process":32}],32:[function(require,module,exports){
+},{"_process":33}],33:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -6591,7 +6769,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -6633,7 +6811,7 @@ function randomBytes (size, cb) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":32,"safe-buffer":43}],34:[function(require,module,exports){
+},{"_process":33,"safe-buffer":44}],35:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6765,7 +6943,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":36,"./_stream_writable":38,"core-util-is":8,"inherits":14,"process-nextick-args":31}],35:[function(require,module,exports){
+},{"./_stream_readable":37,"./_stream_writable":39,"core-util-is":8,"inherits":14,"process-nextick-args":32}],36:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6813,7 +6991,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":37,"core-util-is":8,"inherits":14}],36:[function(require,module,exports){
+},{"./_stream_transform":38,"core-util-is":8,"inherits":14}],37:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7835,7 +8013,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":34,"./internal/streams/BufferList":39,"./internal/streams/destroy":40,"./internal/streams/stream":41,"_process":32,"core-util-is":8,"events":11,"inherits":14,"isarray":16,"process-nextick-args":31,"safe-buffer":43,"string_decoder/":45,"util":6}],37:[function(require,module,exports){
+},{"./_stream_duplex":35,"./internal/streams/BufferList":40,"./internal/streams/destroy":41,"./internal/streams/stream":42,"_process":33,"core-util-is":8,"events":11,"inherits":14,"isarray":16,"process-nextick-args":32,"safe-buffer":44,"string_decoder/":46,"util":6}],38:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8050,8 +8228,8 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":34,"core-util-is":8,"inherits":14}],38:[function(require,module,exports){
-(function (process,global){
+},{"./_stream_duplex":35,"core-util-is":8,"inherits":14}],39:[function(require,module,exports){
+(function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8739,8 +8917,8 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":34,"./internal/streams/destroy":40,"./internal/streams/stream":41,"_process":32,"core-util-is":8,"inherits":14,"process-nextick-args":31,"safe-buffer":43,"util-deprecate":46}],39:[function(require,module,exports){
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
+},{"./_stream_duplex":35,"./internal/streams/destroy":41,"./internal/streams/stream":42,"_process":33,"core-util-is":8,"inherits":14,"process-nextick-args":32,"safe-buffer":44,"timers":47,"util-deprecate":48}],40:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8820,7 +8998,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":43,"util":6}],40:[function(require,module,exports){
+},{"safe-buffer":44,"util":6}],41:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -8895,10 +9073,10 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":31}],41:[function(require,module,exports){
+},{"process-nextick-args":32}],42:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":11}],42:[function(require,module,exports){
+},{"events":11}],43:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -8907,7 +9085,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":34,"./lib/_stream_passthrough.js":35,"./lib/_stream_readable.js":36,"./lib/_stream_transform.js":37,"./lib/_stream_writable.js":38}],43:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":35,"./lib/_stream_passthrough.js":36,"./lib/_stream_readable.js":37,"./lib/_stream_transform.js":38,"./lib/_stream_writable.js":39}],44:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -8971,7 +9149,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":7}],44:[function(require,module,exports){
+},{"buffer":7}],45:[function(require,module,exports){
 (function (Buffer){
 module.exports = Peer
 
@@ -9016,7 +9194,6 @@ function Peer (opts) {
   self.constraints = self._transformConstraints(opts.constraints || Peer.constraints)
   self.offerConstraints = self._transformConstraints(opts.offerConstraints || {})
   self.answerConstraints = self._transformConstraints(opts.answerConstraints || {})
-  self.reconnectTimer = opts.reconnectTimer || false
   self.sdpTransform = opts.sdpTransform || function (sdp) { return sdp }
   self.streams = opts.streams || (opts.stream ? [opts.stream] : []) // support old "stream" option
   self.trickle = opts.trickle !== undefined ? opts.trickle : true
@@ -9060,7 +9237,6 @@ function Peer (opts) {
   self._chunk = null
   self._cb = null
   self._interval = null
-  self._reconnectTimeout = null
 
   self._pc = new (self._wrtc.RTCPeerConnection)(self.config, self.constraints)
 
@@ -9341,9 +9517,7 @@ Peer.prototype._destroy = function (err, cb) {
   self._senderMap = null
 
   clearInterval(self._interval)
-  clearTimeout(self._reconnectTimeout)
   self._interval = null
-  self._reconnectTimeout = null
   self._chunk = null
   self._cb = null
 
@@ -9538,7 +9712,6 @@ Peer.prototype._onIceStateChange = function () {
   self.emit('iceStateChange', iceConnectionState, iceGatheringState)
 
   if (iceConnectionState === 'connected' || iceConnectionState === 'completed') {
-    clearTimeout(self._reconnectTimeout)
     self._pcReady = true
     self._maybeReady()
   }
@@ -9908,7 +10081,7 @@ function makeError (message, code) {
 function noop () {}
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":7,"debug":9,"get-browser-rtc":12,"inherits":14,"randombytes":33,"readable-stream":42}],45:[function(require,module,exports){
+},{"buffer":7,"debug":9,"get-browser-rtc":12,"inherits":14,"randombytes":34,"readable-stream":43}],46:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -10205,7 +10378,86 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":43}],46:[function(require,module,exports){
+},{"safe-buffer":44}],47:[function(require,module,exports){
+(function (setImmediate,clearImmediate){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+},{"process/browser.js":33,"timers":47}],48:[function(require,module,exports){
 (function (global){
 
 /**
@@ -10276,7 +10528,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -10301,7 +10553,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -10335,7 +10587,7 @@ if (getRandomValues) {
   };
 }
 
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -10366,7 +10618,7 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
-},{"./lib/bytesToUuid":47,"./lib/rng":48}],"n2n-overlay-wrtc":[function(require,module,exports){
+},{"./lib/bytesToUuid":49,"./lib/rng":50}],"n2n-overlay-wrtc":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10400,9 +10652,9 @@ var MDirect = require('./messages/mdirect.js');
  */
 
 var N2N = function (_EventEmitter) {
-    _inherits(N2N, _EventEmitter);
+  _inherits(N2N, _EventEmitter);
 
-    /**
+  /**
      * @param {object} [options] options represented as an object (refer to
      * neighborhood-wrtc for other options).
      * @param {string} [options.pid] The unique identifier of the protocol.
@@ -10413,378 +10665,378 @@ var N2N = function (_EventEmitter) {
      * @param {Neighborhood} [options.outview] The neigbhorhood used for
      * outviews, i.e., outgoing arcs.
      */
-    function N2N() {
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  function N2N() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-        _classCallCheck(this, N2N);
+    _classCallCheck(this, N2N);
 
-        // #0 process the options
-        var _this = _possibleConstructorReturn(this, (N2N.__proto__ || Object.getPrototypeOf(N2N)).call(this));
+    // #0 process the options
+    var _this = _possibleConstructorReturn(this, (N2N.__proto__ || Object.getPrototypeOf(N2N)).call(this));
 
-        _this.options = merge({ pid: uuid(),
-            peer: uuid(),
-            retry: 5 }, options);
-        // #1 initialize unmutable protocolId
-        _this.PID = _this.options.pid;
-        // #2 initialize the neighborhoods /!\ i.peer and o.peer must be ≠
-        _this.NI = _this.options.inview || new Neighborhood(merge(merge({}, _this.options), { peer: _this.options.peer + '-I' }));
-        _this.NO = _this.options.outview || new Neighborhood(merge(merge({}, _this.options), { peer: _this.options.peer + '-O' }));
-        // #3 initialize the interfaces
-        _this.II = _this.NI.register(_this);
-        _this.IO = _this.NO.register(_this);
-        _this.PEER = _this.II.peer + '|' + _this.IO.peer;
-        debug('[%s] registered to ==> %s ==>', _this.PID, _this.PEER);
-        // #4 intialize the tables
-        _this.i = new Map();
-        _this.o = new Map();
-        return _this;
+    _this.options = merge({ pid: uuid(),
+      peer: uuid(),
+      retry: 5 }, options);
+    // #1 initialize unmutable protocolId
+    _this.PID = _this.options.pid;
+    // #2 initialize the neighborhoods /!\ i.peer and o.peer must be ≠
+    _this.NI = _this.options.inview || new Neighborhood(merge(merge({}, _this.options), { peer: _this.options.peer + '-I' }));
+    _this.NO = _this.options.outview || new Neighborhood(merge(merge({}, _this.options), { peer: _this.options.peer + '-O' }));
+    // #3 initialize the interfaces
+    _this.II = _this.NI.register(_this);
+    _this.IO = _this.NO.register(_this);
+    _this.PEER = _this.II.peer + '|' + _this.IO.peer;
+    debug('[%s] registered to ==> %s ==>', _this.PID, _this.PEER);
+    // #4 intialize the tables
+    _this.i = new Map();
+    _this.o = new Map();
+    return _this;
+  }
+
+  _createClass(N2N, [{
+    key: '_pid',
+
+
+    /**
+       * @private The getter of the identifier of this protocol.
+       * @returns {string} The identifier of this protocol.
+       */
+    value: function _pid() {
+      return this.PID;
+    }
+  }, {
+    key: '_received',
+
+
+    /**
+       * @private Behavior when this protocol receives a message from peerId.
+       * @param {string} peerId The identifier of the peer that we received a
+       * message from.
+       * @param {object} message The message received.
+       */
+    value: function _received(peerId, message) {
+      if (message.type) {
+        if (message.type === 'MConnectTo' || message.type === 'MForwarded' || message.type === 'MForwardTo') {
+          this._bridge(peerId, message);
+        } else if (message.type === 'MResponse' || message.type === 'MRequest' || message.type === 'MDirect') {
+          this._direct(peerId, message);
+        } else {
+          this.emit('receive', peerId, message);
+        };
+      } else {
+        this.emit('receive', peerId, message);
+      };
+    }
+  }, {
+    key: '_streamed',
+
+
+    /**
+       * @private Behavior when this protocol receives a stream from peerId.
+       * @param {string} peerId The identifier of the peer that we received a
+       * message from.
+       * @param {object} stream The stream received.
+       */
+    value: function _streamed(peerId, stream) {
+      this.emit('stream', peerId, stream);
+    }
+  }, {
+    key: '_connected',
+
+
+    /**
+       * @private Update the local view.
+       * @param {string} peerId The identifier of the peer reachable through the
+       * newly added arc.
+       * @param {boolean} isOutgoing State if the added arc is outgoing or not.
+       */
+    value: function _connected(peerId, isOutgoing) {
+      if (isOutgoing) {
+        if (!this.o.has(peerId)) {
+          this.o.set(peerId, 0);
+        };
+        this.o.set(peerId, this.o.get(peerId) + 1);
+        this.emit('open', peerId); // only consider outgoing arcs
+      } else {
+        if (!this.i.has(peerId)) {
+          this.i.set(peerId, 0);
+        };
+        this.i.set(peerId, this.i.get(peerId) + 1);
+      };
+    }
+  }, {
+    key: '_disconnected',
+
+
+    /**
+       * @private Update the local view.
+       * @param {string} peerId The identifier of the peer that removed an arc.
+       */
+    value: function _disconnected(peerId) {
+      if (this.o.has(peerId)) {
+        this.o.set(peerId, this.o.get(peerId) - 1);
+        this.o.get(peerId) <= 0 && this.o.delete(peerId);
+        this.emit('close', peerId); // only outview
+      } else if (this.i.has(peerId)) {
+        this.i.set(peerId, this.i.get(peerId) - 1);
+        this.i.get(peerId) <= 0 && this.i.delete(peerId);
+      };
+    }
+  }, {
+    key: '_failed',
+
+
+    /**
+       * @private Notify failure
+       * @param {string} peerId The identifier of the peer we failed to establish
+       * a connection with.
+       * @param {boolean} isOutgoing State whether or not the failed arc was
+       * supposed to be an outgoing arc.
+       */
+    value: function _failed(peerId, isOutgoing) {
+      // only takes into account the outgoing arcs
+      isOutgoing && this.emit('fail', peerId);
     }
 
-    _createClass(N2N, [{
-        key: '_pid',
+    /**
+       * @private Function that execute to bridge a connection establishement
+       * between two peers: we start from (i -> b -> a) to get (i -> b -> a) and
+       * (i -> a).
+       * @param {string} peerId The identifier of the peer that sent us the
+       * message
+       * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.
+       */
+
+  }, {
+    key: '_bridge',
+    value: function _bridge(peerId, msg) {
+      var _this2 = this;
+
+      if (msg.type && msg.type === 'MConnectTo') {
+        // #1 we are the initiator
+        this.IO.connect(function (req) {
+          _this2.send(peerId, new MForwardTo(msg.from, msg.to, req), _this2.options.retry).catch(function (e) {}); // nothing on catch
+        });
+      } else if (msg.type && msg.type === 'MForwardTo') {
+        // #2 we are the bridge
+        this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message), this.options.retry).catch(function (e) {}); // nothing on catch
+      } else if (msg.type && msg.type === 'MForwarded' && msg.message.type === 'MRequest') {
+        // #3 we are the acceptor
+        this.II.connect(function (res) {
+          _this2.send(peerId, new MForwardTo(msg.to, msg.from, res), _this2.options.retry).catch(function (e) {}); // nothing on catch
+        }, msg.message);
+        // #4 reapplies #2
+      } else if (msg.type && msg.type === 'MForwarded' && msg.message.type === 'MResponse') {
+        // #5 we are the finalizor
+        this.IO.connect(msg.message);
+      };
+    }
+  }, {
+    key: '_direct',
 
 
-        /**
-         * @private The getter of the identifier of this protocol.
-         * @returns {string} The identifier of this protocol.
-         */
-        value: function _pid() {
-            return this.PID;
-        }
-    }, {
-        key: '_received',
+    /**
+       * @private Create a connection with a neighbor: from (i -> a) we obtain
+       * either (i <-> a) or (i => a). In the former case, assuming that Peer a
+       * does not already have a connection to Peer i, it must create a WebRTC
+       * connection to a. In the latter case, Peer i only duplicates its arc to
+       * Peer a. Thus, it must disconnect twice to truly destroy the connection.
+       * @param {string} peerId The identifier of the peer that we received a
+       * message from.
+       * @param {string} message The received message.
+       */
+    value: function _direct(peerId, message) {
+      var _this3 = this;
+
+      message.type === 'MDirect' && this.IO.connect(function (req) {
+        _this3.send(peerId, req, _this3.options.retry).catch(function (e) {});
+      });
+      message.type === 'MRequest' && this.II.connect(function (res) {
+        _this3.send(peerId, res, _this3.options.retry).catch(function (e) {});
+      }, message);
+      message.type === 'MResponse' && this.IO.connect(message);
+    }
+  }, {
+    key: 'send',
 
 
-        /**
-         * @private Behavior when this protocol receives a message from peerId.
-         * @param {string} peerId The identifier of the peer that we received a
-         * message from.
-         * @param {object} message The message received.
-         */
-        value: function _received(peerId, message) {
-            if (message.type) {
-                if (message.type === 'MConnectTo' || message.type === 'MForwarded' || message.type === 'MForwardTo') {
-                    this._bridge(peerId, message);
-                } else if (message.type === 'MResponse' || message.type === 'MRequest' || message.type === 'MDirect') {
-                    this._direct(peerId, message);
-                } else {
-                    this.emit('receive', peerId, message);
-                };
-            } else {
-                this.emit('receive', peerId, message);
-            };
-        }
-    }, {
-        key: '_streamed',
+    /**
+       * Send a message using either the inview or the outview.
+       * @param {string} peerId The identifier of the receiver.
+       * @param {object} message The message to send.
+       * @param {number} [retry = 0] Number of times it retries to send a
+       * message.
+       * @return {promise} Promise that resolves if the message is sent, reject
+       * otherwise.
+       */
+    value: function send(peerId, message) {
+      var _this4 = this;
 
+      var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-        /**
-         * @private Behavior when this protocol receives a stream from peerId.
-         * @param {string} peerId The identifier of the peer that we received a
-         * message from.
-         * @param {object} stream The stream received.
-         */
-        value: function _streamed(peerId, stream) {
-            this.emit('stream', peerId, stream);
-        }
-    }, {
-        key: '_connected',
-
-
-        /**
-         * @private Update the local view.
-         * @param {string} peerId The identifier of the peer reachable through the
-         * newly added arc.
-         * @param {boolean} isOutgoing State if the added arc is outgoing or not.
-         */
-        value: function _connected(peerId, isOutgoing) {
-            if (isOutgoing) {
-                if (!this.o.has(peerId)) {
-                    this.o.set(peerId, 0);
-                };
-                this.o.set(peerId, this.o.get(peerId) + 1);
-                this.emit('open', peerId); // only consider outgoing arcs
-            } else {
-                if (!this.i.has(peerId)) {
-                    this.i.set(peerId, 0);
-                };
-                this.i.set(peerId, this.i.get(peerId) + 1);
-            };
-        }
-    }, {
-        key: '_disconnected',
-
-
-        /**
-         * @private Update the local view.
-         * @param {string} peerId The identifier of the peer that removed an arc.
-         */
-        value: function _disconnected(peerId) {
-            if (this.o.has(peerId)) {
-                this.o.set(peerId, this.o.get(peerId) - 1);
-                this.o.get(peerId) <= 0 && this.o.delete(peerId);
-                this.emit('close', peerId); // only outview
-            } else if (this.i.has(peerId)) {
-                this.i.set(peerId, this.i.get(peerId) - 1);
-                this.i.get(peerId) <= 0 && this.i.delete(peerId);
-            };
-        }
-    }, {
-        key: '_failed',
-
-
-        /**
-         * @private Notify failure
-         * @param {string} peerId The identifier of the peer we failed to establish
-         * a connection with.
-         * @param {boolean} isOutgoing State whether or not the failed arc was
-         * supposed to be an outgoing arc.
-         */
-        value: function _failed(peerId, isOutgoing) {
-            // only takes into account the outgoing arcs
-            isOutgoing && this.emit('fail', peerId);
-        }
-
-        /**
-         * @private Function that execute to bridge a connection establishement
-         * between two peers: we start from (i -> b -> a) to get (i -> b -> a) and
-         * (i -> a).
-         * @param {string} peerId The identifier of the peer that sent us the
-         * message
-         * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.
-         */
-
-    }, {
-        key: '_bridge',
-        value: function _bridge(peerId, msg) {
-            var _this2 = this;
-
-            if (msg.type && msg.type === 'MConnectTo') {
-                // #1 we are the initiator
-                this.IO.connect(function (req) {
-                    _this2.send(peerId, new MForwardTo(msg.from, msg.to, req), _this2.options.retry).catch(function (e) {}); // nothing on catch
+      var promise = void 0;
+      // #1 normal behavior
+      if (this.i.has(peerId)) {
+        promise = this.II.send(peerId, message, retry);
+      } else if (this.o.has(peerId)) {
+        promise = this.IO.send(peerId, message, retry);
+      } else {
+        // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id
+        var root = peerId.substr(0, peerId.length - 2);
+        var inv = root + '-I';
+        var out = root + '-O';
+        if (this.o.has(inv)) {
+          promise = this.IO.send(inv, message, retry);
+        } else if (this.i.has(out)) {
+          promise = this.II.send(out, message, retry);
+        } else {
+          // #2 last chance behavior
+          promise = new Promise(function (resolve, reject) {
+            var _send = function _send(r) {
+              _this4.IO.send(peerId, message, 0).then(function () {
+                return resolve();
+              }).catch(function (e) {
+                return _this4.II.send(peerId, message, 0).then(function () {
+                  return resolve();
+                }).catch(function (e) {
+                  if (r < retry) {
+                    setTimeout(function () {
+                      _send(r + 1);
+                    }, 1000);
+                  } else {
+                    reject(e);
+                  }
                 });
-            } else if (msg.type && msg.type === 'MForwardTo') {
-                // #2 we are the bridge
-                this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message), this.options.retry).catch(function (e) {}); // nothing on catch
-            } else if (msg.type && msg.type === 'MForwarded' && msg.message.type === 'MRequest') {
-                // #3 we are the acceptor
-                this.II.connect(function (res) {
-                    _this2.send(peerId, new MForwardTo(msg.to, msg.from, res), _this2.options.retry).catch(function (e) {}); // nothing on catch
-                }, msg.message);
-                // #4 reapplies #2
-            } else if (msg.type && msg.type === 'MForwarded' && msg.message.type === 'MResponse') {
-                // #5 we are the finalizor
-                this.IO.connect(msg.message);
+              });
             };
+            _send(0);
+          });
         }
-    }, {
-        key: '_direct',
+      };
+      return promise;
+    }
+  }, {
+    key: 'connect',
 
 
-        /**
-         * @private Create a connection with a neighbor: from (i -> a) we obtain
-         * either (i <-> a) or (i => a). In the former case, assuming that Peer a
-         * does not already have a connection to Peer i, it must create a WebRTC
-         * connection to a. In the latter case, Peer i only duplicates its arc to
-         * Peer a. Thus, it must disconnect twice to truly destroy the connection.
-         * @param {string} peerId The identifier of the peer that we received a
-         * message from.
-         * @param {string} message The received message.
-         */
-        value: function _direct(peerId, message) {
-            var _this3 = this;
+    /**
+       * Create an arc (establishes a WebRTC connection if need be) from 'from' to
+       * 'to'. (TODO) explain function args
+       * @param {function|MResponse|string|null} from - The identifier of the peer
+       * that must initiate the connection. Null implicitely means this.
+       * @param {MRequest|string|null} to - The identifier of the peer that must
+       * accept the connection. Null implicitely means this.
+       */
+    value: function connect() {
+      var from = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-            message.type === 'MDirect' && this.IO.connect(function (req) {
-                _this3.send(peerId, req, _this3.options.retry).catch(function (e) {});
-            });
-            message.type === 'MRequest' && this.II.connect(function (res) {
-                _this3.send(peerId, res, _this3.options.retry).catch(function (e) {});
-            }, message);
-            message.type === 'MResponse' && this.IO.connect(message);
-        }
-    }, {
-        key: 'send',
+      // #1 handle bootstrap using other communication channels than our
+      // own.
+      if (typeof from === 'function' && to === null) {
+        this.IO.connect(function (req) {
+          return from(req);
+        }); // from: callback
+      } else if (typeof from === 'function' && to !== null) {
+        debug('[%s] %s <π= ??? =π= %s', this.PID, this.getInviewId(), to.peer);
+        this.II.connect(function (res) {
+          return from(res);
+        }, to); // from: cb; to: msg
+      } else if (from !== null && (typeof from === 'undefined' ? 'undefined' : _typeof(from)) === 'object' && to === null) {
+        this.IO.connect(from); // from: msg
+      } else {
+        // #2 handle n2n connections
+        // #A replace our own identifier by null
+        if (from !== null && (from === this.IO.peer || from === this.II.peer)) {
+          from = null;
+        };
+        if (to !== null && (to === this.IO.peer || to === this.II.peer)) {
+          to = null;
+        };
 
-
-        /**
-         * Send a message using either the inview or the outview.
-         * @param {string} peerId The identifier of the receiver.
-         * @param {object} message The message to send.
-         * @param {number} [retry = 0] Number of times it retries to send a
-         * message.
-         * @return {promise} Promise that resolves if the message is sent, reject
-         * otherwise.
-         */
-        value: function send(peerId, message) {
-            var _this4 = this;
-
-            var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-
-            console.log(arguments, this);
-            var promise = void 0;
-            // #1 normal behavior
-            if (this.i.has(peerId)) {
-                promise = this.II.send(peerId, message, retry);
-            } else if (this.o.has(peerId)) {
-                promise = this.IO.send(peerId, message, retry);
-            } else {
-                // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id
-                var root = peerId.substr(0, peerId.length - 2);
-                var inv = root + '-I';
-                var out = root + '-O';
-                if (this.o.has(inv)) {
-                    promise = this.IO.send(inv, message, retry);
-                } else if (this.i.has(out)) {
-                    promise = this.II.send(out, message, retry);
-                } else {
-                    // #2 last chance behavior
-                    promise = new Promise(function (resolve, reject) {
-                        var _send = function _send(r) {
-                            _this4.IO.send(peerId, message, 0).then(function () {
-                                return resolve();
-                            }).catch(function (e) {
-                                return _this4.II.send(peerId, message, 0).then(function () {
-                                    return resolve();
-                                }).catch(function (e) {
-                                    if (r < retry) {
-                                        setTimeout(function () {
-                                            _send(r + 1);
-                                        }, 1000);
-                                    } else {
-                                        reject(e);
-                                    }
-                                });
-                            });
-                        };
-                        _send(0);
-                    });
-                }
-            };
-            return promise;
-        }
-    }, {
-        key: 'connect',
+        if (from !== null && to !== null) {
+          // #1 arg1: from; arg2: to
+          // from -> this -> to  creates  from -> to
+          debug('[%s] %s =π= %s =π> %s', this.PID, from, this.PEER, to);
+          this.send(from, new MConnectTo(from, to), this.options.retry).catch(function (e) {});
+        } else if (from !== null) {
+          // #2 arg1: from
+          // from -> this  becomes  from => this
+          this.send(from, new MDirect(), this.options.retry).catch(function (e) {});
+        } else if (to !== null) {
+          // #3 arg2: to
+          // this -> to becomes this => to
+          this._direct(to, new MDirect()); // emulate a MDirect receipt
+        };
+      };
+    }
+  }, {
+    key: 'disconnect',
 
 
-        /**
-         * Create an arc (establishes a WebRTC connection if need be) from 'from' to
-         * 'to'. (TODO) explain function args
-         * @param {function|MResponse|string|null} from - The identifier of the peer
-         * that must initiate the connection. Null implicitely means this.
-         * @param {MRequest|string|null} to - The identifier of the peer that must
-         * accept the connection. Null implicitely means this.
-         */
-        value: function connect() {
-            var from = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-            var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    /**
+       * Remove an arc of the outview or all arcs
+       * @param {string} peerId The identifier of the arc to remove.
+       */
+    value: function disconnect(peerId) {
+      if (typeof peerId === 'undefined') {
+        this.II.disconnect();
+        this.IO.disconnect();
+      } else {
+        if (this.i.has(peerId)) this.II.disconnect(peerId);
+        if (this.o.has(peerId)) this.IO.disconnect(peerId);
+      };
+    }
 
-            // #1 handle bootstrap using other communication channels than our
-            // own.
-            if (typeof from === 'function' && to === null) {
-                this.IO.connect(function (req) {
-                    return from(req);
-                }); // from: callback
-            } else if (typeof from === 'function' && to !== null) {
-                debug('[%s] %s <π= ??? =π= %s', this.PID, this.getInviewId(), to.peer);
-                this.II.connect(function (res) {
-                    return from(res);
-                }, to); // from: cb; to: msg
-            } else if (from !== null && (typeof from === 'undefined' ? 'undefined' : _typeof(from)) === 'object' && to === null) {
-                this.IO.connect(from); // from: msg
-            } else {
-                // #2 handle n2n connections
-                // #A replace our own identifier by null
-                if (from !== null && (from === this.IO.peer || from === this.II.peer)) {
-                    from = null;
-                };
-                if (to !== null && (to === this.IO.peer || to === this.II.peer)) {
-                    to = null;
-                };
+    /**
+       * Getter of the inview.
+       * @returns {Map} A new map comprising {peerId => occurrences}.
+       */
 
-                if (from !== null && to !== null) {
-                    // #1 arg1: from; arg2: to
-                    // from -> this -> to  creates  from -> to
-                    debug('[%s] %s =π= %s =π> %s', this.PID, from, this.PEER, to);
-                    this.send(from, new MConnectTo(from, to), this.options.retry).catch(function (e) {});
-                } else if (from !== null) {
-                    // #2 arg1: from
-                    // from -> this  becomes  from => this
-                    this.send(from, new MDirect(), this.options.retry).catch(function (e) {});
-                } else if (to !== null) {
-                    // #3 arg2: to
-                    // this -> to becomes this => to
-                    this._direct(to, new MDirect()); // emulate a MDirect receipt
-                };
-            };
-        }
-    }, {
-        key: 'disconnect',
+  }, {
+    key: 'getInview',
+    value: function getInview() {
+      return new Map(this.i);
+    }
+  }, {
+    key: 'getInviewId',
 
 
-        /**
-         * Remove an arc of the outview or all arcs
-         * @param {string} peerId The identifier of the arc to remove.
-         */
-        value: function disconnect(peerId) {
-            if (typeof peerId === 'undefined') {
-                this.II.disconnect();
-                this.IO.disconnect();
-            } else {
-                this.IO.disconnect(peerId);
-            };
-        }
-
-        /**
-         * Getter of the inview.
-         * @returns {Map} A new map comprising {peerId => occurrences}.
-         */
-
-    }, {
-        key: 'getInview',
-        value: function getInview() {
-            return new Map(this.i);
-        }
-    }, {
-        key: 'getInviewId',
+    /**
+       * Getter of the inview ID.
+       * @returns {string} The identifier of the inview.
+       */
+    value: function getInviewId() {
+      return this.NI.PEER;
+    }
+  }, {
+    key: 'getOutview',
 
 
-        /**
-         * Getter of the inview ID.
-         * @returns {string} The identifier of the inview.
-         */
-        value: function getInviewId() {
-            return this.NI.PEER;
-        }
-    }, {
-        key: 'getOutview',
+    /**
+       * Getter of the outview.
+       * @returns {Map} A new map comprising {peerId => occurrences}.
+       */
+    value: function getOutview() {
+      return new Map(this.o);
+    }
+  }, {
+    key: 'getOutviewId',
 
 
-        /**
-         * Getter of the outview.
-         * @returns {Map} A new map comprising {peerId => occurrences}.
-         */
-        value: function getOutview() {
-            return new Map(this.o);
-        }
-    }, {
-        key: 'getOutviewId',
+    /**
+       * Getter of the inview ID.
+       * @returns {string} The identifier of the outview.
+       */
+    value: function getOutviewId() {
+      return this.NO.PEER;
+    }
+  }]);
 
-
-        /**
-         * Getter of the inview ID.
-         * @returns {string} The identifier of the outview.
-         */
-        value: function getOutviewId() {
-            return this.NO.PEER;
-        }
-    }]);
-
-    return N2N;
+  return N2N;
 }(EventEmitter);
 
 ;
 
 module.exports = N2N;
 
-},{"./messages/mconnectto.js":1,"./messages/mdirect.js":2,"./messages/mforwarded.js":3,"./messages/mforwardto.js":4,"debug":9,"events":11,"lodash.merge":17,"neighborhood-wrtc":30,"uuid/v4":49}]},{},[]);
+},{"./messages/mconnectto.js":1,"./messages/mdirect.js":2,"./messages/mforwarded.js":3,"./messages/mforwardto.js":4,"debug":9,"events":11,"lodash.merge":17,"neighborhood-wrtc":31,"uuid/v4":51}]},{},[]);
