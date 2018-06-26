@@ -10915,6 +10915,65 @@ var N2N = function (_EventEmitter) {
       return promise;
     }
   }, {
+    key: 'stream',
+
+
+    /**
+       * Send a MediaStream using either the inview or the outview.
+       * @param {string} peerId The identifier of the receiver.
+       * @param {MediaStream} media The message to send.
+       * @param {number} [retry = 0] Number of times it retries to send a
+       * message.
+       * @return {promise} Promise that resolves if the message is sent, reject
+       * otherwise.
+       */
+    value: function stream(peerId, media) {
+      var _this5 = this;
+
+      var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+      var promise = void 0;
+      // #1 normal behavior
+      if (this.i.has(peerId)) {
+        promise = this.II.stream(peerId, media, retry);
+      } else if (this.o.has(peerId)) {
+        promise = this.IO.stream(peerId, media, retry);
+      } else {
+        // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id
+        var root = peerId.substr(0, peerId.length - 2);
+        var inv = root + '-I';
+        var out = root + '-O';
+        if (this.o.has(inv)) {
+          promise = this.IO.stream(inv, media, retry);
+        } else if (this.i.has(out)) {
+          promise = this.II.stream(out, media, retry);
+        } else {
+          // #2 last chance behavior
+          promise = new Promise(function (resolve, reject) {
+            var _send = function _send(r) {
+              _this5.IO.stream(peerId, media, 0).then(function () {
+                return resolve();
+              }).catch(function (e) {
+                return _this5.II.send(peerId, media, 0).then(function () {
+                  return resolve();
+                }).catch(function (e) {
+                  if (r < retry) {
+                    setTimeout(function () {
+                      _send(r + 1);
+                    }, 1000);
+                  } else {
+                    reject(e);
+                  }
+                });
+              });
+            };
+            _send(0);
+          });
+        }
+      };
+      return promise;
+    }
+  }, {
     key: 'connect',
 
 
@@ -10985,6 +11044,49 @@ var N2N = function (_EventEmitter) {
         if (this.i.has(peerId)) this.II.disconnect(peerId);
         if (this.o.has(peerId)) this.IO.disconnect(peerId);
       };
+    }
+
+    /**
+     * Return living neighbours as specified in neighborhood-wrtc
+     * @return {[Object]} Object containing living inview and living outview entries
+     */
+
+  }, {
+    key: 'neighbours',
+    value: function neighbours() {
+      return {
+        inview: this.II.neighbours(),
+        outview: this.IO.neighbours()
+      };
+    }
+
+    /**
+     * Return an array of uniq reachable peers without distinction between inview or outview (without -I or -O)
+     * if you want to send a message to one of these peers, add either a -I or a -I (or pass a boolean as parameter, default false)
+     * @param {Boolean} [transform=false] If true, transform final Id into ids that can be used to send messages
+     * @return {[type]} [description]
+     */
+
+  }, {
+    key: 'uniqNeighbours',
+    value: function uniqNeighbours() {
+      var transform = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      var i = this.II.neighbours();
+      var o = this.IO.neighbours();
+      var peers = [];
+      i.forEach(function (entry) {
+        var p = entry.peer.substr(0, entry.peer.length - 2);
+        if (peers.indexOf(p) === -1) peers.push(p);
+      });
+      o.forEach(function (entry) {
+        var p = entry.peer.substr(0, entry.peer.length - 2);
+        if (peers.indexOf(p) === -1) peers.push(p);
+      });
+      if (transform) return peers.map(function (p) {
+        return p + '-O';
+      });
+      return peers;
     }
 
     /**
