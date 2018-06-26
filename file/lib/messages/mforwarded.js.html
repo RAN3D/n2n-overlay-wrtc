@@ -39,27 +39,26 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">lib/messages/mforwarded.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
-
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;
 /**
  * Message piggybacking another message that has been forwarded by an
  * intermediate peer.
  */
 class MForwarded {
-    /**
+  /**
      * @param {string} from The departure of the piggybacked message.
      * @param {string} to The arrival of the piggybacked message.
      * @param {object} message The piggybacked message to deliver.
      */
-    constructor (from, to, message) {
-        this.from = from;
-        this.to = to;
-        this.message = message;
-        this.type = &apos;MForwarded&apos;;
-    };
+  constructor (from, to, message) {
+    this.from = from
+    this.to = to
+    this.message = message
+    this.type = &apos;MForwarded&apos;
+  };
 };
 
-module.exports = MForwarded;
+module.exports = MForwarded
 </code></pre>
 
 </div>

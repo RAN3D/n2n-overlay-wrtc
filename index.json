@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "lib/messages/mconnectto.js",
-    "content": "'use strict';\n\n/**\n * Message that requires from-peer to initiate a WebRTC connection with to\n * to-peer.\n */\nclass MConnectTo {\n    /**\n     * @param {string} from The identifier of the peer that should initiate the\n     * WebRTC connection.\n     * @param {string} to The identifier of the peer that should accept the\n     * WebRTC connection.\n     */\n    constructor (from, to) {\n        this.from = from;\n        this.to = to;\n        this.type = 'MConnectTo';\n    };\n};\n\nmodule.exports = MConnectTo;\n",
+    "content": "'use strict'\n/**\n * Message that requires from-peer to initiate a WebRTC connection with to\n * to-peer.\n */\nclass MConnectTo {\n  /**\n     * @param {string} from The identifier of the peer that should initiate the\n     * WebRTC connection.\n     * @param {string} to The identifier of the peer that should accept the\n     * WebRTC connection.\n     */\n  constructor (from, to) {\n    this.from = from\n    this.to = to\n    this.type = 'MConnectTo'\n  };\n};\n\nmodule.exports = MConnectTo\n",
     "static": true,
     "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mconnectto.js",
     "access": "public",
@@ -586,7 +586,7 @@
     "importPath": "n2n-overlay-wrtc/lib/messages/mconnectto.js",
     "importStyle": "MConnectTo",
     "description": "Message that requires from-peer to initiate a WebRTC connection with to\nto-peer.",
-    "lineNumber": 7,
+    "lineNumber": 6,
     "interface": false
   },
   {
@@ -600,7 +600,7 @@
     "longname": "lib/messages/mconnectto.js~MConnectTo#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 14,
+    "lineNumber": 13,
     "params": [
       {
         "nullable": null,
@@ -633,7 +633,7 @@
     "longname": "lib/messages/mconnectto.js~MConnectTo#from",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -650,7 +650,7 @@
     "longname": "lib/messages/mconnectto.js~MConnectTo#to",
     "access": "public",
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -667,7 +667,7 @@
     "longname": "lib/messages/mconnectto.js~MConnectTo#type",
     "access": "public",
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 16,
     "undocument": true,
     "type": {
       "types": [
@@ -679,7 +679,7 @@
     "__docId__": 54,
     "kind": "file",
     "name": "lib/messages/mdirect.js",
-    "content": "'use strict';\n\n/**\n * Messages traveling between two direct neighbors. It requests from the\n * receiving peer that it initiates a connection with the emitter.\n */\nclass MDirect {\n    constructor () {\n        this.type = 'MDirect';\n    };\n};\n\nmodule.exports = MDirect;\n",
+    "content": "'use strict'\n/**\n * Messages traveling between two direct neighbors. It requests from the\n * receiving peer that it initiates a connection with the emitter.\n */\nclass MDirect {\n  constructor () {\n    this.type = 'MDirect'\n  };\n};\n\nmodule.exports = MDirect\n",
     "static": true,
     "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mdirect.js",
     "access": "public",
@@ -698,7 +698,7 @@
     "importPath": "n2n-overlay-wrtc/lib/messages/mdirect.js",
     "importStyle": "MDirect",
     "description": "Messages traveling between two direct neighbors. It requests from the\nreceiving peer that it initiates a connection with the emitter.",
-    "lineNumber": 7,
+    "lineNumber": 6,
     "interface": false
   },
   {
@@ -712,7 +712,7 @@
     "longname": "lib/messages/mdirect.js~MDirect#constructor",
     "access": "public",
     "description": null,
-    "lineNumber": 8,
+    "lineNumber": 7,
     "undocument": true
   },
   {
@@ -724,7 +724,7 @@
     "longname": "lib/messages/mdirect.js~MDirect#type",
     "access": "public",
     "description": null,
-    "lineNumber": 9,
+    "lineNumber": 8,
     "undocument": true,
     "type": {
       "types": [
@@ -736,7 +736,7 @@
     "__docId__": 58,
     "kind": "file",
     "name": "lib/messages/mforwarded.js",
-    "content": "'use strict';\n\n/**\n * Message piggybacking another message that has been forwarded by an\n * intermediate peer.\n */\nclass MForwarded {\n    /**\n     * @param {string} from The departure of the piggybacked message.\n     * @param {string} to The arrival of the piggybacked message.\n     * @param {object} message The piggybacked message to deliver.\n     */\n    constructor (from, to, message) {\n        this.from = from;\n        this.to = to;\n        this.message = message;\n        this.type = 'MForwarded';\n    };\n};\n\nmodule.exports = MForwarded;\n",
+    "content": "'use strict'\n/**\n * Message piggybacking another message that has been forwarded by an\n * intermediate peer.\n */\nclass MForwarded {\n  /**\n     * @param {string} from The departure of the piggybacked message.\n     * @param {string} to The arrival of the piggybacked message.\n     * @param {object} message The piggybacked message to deliver.\n     */\n  constructor (from, to, message) {\n    this.from = from\n    this.to = to\n    this.message = message\n    this.type = 'MForwarded'\n  };\n};\n\nmodule.exports = MForwarded\n",
     "static": true,
     "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mforwarded.js",
     "access": "public",
@@ -755,7 +755,7 @@
     "importPath": "n2n-overlay-wrtc/lib/messages/mforwarded.js",
     "importStyle": "MForwarded",
     "description": "Message piggybacking another message that has been forwarded by an\nintermediate peer.",
-    "lineNumber": 7,
+    "lineNumber": 6,
     "interface": false
   },
   {
@@ -769,7 +769,7 @@
     "longname": "lib/messages/mforwarded.js~MForwarded#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 13,
+    "lineNumber": 12,
     "params": [
       {
         "nullable": null,
@@ -812,7 +812,7 @@
     "longname": "lib/messages/mforwarded.js~MForwarded#from",
     "access": "public",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 13,
     "undocument": true,
     "type": {
       "types": [
@@ -829,7 +829,7 @@
     "longname": "lib/messages/mforwarded.js~MForwarded#to",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -846,7 +846,7 @@
     "longname": "lib/messages/mforwarded.js~MForwarded#message",
     "access": "public",
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -863,7 +863,7 @@
     "longname": "lib/messages/mforwarded.js~MForwarded#type",
     "access": "public",
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 16,
     "undocument": true,
     "type": {
       "types": [
@@ -875,7 +875,7 @@
     "__docId__": 65,
     "kind": "file",
     "name": "lib/messages/mforwardto.js",
-    "content": "'use strict';\n\n/**\n * Message that asks a peer to forward the piggybacked message to to-peer.\n */\nclass MForwardTo {\n    /**\n     * @param {string} from The departure of the message.\n     * @param {string} to The arrival of the piggybacked message.\n     * @param {object} message The message to piggyback.\n     */\n    constructor (from, to, message) {\n        this.from = from;\n        this.to = to;\n        this.message = message;\n        this.type = 'MForwardTo';        \n    };\n};\n\nmodule.exports = MForwardTo;\n",
+    "content": "'use strict'\n/**\n * Message that asks a peer to forward the piggybacked message to to-peer.\n */\nclass MForwardTo {\n  /**\n     * @param {string} from The departure of the message.\n     * @param {string} to The arrival of the piggybacked message.\n     * @param {object} message The message to piggyback.\n     */\n  constructor (from, to, message) {\n    this.from = from\n    this.to = to\n    this.message = message\n    this.type = 'MForwardTo'\n  };\n};\n\nmodule.exports = MForwardTo\n",
     "static": true,
     "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/messages/mforwardto.js",
     "access": "public",
@@ -894,7 +894,7 @@
     "importPath": "n2n-overlay-wrtc/lib/messages/mforwardto.js",
     "importStyle": "MForwardTo",
     "description": "Message that asks a peer to forward the piggybacked message to to-peer.",
-    "lineNumber": 6,
+    "lineNumber": 5,
     "interface": false
   },
   {
@@ -908,7 +908,7 @@
     "longname": "lib/messages/mforwardto.js~MForwardTo#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 12,
+    "lineNumber": 11,
     "params": [
       {
         "nullable": null,
@@ -951,7 +951,7 @@
     "longname": "lib/messages/mforwardto.js~MForwardTo#from",
     "access": "public",
     "description": null,
-    "lineNumber": 13,
+    "lineNumber": 12,
     "undocument": true,
     "type": {
       "types": [
@@ -968,7 +968,7 @@
     "longname": "lib/messages/mforwardto.js~MForwardTo#to",
     "access": "public",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 13,
     "undocument": true,
     "type": {
       "types": [
@@ -985,7 +985,7 @@
     "longname": "lib/messages/mforwardto.js~MForwardTo#message",
     "access": "public",
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -1002,7 +1002,7 @@
     "longname": "lib/messages/mforwardto.js~MForwardTo#type",
     "access": "public",
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 15,
     "undocument": true,
     "type": {
       "types": [
@@ -1014,7 +1014,7 @@
     "__docId__": 72,
     "kind": "file",
     "name": "lib/n2n-overlay.js",
-    "content": "'use strict';\n\nconst debug = (require('debug'))('n2n-overlay-wrtc');\nconst Neighborhood = require('neighborhood-wrtc');\nconst EventEmitter = require('events');\nconst merge = require('lodash.merge');\nconst uuid = require('uuid/v4');\n\n\nconst MForwardTo = require('./messages/mforwardto.js');\nconst MForwarded = require('./messages/mforwarded.js');\nconst MConnectTo = require('./messages/mconnectto.js');\nconst MDirect = require('./messages/mdirect.js');\n\n/**\n * A peer has an inview and an outview, i.e., tables containing sockets to\n * communicate with remote peers. This module transforms a peer so it can act as\n * a bridge between its direct neighbors. Consequently, these neighbors can\n * create their own communication channels: necessary data to establish the\n * connection travel through the bridge; once the connection is successfully\n * established, they communicate using their own direct connection.\n */\nclass N2N extends EventEmitter {\n    /**\n     * @param {object} [options] options represented as an object (refer to\n     * neighborhood-wrtc for other options).\n     * @param {string} [options.pid] The unique identifier of the protocol.\n     * @param {number} [options.retry = 5] The number of times it tries to send\n     * a message.\n     * @param {Neighborhood} [options.inview] The neighborhood used for inviews,\n     * i.e., incoming arcs.\n     * @param {Neighborhood} [options.outview] The neigbhorhood used for\n     * outviews, i.e., outgoing arcs.\n     */\n    constructor (options = {}) {\n        super();\n\n        // #0 process the options\n        this.options = merge( { pid: uuid(),\n                                  peer: uuid(),\n                                  retry: 5 }, options);\n        // #1 initialize unmutable protocolId\n        this.PID = this.options.pid;\n        // #2 initialize the neighborhoods /!\\ i.peer and o.peer must be ≠\n        this.NI = this.options.inview ||\n            new Neighborhood( merge(merge( {}, this.options),\n                                    {peer: this.options.peer+'-I'}) );\n        this.NO = this.options.outview ||\n            new Neighborhood( merge(merge( {}, this.options),\n                                    {peer: this.options.peer+'-O'}) );\n        // #3 initialize the interfaces\n        this.II = this.NI.register(this);\n        this.IO = this.NO.register(this);\n        this.PEER = this.II.peer + '|' + this.IO.peer;\n        debug('[%s] registered to ==> %s ==>', this.PID, this.PEER);\n        // #4 intialize the tables\n        this.i = new Map();\n        this.o = new Map();\n    };\n\n    /**\n     * @private The getter of the identifier of this protocol.\n     * @returns {string} The identifier of this protocol.\n     */\n    _pid () {\n        return this.PID;\n    };\n\n    /**\n     * @private Behavior when this protocol receives a message from peerId.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {object} message The message received.\n     */\n    _received (peerId, message) {\n        if (message.type) {\n            if (message.type === 'MConnectTo' ||\n                message.type === 'MForwarded' ||\n                message.type === 'MForwardTo') {\n                this._bridge(peerId, message);\n            } else if (message.type === 'MResponse' ||\n                       message.type === 'MRequest' ||\n                       message.type === 'MDirect') {\n                this._direct(peerId, message);\n            } else {\n                this.emit('receive', peerId, message);\n            };\n        } else {\n            this.emit('receive', peerId, message);\n        };\n    };\n\n\n    /**\n     * @private Behavior when this protocol receives a stream from peerId.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {object} stream The stream received.\n     */\n    _streamed (peerId, stream) {\n        this.emit('stream', peerId, stream);\n    };\n\n\n    /**\n     * @private Update the local view.\n     * @param {string} peerId The identifier of the peer reachable through the\n     * newly added arc.\n     * @param {boolean} isOutgoing State if the added arc is outgoing or not.\n     */\n    _connected (peerId, isOutgoing) {\n        if (isOutgoing){\n            if (!this.o.has(peerId)){\n                this.o.set(peerId, 0);\n            };\n            this.o.set(peerId, this.o.get(peerId) + 1 );\n            this.emit('open', peerId); // only consider outgoing arcs\n        } else {\n            if (!this.i.has(peerId)){\n                this.i.set(peerId, 0);\n            };\n            this.i.set(peerId, this.i.get(peerId) + 1 );\n        };\n    };\n\n    /**\n     * @private Update the local view.\n     * @param {string} peerId The identifier of the peer that removed an arc.\n     */\n    _disconnected (peerId) {\n        if (this.o.has(peerId)){\n            this.o.set(peerId, this.o.get(peerId) - 1 );\n            (this.o.get(peerId) <= 0) && this.o.delete(peerId);\n            this.emit('close', peerId); // only outview\n        } else if (this.i.has(peerId)){\n            this.i.set(peerId, this.i.get(peerId) - 1 );\n            (this.i.get(peerId) <= 0) && this.i.delete(peerId);\n        };\n    };\n\n    /**\n     * @private Notify failure\n     * @param {string} peerId The identifier of the peer we failed to establish\n     * a connection with.\n     * @param {boolean} isOutgoing State whether or not the failed arc was\n     * supposed to be an outgoing arc.\n     */\n    _failed (peerId, isOutgoing) {\n        // only takes into account the outgoing arcs\n        isOutgoing && this.emit('fail', peerId);\n    }\n\n\n    /**\n     * @private Function that execute to bridge a connection establishement\n     * between two peers: we start from (i -> b -> a) to get (i -> b -> a) and\n     * (i -> a).\n     * @param {string} peerId The identifier of the peer that sent us the\n     * message\n     * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.\n     */\n    _bridge (peerId, msg) {\n        if (msg.type && msg.type === 'MConnectTo') {\n            // #1 we are the initiator\n            this.IO.connect( (req) => {\n                this.send(peerId, new MForwardTo(msg.from, msg.to, req),\n                          this.options.retry)\n                    .catch( (e) => { }); // nothing on catch\n            });\n        } else if (msg.type && msg.type === 'MForwardTo') {\n            // #2 we are the bridge\n            this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message),\n                      this.options.retry)\n                .catch( (e) => { }); // nothing on catch\n        } else if (msg.type && msg.type === 'MForwarded' &&\n                   msg.message.type === 'MRequest') {\n            // #3 we are the acceptor\n            this.II.connect( (res) => {\n                this.send(peerId, new MForwardTo(msg.to, msg.from, res),\n                          this.options.retry)\n                    .catch( (e) => { }); // nothing on catch\n            }, msg.message );\n            // #4 reapplies #2\n        } else if (msg.type && msg.type === 'MForwarded' &&\n                   msg.message.type === 'MResponse') {\n            // #5 we are the finalizor\n            this.IO.connect( msg.message );\n        };\n    };\n\n    /**\n     * @private Create a connection with a neighbor: from (i -> a) we obtain\n     * either (i <-> a) or (i => a). In the former case, assuming that Peer a\n     * does not already have a connection to Peer i, it must create a WebRTC\n     * connection to a. In the latter case, Peer i only duplicates its arc to\n     * Peer a. Thus, it must disconnect twice to truly destroy the connection.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {string} message The received message.\n     */\n    _direct(peerId, message){\n        (message.type === 'MDirect') &&\n            this.IO.connect( (req) => {\n                this.send(peerId, req, this.options.retry).catch( (e) => { });\n            });\n        (message.type === 'MRequest') &&\n            this.II.connect( (res) => {\n                this.send(peerId, res, this.options.retry).catch( (e) => { });\n            }, message);\n        (message.type === 'MResponse') &&\n            this.IO.connect( message );\n    };\n\n\n    /**\n     * Send a message using either the inview or the outview.\n     * @param {string} peerId The identifier of the receiver.\n     * @param {object} message The message to send.\n     * @param {number} [retry = 0] Number of times it retries to send a\n     * message.\n     * @return {promise} Promise that resolves if the message is sent, reject\n     * otherwise.\n     */\n    send(peerId, message, retry = 0){\n        let promise;\n        // #1 normal behavior\n        if (this.i.has(peerId)) {\n            promise = this.II.send(peerId, message, retry);\n        } else if (this.o.has(peerId)) {\n            promise = this.IO.send(peerId, message, retry);\n        } else {\n          // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id\n          const root = peerId.substr(0, peerId.length-2)\n          const inv = root+'-I'\n          const out = root+'-O'\n          if(this.o.has(inv)) {\n            promise = this.IO.send(inv, message, retry);\n          } else if(this.i.has(out)) {\n            promise = this.II.send(out, message, retry);\n          } else {\n            // #2 last chance behavior\n            promise = new Promise( (resolve, reject) => {\n                const _send = (r) => {\n                    this.IO.send(peerId, message, 0)\n                        .then( () => resolve() )\n                        .catch( (e) => this.II.send(peerId, message, 0)\n                                .then( () => resolve() )\n                                .catch( (e) => {\n                                    if (r<retry){\n                                        setTimeout( () => {\n                                            _send (r+1);\n                                        }, 1000);\n                                    } else {\n                                        reject(e);\n                                    }\n                                }));};\n                _send(0);\n            });\n          }\n        };\n        return promise;\n    };\n\n    /**\n     * Create an arc (establishes a WebRTC connection if need be) from 'from' to\n     * 'to'. (TODO) explain function args\n     * @param {function|MResponse|string|null} from - The identifier of the peer\n     * that must initiate the connection. Null implicitely means this.\n     * @param {MRequest|string|null} to - The identifier of the peer that must\n     * accept the connection. Null implicitely means this.\n     */\n    connect (from = null, to = null) {\n        // #1 handle bootstrap using other communication channels than our\n        // own.\n        if (typeof from === 'function' && to === null) {\n            this.IO.connect( (req) => from(req) ); // from: callback\n        } else if (typeof from === 'function' && to !== null) {\n            debug('[%s] %s <π= ??? =π= %s',\n                  this.PID, this.getInviewId(), to.peer);\n            this.II.connect( (res) => from(res), to); // from: cb; to: msg\n        } else if (from !== null && typeof from === 'object' && to === null) {\n            this.IO.connect( from ); // from: msg\n        } else {\n            // #2 handle n2n connections\n            // #A replace our own identifier by null\n            if (from!==null && (from===this.IO.peer || from===this.II.peer)) {\n                from = null;\n            };\n            if (to!==null && (to===this.IO.peer || to===this.II.peer)) {\n                to = null;\n            };\n\n            if (from !== null && to !== null){\n                // #1 arg1: from; arg2: to\n                // from -> this -> to  creates  from -> to\n                debug('[%s] %s =π= %s =π> %s', this.PID, from, this.PEER, to);\n                this.send(from, new MConnectTo(from, to),\n                          this.options.retry).catch( (e) => { } );\n            } else if (from !== null) {\n                // #2 arg1: from\n                // from -> this  becomes  from => this\n                this.send(from, new MDirect(),\n                          this.options.retry).catch( (e) => { } );\n            } else if (to !== null) {\n                // #3 arg2: to\n                // this -> to becomes this => to\n                this._direct(to, new MDirect()); // emulate a MDirect receipt\n            };\n        };\n    };\n\n    /**\n     * Remove an arc of the outview or all arcs\n     * @param {string} peerId The identifier of the arc to remove.\n     */\n    disconnect (peerId) {\n        if (typeof peerId === 'undefined') {\n            this.II.disconnect();\n            this.IO.disconnect();\n        } else {\n          if(this.i.has(peerId)) this.II.disconnect(peerId);\n          if(this.o.has(peerId)) this.IO.disconnect(peerId);\n        };\n    }\n\n    /**\n     * Getter of the inview.\n     * @returns {Map} A new map comprising {peerId => occurrences}.\n     */\n    getInview () {\n        return new Map(this.i);\n    };\n\n    /**\n     * Getter of the inview ID.\n     * @returns {string} The identifier of the inview.\n     */\n    getInviewId () {\n        return this.NI.PEER;\n    };\n\n    /**\n     * Getter of the outview.\n     * @returns {Map} A new map comprising {peerId => occurrences}.\n     */\n    getOutview () {\n        return new Map(this.o);\n    };\n\n    /**\n     * Getter of the inview ID.\n     * @returns {string} The identifier of the outview.\n     */\n    getOutviewId () {\n        return this.NO.PEER;\n    };\n\n};\n\nmodule.exports = N2N;\n",
+    "content": "'use strict'\n\nconst debug = (require('debug'))('n2n-overlay-wrtc')\nconst Neighborhood = require('neighborhood-wrtc')\nconst EventEmitter = require('events')\nconst merge = require('lodash.merge')\nconst uuid = require('uuid/v4')\n\nconst MForwardTo = require('./messages/mforwardto.js')\nconst MForwarded = require('./messages/mforwarded.js')\nconst MConnectTo = require('./messages/mconnectto.js')\nconst MDirect = require('./messages/mdirect.js')\n\n/**\n * A peer has an inview and an outview, i.e., tables containing sockets to\n * communicate with remote peers. This module transforms a peer so it can act as\n * a bridge between its direct neighbors. Consequently, these neighbors can\n * create their own communication channels: necessary data to establish the\n * connection travel through the bridge; once the connection is successfully\n * established, they communicate using their own direct connection.\n */\nclass N2N extends EventEmitter {\n  /**\n     * @param {object} [options] options represented as an object (refer to\n     * neighborhood-wrtc for other options).\n     * @param {string} [options.pid] The unique identifier of the protocol.\n     * @param {number} [options.retry = 5] The number of times it tries to send\n     * a message.\n     * @param {Neighborhood} [options.inview] The neighborhood used for inviews,\n     * i.e., incoming arcs.\n     * @param {Neighborhood} [options.outview] The neigbhorhood used for\n     * outviews, i.e., outgoing arcs.\n     */\n  constructor (options = {}) {\n    super()\n    // #0 process the options\n    this.options = merge({ pid: uuid(),\n      peer: uuid(),\n      retry: 5 }, options)\n    // #1 initialize unmutable protocolId\n    this.PID = this.options.pid\n    // #2 initialize the neighborhoods /!\\ i.peer and o.peer must be ≠\n    this.NI = this.options.inview ||\n            new Neighborhood(merge(merge({}, this.options),\n        {peer: this.options.peer + '-I'}))\n    this.NO = this.options.outview ||\n            new Neighborhood(merge(merge({}, this.options),\n        {peer: this.options.peer + '-O'}))\n    // #3 initialize the interfaces\n    this.II = this.NI.register(this)\n    this.IO = this.NO.register(this)\n    this.PEER = this.II.peer + '|' + this.IO.peer\n    debug('[%s] registered to ==> %s ==>', this.PID, this.PEER)\n    // #4 intialize the tables\n    this.i = new Map()\n    this.o = new Map()\n  };\n\n  /**\n     * @private The getter of the identifier of this protocol.\n     * @returns {string} The identifier of this protocol.\n     */\n  _pid () {\n    return this.PID\n  };\n\n  /**\n     * @private Behavior when this protocol receives a message from peerId.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {object} message The message received.\n     */\n  _received (peerId, message) {\n    if (message.type) {\n      if (message.type === 'MConnectTo' ||\n                message.type === 'MForwarded' ||\n                message.type === 'MForwardTo') {\n        this._bridge(peerId, message)\n      } else if (message.type === 'MResponse' ||\n                       message.type === 'MRequest' ||\n                       message.type === 'MDirect') {\n        this._direct(peerId, message)\n      } else {\n        this.emit('receive', peerId, message)\n      };\n    } else {\n      this.emit('receive', peerId, message)\n    };\n  };\n\n  /**\n     * @private Behavior when this protocol receives a stream from peerId.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {object} stream The stream received.\n     */\n  _streamed (peerId, stream) {\n    this.emit('stream', peerId, stream)\n  };\n\n  /**\n     * @private Update the local view.\n     * @param {string} peerId The identifier of the peer reachable through the\n     * newly added arc.\n     * @param {boolean} isOutgoing State if the added arc is outgoing or not.\n     */\n  _connected (peerId, isOutgoing) {\n    if (isOutgoing) {\n      if (!this.o.has(peerId)) {\n        this.o.set(peerId, 0)\n      };\n      this.o.set(peerId, this.o.get(peerId) + 1)\n      this.emit('open', peerId) // only consider outgoing arcs\n    } else {\n      if (!this.i.has(peerId)) {\n        this.i.set(peerId, 0)\n      };\n      this.i.set(peerId, this.i.get(peerId) + 1)\n    };\n  };\n\n  /**\n     * @private Update the local view.\n     * @param {string} peerId The identifier of the peer that removed an arc.\n     */\n  _disconnected (peerId) {\n    if (this.o.has(peerId)) {\n      this.o.set(peerId, this.o.get(peerId) - 1);\n      (this.o.get(peerId) <= 0) && this.o.delete(peerId)\n      this.emit('close', peerId) // only outview\n    } else if (this.i.has(peerId)) {\n      this.i.set(peerId, this.i.get(peerId) - 1);\n      (this.i.get(peerId) <= 0) && this.i.delete(peerId)\n    };\n  };\n\n  /**\n     * @private Notify failure\n     * @param {string} peerId The identifier of the peer we failed to establish\n     * a connection with.\n     * @param {boolean} isOutgoing State whether or not the failed arc was\n     * supposed to be an outgoing arc.\n     */\n  _failed (peerId, isOutgoing) {\n    // only takes into account the outgoing arcs\n    isOutgoing && this.emit('fail', peerId)\n  }\n\n  /**\n     * @private Function that execute to bridge a connection establishement\n     * between two peers: we start from (i -> b -> a) to get (i -> b -> a) and\n     * (i -> a).\n     * @param {string} peerId The identifier of the peer that sent us the\n     * message\n     * @param {MConnectTo|MForwardTo|MForwarded} msg The message received.\n     */\n  _bridge (peerId, msg) {\n    if (msg.type && msg.type === 'MConnectTo') {\n      // #1 we are the initiator\n      this.IO.connect((req) => {\n        this.send(peerId, new MForwardTo(msg.from, msg.to, req),\n          this.options.retry)\n          .catch((e) => { }) // nothing on catch\n      })\n    } else if (msg.type && msg.type === 'MForwardTo') {\n      // #2 we are the bridge\n      this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message),\n        this.options.retry)\n        .catch((e) => { }) // nothing on catch\n    } else if (msg.type && msg.type === 'MForwarded' &&\n                   msg.message.type === 'MRequest') {\n      // #3 we are the acceptor\n      this.II.connect((res) => {\n        this.send(peerId, new MForwardTo(msg.to, msg.from, res),\n          this.options.retry)\n          .catch((e) => { }) // nothing on catch\n      }, msg.message)\n      // #4 reapplies #2\n    } else if (msg.type && msg.type === 'MForwarded' &&\n                   msg.message.type === 'MResponse') {\n      // #5 we are the finalizor\n      this.IO.connect(msg.message)\n    };\n  };\n\n  /**\n     * @private Create a connection with a neighbor: from (i -> a) we obtain\n     * either (i <-> a) or (i => a). In the former case, assuming that Peer a\n     * does not already have a connection to Peer i, it must create a WebRTC\n     * connection to a. In the latter case, Peer i only duplicates its arc to\n     * Peer a. Thus, it must disconnect twice to truly destroy the connection.\n     * @param {string} peerId The identifier of the peer that we received a\n     * message from.\n     * @param {string} message The received message.\n     */\n  _direct (peerId, message) {\n    (message.type === 'MDirect') &&\n            this.IO.connect((req) => {\n              this.send(peerId, req, this.options.retry).catch((e) => { })\n            });\n    (message.type === 'MRequest') &&\n            this.II.connect((res) => {\n              this.send(peerId, res, this.options.retry).catch((e) => { })\n            }, message);\n    (message.type === 'MResponse') &&\n            this.IO.connect(message)\n  };\n\n  /**\n     * Send a message using either the inview or the outview.\n     * @param {string} peerId The identifier of the receiver.\n     * @param {object} message The message to send.\n     * @param {number} [retry = 0] Number of times it retries to send a\n     * message.\n     * @return {promise} Promise that resolves if the message is sent, reject\n     * otherwise.\n     */\n  send (peerId, message, retry = 0) {\n    let promise\n    // #1 normal behavior\n    if (this.i.has(peerId)) {\n      promise = this.II.send(peerId, message, retry)\n    } else if (this.o.has(peerId)) {\n      promise = this.IO.send(peerId, message, retry)\n    } else {\n      // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id\n      const root = peerId.substr(0, peerId.length - 2)\n      const inv = root + '-I'\n      const out = root + '-O'\n      if (this.o.has(inv)) {\n        promise = this.IO.send(inv, message, retry)\n      } else if (this.i.has(out)) {\n        promise = this.II.send(out, message, retry)\n      } else {\n        // #2 last chance behavior\n        promise = new Promise((resolve, reject) => {\n          const _send = (r) => {\n            this.IO.send(peerId, message, 0)\n              .then(() => resolve())\n              .catch((e) => this.II.send(peerId, message, 0)\n                .then(() => resolve())\n                .catch((e) => {\n                  if (r < retry) {\n                    setTimeout(() => {\n                      _send(r + 1)\n                    }, 1000)\n                  } else {\n                    reject(e)\n                  }\n                }))\n          }\n          _send(0)\n        })\n      }\n    };\n    return promise\n  };\n\n  /**\n     * Send a MediaStream using either the inview or the outview.\n     * @param {string} peerId The identifier of the receiver.\n     * @param {MediaStream} media The message to send.\n     * @param {number} [retry = 0] Number of times it retries to send a\n     * message.\n     * @return {promise} Promise that resolves if the message is sent, reject\n     * otherwise.\n     */\n  stream (peerId, media, retry = 0) {\n    let promise\n    // #1 normal behavior\n    if (this.i.has(peerId)) {\n      promise = this.II.stream(peerId, media, retry)\n    } else if (this.o.has(peerId)) {\n      promise = this.IO.stream(peerId, media, retry)\n    } else {\n      // determine if it is an inview id or an outview arc and in case of inview, tranform it to outview and try to find it in the outview, reverse method for outview id\n      const root = peerId.substr(0, peerId.length - 2)\n      const inv = root + '-I'\n      const out = root + '-O'\n      if (this.o.has(inv)) {\n        promise = this.IO.stream(inv, media, retry)\n      } else if (this.i.has(out)) {\n        promise = this.II.stream(out, media, retry)\n      } else {\n        // #2 last chance behavior\n        promise = new Promise((resolve, reject) => {\n          const _send = (r) => {\n            this.IO.stream(peerId, media, 0)\n              .then(() => resolve())\n              .catch((e) => this.II.send(peerId, media, 0)\n                .then(() => resolve())\n                .catch((e) => {\n                  if (r < retry) {\n                    setTimeout(() => {\n                      _send(r + 1)\n                    }, 1000)\n                  } else {\n                    reject(e)\n                  }\n                }))\n          }\n          _send(0)\n        })\n      }\n    };\n    return promise\n  };\n\n  /**\n     * Create an arc (establishes a WebRTC connection if need be) from 'from' to\n     * 'to'. (TODO) explain function args\n     * @param {function|MResponse|string|null} from - The identifier of the peer\n     * that must initiate the connection. Null implicitely means this.\n     * @param {MRequest|string|null} to - The identifier of the peer that must\n     * accept the connection. Null implicitely means this.\n     */\n  connect (from = null, to = null) {\n    // #1 handle bootstrap using other communication channels than our\n    // own.\n    if (typeof from === 'function' && to === null) {\n      this.IO.connect((req) => from(req)) // from: callback\n    } else if (typeof from === 'function' && to !== null) {\n      debug('[%s] %s <π= ??? =π= %s',\n        this.PID, this.getInviewId(), to.peer)\n      this.II.connect((res) => from(res), to) // from: cb; to: msg\n    } else if (from !== null && typeof from === 'object' && to === null) {\n      this.IO.connect(from) // from: msg\n    } else {\n      // #2 handle n2n connections\n      // #A replace our own identifier by null\n      if (from !== null && (from === this.IO.peer || from === this.II.peer)) {\n        from = null\n      };\n      if (to !== null && (to === this.IO.peer || to === this.II.peer)) {\n        to = null\n      };\n\n      if (from !== null && to !== null) {\n        // #1 arg1: from; arg2: to\n        // from -> this -> to  creates  from -> to\n        debug('[%s] %s =π= %s =π> %s', this.PID, from, this.PEER, to)\n        this.send(from, new MConnectTo(from, to),\n          this.options.retry).catch((e) => { })\n      } else if (from !== null) {\n        // #2 arg1: from\n        // from -> this  becomes  from => this\n        this.send(from, new MDirect(),\n          this.options.retry).catch((e) => { })\n      } else if (to !== null) {\n        // #3 arg2: to\n        // this -> to becomes this => to\n        this._direct(to, new MDirect()) // emulate a MDirect receipt\n      };\n    };\n  };\n\n  /**\n     * Remove an arc of the outview or all arcs\n     * @param {string} peerId The identifier of the arc to remove.\n     */\n  disconnect (peerId) {\n    if (typeof peerId === 'undefined') {\n      this.II.disconnect()\n      this.IO.disconnect()\n    } else {\n      if (this.i.has(peerId)) this.II.disconnect(peerId)\n      if (this.o.has(peerId)) this.IO.disconnect(peerId)\n    };\n  }\n\n  /**\n   * Return living neighbours as specified in neighborhood-wrtc\n   * @return {[Object]} Object containing living inview and living outview entries\n   */\n  neighbours () {\n    return {\n      inview: this.II.neighbours(),\n      outview: this.IO.neighbours()\n    }\n  }\n\n  /**\n   * Return an array of uniq reachable peers without distinction between inview or outview (without -I or -O)\n   * if you want to send a message to one of these peers, add either a -I or a -I (or pass a boolean as parameter, default false)\n   * @param {Boolean} [transform=false] If true, transform final Id into ids that can be used to send messages\n   * @return {[type]} [description]\n   */\n  uniqNeighbours (transform = false) {\n    const i = this.II.neighbours()\n    const o = this.IO.neighbours()\n    const peers = []\n    i.forEach(entry => {\n      const p = entry.peer.substr(0, entry.peer.length - 2)\n      if (peers.indexOf(p) === -1) peers.push(p)\n    })\n    o.forEach(entry => {\n      const p = entry.peer.substr(0, entry.peer.length - 2)\n      if (peers.indexOf(p) === -1) peers.push(p)\n    })\n    if (transform) return peers.map(p => p + '-O')\n    return peers\n  }\n\n  /**\n     * Getter of the inview.\n     * @returns {Map} A new map comprising {peerId => occurrences}.\n     */\n  getInview () {\n    return new Map(this.i)\n  };\n\n  /**\n     * Getter of the inview ID.\n     * @returns {string} The identifier of the inview.\n     */\n  getInviewId () {\n    return this.NI.PEER\n  };\n\n  /**\n     * Getter of the outview.\n     * @returns {Map} A new map comprising {peerId => occurrences}.\n     */\n  getOutview () {\n    return new Map(this.o)\n  };\n\n  /**\n     * Getter of the inview ID.\n     * @returns {string} The identifier of the outview.\n     */\n  getOutviewId () {\n    return this.NO.PEER\n  };\n};\n\nmodule.exports = N2N\n",
     "static": true,
     "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/lib/n2n-overlay.js",
     "access": "public",
@@ -1054,7 +1054,7 @@
     "importPath": "n2n-overlay-wrtc",
     "importStyle": "N2N",
     "description": "A peer has an inview and an outview, i.e., tables containing sockets to\ncommunicate with remote peers. This module transforms a peer so it can act as\na bridge between its direct neighbors. Consequently, these neighbors can\ncreate their own communication channels: necessary data to establish the\nconnection travel through the bridge; once the connection is successfully\nestablished, they communicate using their own direct connection.",
-    "lineNumber": 23,
+    "lineNumber": 22,
     "interface": false,
     "extends": [
       "events~EventEmitter"
@@ -1071,7 +1071,7 @@
     "longname": "lib/n2n-overlay.js~N2N#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 35,
+    "lineNumber": 34,
     "params": [
       {
         "nullable": null,
@@ -1136,7 +1136,7 @@
     "longname": "lib/n2n-overlay.js~N2N#options",
     "access": "public",
     "description": null,
-    "lineNumber": 39,
+    "lineNumber": 37,
     "undocument": true,
     "type": {
       "types": [
@@ -1153,7 +1153,7 @@
     "longname": "lib/n2n-overlay.js~N2N#PID",
     "access": "public",
     "description": null,
-    "lineNumber": 43,
+    "lineNumber": 41,
     "undocument": true,
     "type": {
       "types": [
@@ -1170,7 +1170,7 @@
     "longname": "lib/n2n-overlay.js~N2N#NI",
     "access": "public",
     "description": null,
-    "lineNumber": 45,
+    "lineNumber": 43,
     "undocument": true,
     "type": {
       "types": [
@@ -1187,7 +1187,7 @@
     "longname": "lib/n2n-overlay.js~N2N#NO",
     "access": "public",
     "description": null,
-    "lineNumber": 48,
+    "lineNumber": 46,
     "undocument": true,
     "type": {
       "types": [
@@ -1204,7 +1204,7 @@
     "longname": "lib/n2n-overlay.js~N2N#II",
     "access": "public",
     "description": null,
-    "lineNumber": 52,
+    "lineNumber": 50,
     "undocument": true,
     "type": {
       "types": [
@@ -1221,7 +1221,7 @@
     "longname": "lib/n2n-overlay.js~N2N#IO",
     "access": "public",
     "description": null,
-    "lineNumber": 53,
+    "lineNumber": 51,
     "undocument": true,
     "type": {
       "types": [
@@ -1238,7 +1238,7 @@
     "longname": "lib/n2n-overlay.js~N2N#PEER",
     "access": "public",
     "description": null,
-    "lineNumber": 54,
+    "lineNumber": 52,
     "undocument": true,
     "type": {
       "types": [
@@ -1255,7 +1255,7 @@
     "longname": "lib/n2n-overlay.js~N2N#i",
     "access": "public",
     "description": null,
-    "lineNumber": 57,
+    "lineNumber": 55,
     "undocument": true,
     "type": {
       "types": [
@@ -1272,7 +1272,7 @@
     "longname": "lib/n2n-overlay.js~N2N#o",
     "access": "public",
     "description": null,
-    "lineNumber": 58,
+    "lineNumber": 56,
     "undocument": true,
     "type": {
       "types": [
@@ -1291,7 +1291,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_pid",
     "access": "private",
     "description": "",
-    "lineNumber": 65,
+    "lineNumber": 63,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1319,7 +1319,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_received",
     "access": "private",
     "description": "",
-    "lineNumber": 75,
+    "lineNumber": 73,
     "params": [
       {
         "nullable": null,
@@ -1355,7 +1355,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_streamed",
     "access": "private",
     "description": "",
-    "lineNumber": 100,
+    "lineNumber": 97,
     "params": [
       {
         "nullable": null,
@@ -1391,7 +1391,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_connected",
     "access": "private",
     "description": "",
-    "lineNumber": 111,
+    "lineNumber": 107,
     "params": [
       {
         "nullable": null,
@@ -1427,7 +1427,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_disconnected",
     "access": "private",
     "description": "",
-    "lineNumber": 130,
+    "lineNumber": 126,
     "params": [
       {
         "nullable": null,
@@ -1453,7 +1453,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_failed",
     "access": "private",
     "description": "",
-    "lineNumber": 148,
+    "lineNumber": 144,
     "params": [
       {
         "nullable": null,
@@ -1489,7 +1489,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_bridge",
     "access": "private",
     "description": "",
-    "lineNumber": 162,
+    "lineNumber": 157,
     "params": [
       {
         "nullable": null,
@@ -1527,7 +1527,7 @@
     "longname": "lib/n2n-overlay.js~N2N#_direct",
     "access": "private",
     "description": "",
-    "lineNumber": 201,
+    "lineNumber": 196,
     "params": [
       {
         "nullable": null,
@@ -1563,7 +1563,7 @@
     "longname": "lib/n2n-overlay.js~N2N#send",
     "access": "public",
     "description": "Send a message using either the inview or the outview.",
-    "lineNumber": 224,
+    "lineNumber": 218,
     "params": [
       {
         "nullable": null,
@@ -1610,6 +1610,61 @@
   {
     "__docId__": 94,
     "kind": "method",
+    "name": "stream",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#stream",
+    "access": "public",
+    "description": "Send a MediaStream using either the inview or the outview.",
+    "lineNumber": 268,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "peerId",
+        "description": "The identifier of the receiver."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "MediaStream"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "media",
+        "description": "The message to send."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 0",
+        "defaultRaw": 0,
+        "name": "retry",
+        "description": "Number of times it retries to send a\nmessage."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "promise"
+      ],
+      "spread": false,
+      "description": "Promise that resolves if the message is sent, reject\notherwise."
+    }
+  },
+  {
+    "__docId__": 95,
+    "kind": "method",
     "name": "connect",
     "memberof": "lib/n2n-overlay.js~N2N",
     "generator": false,
@@ -1618,7 +1673,7 @@
     "longname": "lib/n2n-overlay.js~N2N#connect",
     "access": "public",
     "description": "Create an arc (establishes a WebRTC connection if need be) from 'from' to\n'to'. (TODO) explain function args",
-    "lineNumber": 272,
+    "lineNumber": 317,
     "params": [
       {
         "nullable": null,
@@ -1649,7 +1704,7 @@
     "return": null
   },
   {
-    "__docId__": 95,
+    "__docId__": 96,
     "kind": "method",
     "name": "disconnect",
     "memberof": "lib/n2n-overlay.js~N2N",
@@ -1659,7 +1714,7 @@
     "longname": "lib/n2n-overlay.js~N2N#disconnect",
     "access": "public",
     "description": "Remove an arc of the outview or all arcs",
-    "lineNumber": 316,
+    "lineNumber": 361,
     "params": [
       {
         "nullable": null,
@@ -1675,7 +1730,64 @@
     "return": null
   },
   {
-    "__docId__": 96,
+    "__docId__": 97,
+    "kind": "method",
+    "name": "neighbours",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#neighbours",
+    "access": "public",
+    "description": "Return living neighbours as specified in neighborhood-wrtc",
+    "lineNumber": 375,
+    "return": {
+      "nullable": null,
+      "types": [
+        "[Object]"
+      ],
+      "spread": false,
+      "description": "Object containing living inview and living outview entries"
+    },
+    "params": []
+  },
+  {
+    "__docId__": 98,
+    "kind": "method",
+    "name": "uniqNeighbours",
+    "memberof": "lib/n2n-overlay.js~N2N",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/n2n-overlay.js~N2N#uniqNeighbours",
+    "access": "public",
+    "description": "Return an array of uniq reachable peers without distinction between inview or outview (without -I or -O)\nif you want to send a message to one of these peers, add either a -I or a -I (or pass a boolean as parameter, default false)",
+    "lineNumber": 388,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "transform",
+        "description": "If true, transform final Id into ids that can be used to send messages"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "[type]"
+      ],
+      "spread": false,
+      "description": "[description]"
+    }
+  },
+  {
+    "__docId__": 99,
     "kind": "method",
     "name": "getInview",
     "memberof": "lib/n2n-overlay.js~N2N",
@@ -1685,7 +1797,7 @@
     "longname": "lib/n2n-overlay.js~N2N#getInview",
     "access": "public",
     "description": "Getter of the inview.",
-    "lineNumber": 330,
+    "lineNumber": 408,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1703,7 +1815,7 @@
     "params": []
   },
   {
-    "__docId__": 97,
+    "__docId__": 100,
     "kind": "method",
     "name": "getInviewId",
     "memberof": "lib/n2n-overlay.js~N2N",
@@ -1713,7 +1825,7 @@
     "longname": "lib/n2n-overlay.js~N2N#getInviewId",
     "access": "public",
     "description": "Getter of the inview ID.",
-    "lineNumber": 338,
+    "lineNumber": 416,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1731,7 +1843,7 @@
     "params": []
   },
   {
-    "__docId__": 98,
+    "__docId__": 101,
     "kind": "method",
     "name": "getOutview",
     "memberof": "lib/n2n-overlay.js~N2N",
@@ -1741,7 +1853,7 @@
     "longname": "lib/n2n-overlay.js~N2N#getOutview",
     "access": "public",
     "description": "Getter of the outview.",
-    "lineNumber": 346,
+    "lineNumber": 424,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1759,7 +1871,7 @@
     "params": []
   },
   {
-    "__docId__": 99,
+    "__docId__": 102,
     "kind": "method",
     "name": "getOutviewId",
     "memberof": "lib/n2n-overlay.js~N2N",
@@ -1769,7 +1881,7 @@
     "longname": "lib/n2n-overlay.js~N2N#getOutviewId",
     "access": "public",
     "description": "Getter of the inview ID.",
-    "lineNumber": 354,
+    "lineNumber": 432,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1796,7 +1908,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n    \"name\": \"n2n-overlay-wrtc\",\n    \"version\": \"2.0.9\",\n    \"description\": \"A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.\",\n    \"main\": \"lib/n2n-overlay.js\",\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/ran3d/n2n-overlay-wrtc\"\n    },\n    \"keywords\": [\n        \"WebRTC\",\n        \"browser-to-browser communication\",\n        \"overlay network\",\n        \"distributed signaling server\"\n    ],\n    \"author\": \"Chat-Wane\",\n    \"license\": \"MIT\",\n    \"dependencies\": {\n        \"debug\": \"^3.1.0\",\n        \"lodash\": \"^4.17.5\",\n        \"neighborhood-wrtc\": \"^2.0.6\",\n        \"uuid\": \"^3.2.1\"\n    },\n    \"bundledDependencies\": [\n        \"neighborhood-wrtc\",\n        \"lodash\",\n        \"uuid\",\n        \"debug\"\n    ],\n    \"devDependencies\": {\n        \"babel-core\": \"^6.26.0\",\n        \"babel-preset-env\": \"^1.6.1\",\n        \"babelify\": \"^8.0.0\",\n        \"browserify\": \"^16.1.1\",\n        \"esdoc\": \"^1.0.4\",\n        \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n        \"esdoc-node\": \"^1.0.3\",\n        \"esdoc-standard-plugin\": \"^1.0.0\"\n    },\n    \"scripts\": {\n        \"esdoc\": \"esdoc && npm run esdoc:example\",\n        \"esdoc:example\": \"cp -R ./build ./example ./img ./docs\",\n        \"test\": \"npm run all\",\n        \"all\": \"npm run debug && npm run build && npm run esdoc\",\n        \"debug\": \"browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js\",\n        \"build\": \"browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] > build/n2n-overlay-wrtc.bundle.js\"\n    }\n}\n",
+    "content": "{\n    \"name\": \"n2n-overlay-wrtc\",\n    \"version\": \"2.0.10\",\n    \"description\": \"A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.\",\n    \"main\": \"lib/n2n-overlay.js\",\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/ran3d/n2n-overlay-wrtc\"\n    },\n    \"keywords\": [\n        \"WebRTC\",\n        \"browser-to-browser communication\",\n        \"overlay network\",\n        \"distributed signaling server\"\n    ],\n    \"author\": \"Chat-Wane\",\n    \"license\": \"MIT\",\n    \"dependencies\": {\n        \"debug\": \"^3.1.0\",\n        \"lodash\": \"^4.17.10\",\n        \"neighborhood-wrtc\": \"^3.0.0\",\n        \"uuid\": \"^3.2.1\"\n    },\n    \"bundledDependencies\": [\n        \"neighborhood-wrtc\",\n        \"lodash\",\n        \"uuid\",\n        \"debug\"\n    ],\n    \"devDependencies\": {\n        \"babel-core\": \"^6.26.3\",\n        \"babel-preset-env\": \"^1.7.0\",\n        \"babelify\": \"^8.0.0\",\n        \"browserify\": \"^16.2.2\",\n        \"esdoc\": \"^1.1.0\",\n        \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n        \"esdoc-node\": \"^1.0.3\",\n        \"esdoc-standard-plugin\": \"^1.0.0\",\n        \"snazzy\": \"^7.1.1\",\n        \"standard\": \"^11.0.1\"\n    },\n    \"scripts\": {\n        \"lint\": \"standard \\\"./lib/**/*.js\\\" \\\"./example/*.js\\\" --verbose | snazzy\",\n        \"fix\": \"standard --fix --verbose \\\"./example/*.js\\\" \\\"./lib/**/*.js\\\" | snazzy \",\n        \"esdoc\": \"esdoc && npm run esdoc:example\",\n        \"esdoc:example\": \"cp -R ./build ./example ./img ./docs\",\n        \"test\": \"npm run all\",\n        \"all\": \"npm run lint && npm run all:build && npm run esdoc\",\n        \"debug\": \"browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] --debug > build/n2n-overlay-wrtc.bundle.debug.js\",\n        \"build\": \"browserify -r ./lib/n2n-overlay.js:n2n-overlay-wrtc -t [ babelify --presets [ env ] ] > build/n2n-overlay-wrtc.bundle.js\",\n        \"all:build\": \"npm run build && npm run debug\"\n    }\n}\n",
     "longname": "/home/travis/build/RAN3D/n2n-overlay-wrtc/package.json",
     "name": "package.json",
     "static": true,

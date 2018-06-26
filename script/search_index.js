@@ -570,6 +570,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "lib/n2n-overlay.js~n2n#neighbours",
+    "class/lib/n2n-overlay.js~N2N.html#instance-method-neighbours",
+    "lib/n2n-overlay.js~N2N#neighbours",
+    "method"
+  ],
+  [
     "lib/n2n-overlay.js~n2n#o",
     "class/lib/n2n-overlay.js~N2N.html#instance-member-o",
     "lib/n2n-overlay.js~N2N#o",
@@ -585,6 +591,18 @@ window.esdocSearchIndex = [
     "lib/n2n-overlay.js~n2n#send",
     "class/lib/n2n-overlay.js~N2N.html#instance-method-send",
     "lib/n2n-overlay.js~N2N#send",
+    "method"
+  ],
+  [
+    "lib/n2n-overlay.js~n2n#stream",
+    "class/lib/n2n-overlay.js~N2N.html#instance-method-stream",
+    "lib/n2n-overlay.js~N2N#stream",
+    "method"
+  ],
+  [
+    "lib/n2n-overlay.js~n2n#uniqneighbours",
+    "class/lib/n2n-overlay.js~N2N.html#instance-method-uniqNeighbours",
+    "lib/n2n-overlay.js~N2N#uniqNeighbours",
     "method"
   ]
 ]
