@@ -10729,24 +10729,64 @@ var N2N = function (_EventEmitter) {
     _classCallCheck(this, N2N);
 
     // #0 process the options
+    /**
+     * @public
+     * @type {Object} Options
+     */
     var _this = _possibleConstructorReturn(this, (N2N.__proto__ || Object.getPrototypeOf(N2N)).call(this));
 
     _this.options = merge({ pid: uuid(),
       peer: uuid(),
       retry: 5 }, options);
+    /**
+     * @private
+     * @type {EventEmitter}
+     */
     _this._bus = new EventEmitter();
     // #1 initialize unmutable protocolId
+    /**
+     * name of the protocol
+     * @type {String}
+     */
     _this.PID = _this.options.pid;
     // #2 initialize the neighborhoods /!\ i.peer and o.peer must be ≠
+    /**
+     * @private
+     * Neighborhood class corresponding to inview arcs
+     * @type {Neighborhood}
+     */
     _this.NI = _this.options.inview || new Neighborhood(merge(merge({}, _this.options), { peer: _this.options.peer + '-I' }));
+    /**
+     * @private
+     * Neighborhood class corresponding to outview arcs
+     * @type {Neighborhood}
+     */
     _this.NO = _this.options.outview || new Neighborhood(merge(merge({}, _this.options), { peer: _this.options.peer + '-O' }));
     // #3 initialize the interfaces
+    /**
+     * @private
+     */
     _this.II = _this.NI.register(_this);
+    /**
+     * @private
+     */
     _this.IO = _this.NO.register(_this);
+    /**
+     * The peer ID containing both inview and outview ID
+     * @type {String}
+     */
     _this.PEER = _this.II.peer + '|' + _this.IO.peer;
     debug('[%s] registered to ==> %s ==>', _this.PID, _this.PEER);
     // #4 intialize the tables
+    /**
+     * @private
+     * @type {Map}
+     */
     _this.i = new Map();
+    /**
+     * @private
+     * @type {Map}
+     */
     _this.o = new Map();
     return _this;
   }
@@ -10773,7 +10813,6 @@ var N2N = function (_EventEmitter) {
   }, {
     key: '_received',
     value: function _received(peerId, message) {
-      console.log(message);
       if (message.type) {
         if (message.type === 'MConnectTo' || message.type === 'MForwarded' || message.type === 'MForwardTo' || message.type === 'MBridge-status') {
           this._bridge(peerId, message);
@@ -11133,9 +11172,9 @@ var N2N = function (_EventEmitter) {
      * }).then(() => {
      *  console.log('n1 is connected to n3 through a signaling service')
      * })
-     * @param  {[type]} dest              [description]
-     * @param  {[type]} initOfferCallback [description]
-     * @return {[type]}                   [description]
+     * @param  {N2N} dest              Another N2N instance to connect with
+     * @param  {callback} initOfferCallback Or a signaling callback which will have an initOffer and the finalize method to call when you will receive an accepted offer (initOffer, done) => {this is your responsability to send the initOffer, accept the init offer somewhere and to call the done method }
+     * @return {Promise} Return a promise which will resolve when the connection is done, otherwise reject an error.
      */
 
   }, {
@@ -11170,10 +11209,21 @@ var N2N = function (_EventEmitter) {
     }
 
     /**
-     * Connection between us and a remote peer that is already connected.
+     * Connection between us and a remote peer that is ALREADY CONNECTED. It add an arc to the connection.
+     * So if you want to delete this connection you need to call twice n1.disconnect(n2.getOutviewId())
      * The connection will be: us -> peer
-     * @param  {[type]}  peerId peerId to connectWith
-     * @return {Boolean}        [description]
+     * @param  {String}  peerId peerId to connectWith
+     * @return {Promise} Resolve when the connection succesfully established
+     * @example
+     * const opts1 = { pid: '1', pendingTimeout: 2000, peer: '1', config: {trickle: true} }
+     * const n1 = new NO(opts1)
+     * const opts2 = { pid: '1', pendingTimeout: 2000, peer: '2', config: {trickle: true} }
+     * const n2 = new NO(opts2)
+     * // using the a direct callback
+     * n1.connection(n2).then((peer) => {
+     *  console.log('%s is connected to %s', n1.II.peer, n2.II.peer)
+     *  n1.connectionFromThisToPeer(n2.getOutviewId()).then((peer) => { console.log('%s is connected to %s', n1.II.peer, n2.II.peer)})
+     * })
      */
 
   }, {
@@ -11195,10 +11245,21 @@ var N2N = function (_EventEmitter) {
       });
     }
     /**
-     * Connection between us and a remote peer that is already connected.
-     * The connection will be: us -> peer
-     * @param  {[type]}  peerId peerId to connectWith
-     * @return {Boolean}        [description]
+     * Connection between us and a remote peer that is ALREADY CONNECTED. It add an arc to the connection from the peer to us
+     * So if you want to delete this connection you need to call twice n1.disconnect(n2.getOutviewId())
+     * The connection will be: peer -> us
+     * @param  {String}  peerId peerId to connectWith
+     * @return {Promise} Resolve when the connection succesfully established
+     * @example
+     * const opts1 = { pid: '1', pendingTimeout: 2000, peer: '1', config: {trickle: true} }
+     * const n1 = new NO(opts1)
+     * const opts2 = { pid: '1', pendingTimeout: 2000, peer: '2', config: {trickle: true} }
+     * const n2 = new NO(opts2)
+     * // using the a direct callback
+     * n1.connection(n2).then((peer) => {
+     *  console.log('%s is connected to %s', n1.II.peer, n2.II.peer)
+     *  n1.connectionFromPeertoThis(n2.getOutviewId()).then((peer) => { console.log('%s is connected to %s', n2.II.peer, n1.II.peer)})
+     * })
      */
 
   }, {
@@ -11214,7 +11275,7 @@ var N2N = function (_EventEmitter) {
           reject(e);
         }).then(function () {
           _this8._bus.once(id, function (message) {
-            console.log('connectionFromPeertoThis: ', message);
+            debug('connectionFromPeertoThis: ', message);
             if (message.status === true) {
               resolve();
             } else {
@@ -11228,9 +11289,9 @@ var N2N = function (_EventEmitter) {
     /**
      * @private
      * Default direct callback
-     * @param  {[type]} from [description]
-     * @param  {[type]} to   [description]
-     * @return {[type]}      [description]
+     * @param  {N2N} from The N2N initiator, usually us.
+     * @param  {N2N} to A N2N class to connect with
+     * @return {function}      return a callback with an offer as parameter
      */
 
   }, {
@@ -11247,7 +11308,7 @@ var N2N = function (_EventEmitter) {
 
     /**
      * Accept an initialized offer. Call this method only when you are using a custom signaling service.
-     * @param  {[type]} offer [description]
+     * @param  {Object} offer The offer to accept
      * @return {[type]}       [description]
      */
 
@@ -11267,8 +11328,8 @@ var N2N = function (_EventEmitter) {
     /**
      * @private
      * Callback to call when you receive an accepted offer
-     * @param  {[type]} offer [description]
-     * @return {[type]}       [description]
+     * @param  {Object} offer the accepted offer received for finalizing the connection
+     * @return {void}
      */
 
   }, {
@@ -11276,6 +11337,31 @@ var N2N = function (_EventEmitter) {
     value: function _onReceiveAcceptedOffer(offer) {
       this.IO.connect(offer);
     }
+
+    /**
+     * Connect 2 neighbours using existing connections instead of a signling service.
+     * Warning: the connection could be finished and you might not receive the ACK message from the initiator.
+     * Because the connection you and the initiator was down after the establishement of the connection between from and to.
+     * @param  {String} from The id of the remote peer that will initiate the connection
+     * @param  {String} to   the id of the remote peer that will be conencted with the "from" peer
+     * @return {Promise} Resolve when the bridge is finished. Reject if an error appear during the bridge. Do not reject you dont receive the ACK from the initiator.
+     * @example
+     * const opts1 = { pid: '1', pendingTimeout: 2000, peer: '1', config: {trickle: true} }
+     * const n1 = new NO(opts1)
+     * const opts2 = { pid: '1', pendingTimeout: 2000, peer: '2', config: {trickle: true} }
+     * const n2 = new NO(opts2)
+     * const opts2 = { pid: '1', pendingTimeout: 2000, peer: '3', config: {trickle: true} }
+     * const n2 = new NO(opts2)
+     * // using the a direct callback
+     * n1.connection(n2).then((peer) => {
+     *  n1.connection(n3).then((peer) => {
+     *    n1.brodge(n2.getOutviewId(), n3.getOutviewId()).then(() => {
+     *      console.log('Connection established between n2 and n3 through n1')
+     *    })
+     *  })
+     * })
+     */
+
   }, {
     key: 'bridge',
     value: function bridge(from, to) {
@@ -11298,13 +11384,14 @@ var N2N = function (_EventEmitter) {
     }
 
     /**
-       * Create an arc (establishes a WebRTC connection if need be) from 'from' to
-       * 'to'. (TODO) explain function args
-       * @param {function|MResponse|string|null} from - The identifier of the peer
-       * that must initiate the connection. Null implicitely means this.
-       * @param {MRequest|string|null} to - The identifier of the peer that must
-       * accept the connection. Null implicitely means this.
-       */
+     * @deprecated Use either: connection, connectionFromPeertoThis, connectionFromThisToPeer or bridge
+     * Create an arc (establishes a WebRTC connection if need be) from 'from' to
+     * 'to'. (TODO) explain function args
+     * @param {function|MResponse|string|null} from - The identifier of the peer
+     * that must initiate the connection. Null implicitely means this.
+     * @param {MRequest|string|null} to - The identifier of the peer that must
+     * accept the connection. Null implicitely means this.
+     */
 
   }, {
     key: 'connect',
@@ -11312,7 +11399,7 @@ var N2N = function (_EventEmitter) {
       var from = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-      console.log('[WARNING] deprecated method. Use either: connection, connectionFromPeertoThis, connectionFromThisToPeer or bridge');
+      console.warn('[WARNING] deprecated method. Use either: connection, connectionFromPeertoThis, connectionFromThisToPeer or bridge');
       if (typeof from === 'function' && to === null) {
         debug('%s Connect: from=function, to===null', this.IO.peer);
         return this.IO.connect(function (req) {
@@ -11333,8 +11420,6 @@ var N2N = function (_EventEmitter) {
         });
       } else {
         debug('%s handling n2n connection...', this.IO.peer);
-        // #2 handle n2n connections
-        // #A replace our own identifier by null
         if (from !== null && (from === this.IO.peer || from === this.II.peer)) {
           from = null;
         }
@@ -11343,20 +11428,11 @@ var N2N = function (_EventEmitter) {
         }
 
         if (from !== null && to !== null) {
-          // #1 arg1: from; arg2: to
-          // from -> this -> to  creates  from -> to
           return this.bridge(from, to);
         } else if (from !== null) {
           return this.connectionFromPeertoThis(from);
-          // // #2 arg1: from
-          // // from -> this  becomes  from => this
-          // this.send(from, new MDirect(),
-          //   this.options.retry).catch((e) => { })
         } else if (to !== null) {
           return this.connectionFromThisToPeer(to);
-          // // #3 arg2: to
-          // // this -> to becomes this => to
-          // this._direct(to, new MDirect()) // emulate a MDirect receipt
         }
       }
     }
@@ -11364,6 +11440,7 @@ var N2N = function (_EventEmitter) {
     /**
        * Remove an arc of the outview or all arcs
        * @param {string} peerId The identifier of the arc to remove.
+       * @return {Promise} Resolve when either one/all arc(s) is/are disconnected.
        */
 
   }, {
