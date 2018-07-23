@@ -18,7 +18,7 @@
     "dependencies": {
         "debug": "^3.1.0",
         "lodash": "^4.17.10",
-        "neighborhood-wrtc": "3.1.0",
+        "neighborhood-wrtc": "git+https://github.com/RAN3D/neighborhood-wrtc#new",
         "uuid": "^3.2.1"
     },
     "bundledDependencies": [
