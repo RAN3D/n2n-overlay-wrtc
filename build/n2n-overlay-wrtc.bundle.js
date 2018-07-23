@@ -1,5 +1,18 @@
 require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
+
+module.exports = function (jobId) {
+  var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  var reason = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  this.type = 'MBridge-status';
+  this.jobId = jobId;
+  this.status = status;
+  this.reason = reason;
+};
+
+},{}],2:[function(require,module,exports){
+'use strict';
 /**
  * Message that requires from-peer to initiate a WebRTC connection with to
  * to-peer.
@@ -27,7 +40,20 @@ function MConnectTo(from, to, jobId) {
 
 module.exports = MConnectTo;
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
+'use strict';
+
+module.exports = function (jobId) {
+  var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  var reason = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  this.type = 'MDirect-status';
+  this.jobId = jobId;
+  this.status = status;
+  this.reason = reason;
+};
+
+},{}],4:[function(require,module,exports){
 'use strict';
 /**
  * Messages traveling between two direct neighbors. It requests from the
@@ -47,7 +73,7 @@ var MDirect = function MDirect(jobId) {
 
 module.exports = MDirect;
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 /**
  * Message piggybacking another message that has been forwarded by an
@@ -76,7 +102,7 @@ function MForwarded(from, to, message, jobId) {
 
 module.exports = MForwarded;
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 /**
  * Message that asks a peer to forward the piggybacked message to to-peer.
@@ -104,7 +130,7 @@ function MForwardTo(from, to, message, jobId) {
 
 module.exports = MForwardTo;
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -257,9 +283,9 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -1997,7 +2023,7 @@ function numberIsNaN (obj) {
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":5,"ieee754":11}],8:[function(require,module,exports){
+},{"base64-js":7,"ieee754":13}],10:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -2196,7 +2222,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":9,"_process":15}],9:[function(require,module,exports){
+},{"./debug":11,"_process":17}],11:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -2423,7 +2449,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":14}],10:[function(require,module,exports){
+},{"ms":16}],12:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2948,7 +2974,7 @@ function functionBindPolyfill(context) {
   };
 }
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -3034,7 +3060,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -3057,7 +3083,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (global){
 /**
  * Lodash (Custom Build) <https://lodash.com/>
@@ -5024,7 +5050,7 @@ function stubFalse() {
 module.exports = merge;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -5178,7 +5204,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -5364,7 +5390,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (setImmediate,clearImmediate){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -5443,7 +5469,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":15,"timers":16}],17:[function(require,module,exports){
+},{"process/browser.js":17,"timers":18}],19:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -5468,7 +5494,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -5502,7 +5528,7 @@ if (getRandomValues) {
   };
 }
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -5533,7 +5559,7 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
-},{"./lib/bytesToUuid":17,"./lib/rng":18}],20:[function(require,module,exports){
+},{"./lib/bytesToUuid":19,"./lib/rng":20}],22:[function(require,module,exports){
 'use strict'
 
 const ELiving = require('./entries/eliving.js')
@@ -5688,7 +5714,7 @@ class ArcStore {
 
 module.exports = ArcStore
 
-},{"./entries/eliving.js":22,"./exceptions/exsocketnotfound.js":26}],21:[function(require,module,exports){
+},{"./entries/eliving.js":24,"./exceptions/exsocketnotfound.js":28}],23:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5711,7 +5737,7 @@ class EDying {
 
 module.exports = EDying
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5779,7 +5805,7 @@ class ELiving {
 
 module.exports = ELiving
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5808,7 +5834,7 @@ class EPending {
 
 module.exports = EPending
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5830,7 +5856,7 @@ class ExIncompleteMessage {
 
 module.exports = ExIncompleteMessage
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5850,7 +5876,7 @@ class ExProtocolExists {
 
 module.exports = ExProtocolExists
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5874,7 +5900,7 @@ class ExSocketNotFound {
 
 module.exports = ExSocketNotFound
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5957,7 +5983,7 @@ class INeighborhood {
 
 module.exports = INeighborhood
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict'
 
 /**
@@ -5981,7 +6007,7 @@ class MInternalSend {
 
 module.exports = MInternalSend
 
-},{}],29:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict'
 
 /**
@@ -6011,7 +6037,7 @@ class MRequest {
 
 module.exports = MRequest
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict'
 
 /**
@@ -6040,7 +6066,7 @@ class MResponse {
 
 module.exports = MResponse
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict'
 
 /**
@@ -6064,7 +6090,7 @@ class MSend {
 
 module.exports = MSend
 
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict'
 
 const debug = (require('debug'))('neighborhood-wrtc')
@@ -6774,7 +6800,7 @@ class Neighborhood extends Events {
 
 module.exports = Neighborhood
 
-},{"./arcstore.js":20,"./entries/edying.js":21,"./entries/epending.js":23,"./exceptions/exincompletemessage.js":24,"./exceptions/exprotocolexists.js":25,"./interfaces/ineighborhood.js":27,"./messages/minternalsend.js":28,"./messages/mrequest.js":29,"./messages/mresponse.js":30,"./messages/msend.js":31,"debug":34,"events":10,"lodash.merge":39,"simple-peer":53,"uuid/v4":58}],33:[function(require,module,exports){
+},{"./arcstore.js":22,"./entries/edying.js":23,"./entries/epending.js":25,"./exceptions/exincompletemessage.js":26,"./exceptions/exprotocolexists.js":27,"./interfaces/ineighborhood.js":29,"./messages/minternalsend.js":30,"./messages/mrequest.js":31,"./messages/mresponse.js":32,"./messages/msend.js":33,"debug":36,"events":12,"lodash.merge":41,"simple-peer":55,"uuid/v4":60}],35:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -6885,11 +6911,11 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../../../n2n-overlay-wrtc/node_modules/is-buffer/index.js")})
-},{"../../../../n2n-overlay-wrtc/node_modules/is-buffer/index.js":12}],34:[function(require,module,exports){
-arguments[4][8][0].apply(exports,arguments)
-},{"./debug":35,"_process":15,"dup":8}],35:[function(require,module,exports){
-arguments[4][9][0].apply(exports,arguments)
-},{"dup":9,"ms":40}],36:[function(require,module,exports){
+},{"../../../../n2n-overlay-wrtc/node_modules/is-buffer/index.js":14}],36:[function(require,module,exports){
+arguments[4][10][0].apply(exports,arguments)
+},{"./debug":37,"_process":17,"dup":10}],37:[function(require,module,exports){
+arguments[4][11][0].apply(exports,arguments)
+},{"dup":11,"ms":42}],38:[function(require,module,exports){
 // originally pulled out of simple-peer
 
 module.exports = function getBrowserRTC () {
@@ -6906,7 +6932,7 @@ module.exports = function getBrowserRTC () {
   return wrtc
 }
 
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -6931,18 +6957,18 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],39:[function(require,module,exports){
-arguments[4][13][0].apply(exports,arguments)
-},{"dup":13}],40:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"dup":14}],41:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
+arguments[4][15][0].apply(exports,arguments)
+},{"dup":15}],42:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"dup":16}],43:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6990,7 +7016,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 
 }).call(this,require('_process'))
-},{"_process":15}],42:[function(require,module,exports){
+},{"_process":17}],44:[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -7032,7 +7058,7 @@ function randomBytes (size, cb) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":15,"safe-buffer":52}],43:[function(require,module,exports){
+},{"_process":17,"safe-buffer":54}],45:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7164,7 +7190,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":45,"./_stream_writable":47,"core-util-is":33,"inherits":37,"process-nextick-args":41}],44:[function(require,module,exports){
+},{"./_stream_readable":47,"./_stream_writable":49,"core-util-is":35,"inherits":39,"process-nextick-args":43}],46:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7212,7 +7238,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":46,"core-util-is":33,"inherits":37}],45:[function(require,module,exports){
+},{"./_stream_transform":48,"core-util-is":35,"inherits":39}],47:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -8234,7 +8260,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":43,"./internal/streams/BufferList":48,"./internal/streams/destroy":49,"./internal/streams/stream":50,"_process":15,"core-util-is":33,"events":10,"inherits":37,"isarray":38,"process-nextick-args":41,"safe-buffer":52,"string_decoder/":54,"util":6}],46:[function(require,module,exports){
+},{"./_stream_duplex":45,"./internal/streams/BufferList":50,"./internal/streams/destroy":51,"./internal/streams/stream":52,"_process":17,"core-util-is":35,"events":12,"inherits":39,"isarray":40,"process-nextick-args":43,"safe-buffer":54,"string_decoder/":56,"util":8}],48:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8449,7 +8475,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":43,"core-util-is":33,"inherits":37}],47:[function(require,module,exports){
+},{"./_stream_duplex":45,"core-util-is":35,"inherits":39}],49:[function(require,module,exports){
 (function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -9139,7 +9165,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"./_stream_duplex":43,"./internal/streams/destroy":49,"./internal/streams/stream":50,"_process":15,"core-util-is":33,"inherits":37,"process-nextick-args":41,"safe-buffer":52,"timers":16,"util-deprecate":55}],48:[function(require,module,exports){
+},{"./_stream_duplex":45,"./internal/streams/destroy":51,"./internal/streams/stream":52,"_process":17,"core-util-is":35,"inherits":39,"process-nextick-args":43,"safe-buffer":54,"timers":18,"util-deprecate":57}],50:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9219,7 +9245,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":52,"util":6}],49:[function(require,module,exports){
+},{"safe-buffer":54,"util":8}],51:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -9294,10 +9320,10 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":41}],50:[function(require,module,exports){
+},{"process-nextick-args":43}],52:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":10}],51:[function(require,module,exports){
+},{"events":12}],53:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -9306,7 +9332,7 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":43,"./lib/_stream_passthrough.js":44,"./lib/_stream_readable.js":45,"./lib/_stream_transform.js":46,"./lib/_stream_writable.js":47}],52:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":45,"./lib/_stream_passthrough.js":46,"./lib/_stream_readable.js":47,"./lib/_stream_transform.js":48,"./lib/_stream_writable.js":49}],54:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -9370,7 +9396,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":7}],53:[function(require,module,exports){
+},{"buffer":9}],55:[function(require,module,exports){
 (function (Buffer){
 module.exports = Peer
 
@@ -10302,7 +10328,7 @@ function makeError (message, code) {
 function noop () {}
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":7,"debug":34,"get-browser-rtc":36,"inherits":37,"randombytes":42,"readable-stream":51}],54:[function(require,module,exports){
+},{"buffer":9,"debug":36,"get-browser-rtc":38,"inherits":39,"randombytes":44,"readable-stream":53}],56:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -10599,7 +10625,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":52}],55:[function(require,module,exports){
+},{"safe-buffer":54}],57:[function(require,module,exports){
 (function (global){
 
 /**
@@ -10670,13 +10696,13 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],56:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"dup":17}],57:[function(require,module,exports){
-arguments[4][18][0].apply(exports,arguments)
-},{"dup":18}],58:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 arguments[4][19][0].apply(exports,arguments)
-},{"./lib/bytesToUuid":56,"./lib/rng":57,"dup":19}],"n2n-overlay-wrtc":[function(require,module,exports){
+},{"dup":19}],59:[function(require,module,exports){
+arguments[4][20][0].apply(exports,arguments)
+},{"dup":20}],60:[function(require,module,exports){
+arguments[4][21][0].apply(exports,arguments)
+},{"./lib/bytesToUuid":58,"./lib/rng":59,"dup":21}],"n2n-overlay-wrtc":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10699,15 +10725,89 @@ var MForwardTo = require('./messages/mforwardto.js');
 var MForwarded = require('./messages/mforwarded.js');
 var MConnectTo = require('./messages/mconnectto.js');
 var MDirect = require('./messages/mdirect.js');
+var MDirectStatus = require('./messages/mdirect-status.js');
+var MBridgeStatus = require('./messages/mbridge-status.js');
 
 /**
- * A peer has an inview and an outview, i.e., tables containing sockets to
- * communicate with remote peers. This module transforms a peer so it can act as
- * a bridge between its direct neighbors. Consequently, these neighbors can
- * create their own communication channels: necessary data to establish the
- * connection travel through the bridge; once the connection is successfully
- * established, they communicate using their own direct connection.
- */
+* A peer has an inview and an outview, i.e., tables containing sockets to
+* communicate with remote peers. This module transforms a peer so it can act as
+* a bridge between its direct neighbors. Consequently, these neighbors can
+* create their own communication channels: necessary data to establish the
+* connection travel through the bridge; once the connection is successfully
+* established, they communicate using their own direct connection.
+* @example
+* const NO = require('n2n-overlay-wrtc')
+* localStorage.debug = 'n2n-overlay-wrtc' // eslint-disable-line
+* // # create 3 peers+protocols
+* const opts1 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '1', config: {trickle: true} }
+* const n1 = new NO(opts1)
+* const opts2 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '2', config: {trickle: true} }
+* const n2 = new NO(opts2)
+* const opts3 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '3', config: {trickle: true} }
+* const n3 = new NO(opts3)
+* n1.on('close', (peer) => {
+*  console.log('[%s] A connection has just closed: %s', n1.PEER, peer)
+* })
+* n2.on('close', (peer) => {
+*    console.log('[%s] A connection has just closed: %s', n2.PEER, peer)
+* })
+* n3.on('close', (peer) => {
+*  console.log('[%s] A connection has just closed: %s', n3.PEER, peer)
+* })
+* n1.on('open', (peer) => {
+*    console.log('[%s]A connection has just opened: %s', n1.PEER, peer)
+* })
+* n2.on('open', (peer) => {
+*  console.log('[%s]A connection has just opened: %s', n2.PEER, peer)
+* })
+* n3.on('open', (peer) => {
+*  console.log('[%s]A connection has just opened: %s', n3.PEER, peer)
+* })
+* function now () { // eslint-disable-line
+*    return new Promise((resolve, reject) => {
+*      n1.connection(n2).then((peer) => {
+*        console.log('* n1 is directly connected to n2')
+*        n1.connection(null, (initOffer, finalizeCallback) => {
+*          // SIMULATE a signaling service
+*          // (This is the responsability of n1 to find a way to send the offer to n3, and n3 to accept the offer)
+*          n3.acceptOffer(initOffer).then((acceptedOffer) => {
+*            // (This is the responsability of n3 to find a way to send the accepted offer to n1, and n1 to finalize the connection)
+*            finalizeCallback(acceptedOffer)
+*          }).catch(e => {
+*            reject(e)
+*          })
+*        }).then(() => {
+*          console.log('* n1 is connected to n3 through a signaling service')
+*          // behave()
+*          console.log('* New connection engaged from %s to %s', n1.getInviewId(), n2.getOutviewId())
+*          n1.connectionFromThisToPeer(n2.getOutviewId()).then(() => {
+*            console.log('* New connection established. from n1 to n2')
+*            n1.connectionFromPeertoThis(n2.getOutviewId()).then(() => {
+*              console.log('* New connection established. from n2 to n1')
+*              n1.bridge(n2.getOutviewId(), n3.getOutviewId()).then(() => {
+*                console.log('* bridge finished between n2 and n3.')
+*                resolve()
+*              }).catch(e => {
+*                reject(e)
+*              })
+*            }).catch(e => {
+*              reject(e)
+*            })
+*          }).catch(e => {
+*            reject(e)
+*          })
+*        }).catch(e => {
+*          reject(e)
+*        })
+*      }).catch(e => {
+*        reject(e)
+*      })
+*    })
+* }
+* now().then(() => {
+*   console.log('Hey, all peers are now conencted.')
+* })
+*/
 
 var N2N = function (_EventEmitter) {
   _inherits(N2N, _EventEmitter);
@@ -10913,61 +11013,36 @@ var N2N = function (_EventEmitter) {
       if (msg.type && msg.type === 'MConnectTo') {
         // #1 we are the initiator
         this.IO.connect(function (req) {
-          _this2.send(peerId, new MForwardTo(msg.from, msg.to, req, msg.jobId), _this2.options.retry).catch(function (e) {
+          _this2.send(peerId, new MForwardTo(msg.from, msg.to, req, msg.jobId)).catch(function (e) {
             // send ACK that the connection do not succeed
-            _this2.send(peerId, {
-              type: 'MBridge-status',
-              status: false,
-              reason: e,
-              jobId: msg.jobId
-            }).catch(function (e) {
+            _this2.send(peerId, new MBridgeStatus(msg.jobId, false, e)).catch(function (e) {
               // need a proper way to dispatch the ACK
               console.error('Cant send an ACK to ' + peerId, e);
             });
           }); // nothing on catch
         }).then(function (peer) {
           // send ACK that the connection succeeded
-          _this2.send(peerId, {
-            type: 'MBridge-status',
-            status: true,
-            reason: null,
-            jobId: msg.jobId
-          }).catch(function (e) {
+          _this2.send(peerId, new MBridgeStatus(msg.jobId, true, null)).catch(function (e) {
             // need a proper way to dispatch the ACK
             console.error('Cant send an ACK to ' + peerId, e);
           });
         }).catch(function (e) {
           // send ACK that the connection do not succeed
-          _this2.send(peerId, {
-            type: 'MBridge-status',
-            status: false,
-            reason: e,
-            jobId: msg.jobId
-          }).catch(function (e) {
+          _this2.send(peerId, new MBridgeStatus(msg.jobId, false, e)).catch(function (e) {
             // need a proper way to dispatch the ACK
             console.error('Cant send an ACK to ' + peerId, e);
           });
         });
       } else if (msg.type && msg.type === 'MForwardTo') {
         // #2 we are the bridge
-        this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message, msg.jobId), this.options.retry).catch(function (e) {
-          _this2.emit(msg.jobId, {
-            type: 'MBridge-status',
-            status: false,
-            reason: e,
-            jobId: msg.jobId
-          });
+        this.send(msg.to, new MForwarded(msg.from, msg.to, msg.message, msg.jobId)).catch(function (e) {
+          _this2.emit(msg.jobId, new MBridgeStatus(msg.jobId, false, e));
         }); // nothing on catch
       } else if (msg.type && msg.type === 'MForwarded' && msg.message.type === 'MRequest') {
         // #3 we are the acceptor
         this.II.connect(function (res) {
-          _this2.send(peerId, new MForwardTo(msg.to, msg.from, res, msg.jobId), _this2.options.retry).catch(function (e) {
-            _this2.send(peerId, {
-              type: 'MBridge-status',
-              status: false,
-              reason: e,
-              jobId: msg.jobId
-            }).catch(function (e) {
+          _this2.send(peerId, new MForwardTo(msg.to, msg.from, res, msg.jobId)).catch(function (e) {
+            _this2.send(peerId, new MBridgeStatus(msg.jobId, false, e)).catch(function (e) {
               // need a proper way to dispatch the ACK
               console.error('Cant send an ACK to ' + peerId, e);
             });
@@ -11001,29 +11076,19 @@ var N2N = function (_EventEmitter) {
       debug('direct, %s ', peerId, message);
       if (message.type === 'MDirect') {
         this.IO.connect(function (req) {
-          _this3.send(peerId, req, _this3.options.retry).catch(function (e) {});
+          _this3.send(peerId, req).catch(function (e) {});
         }).then(function (peer) {
-          _this3.send(peerId, {
-            type: 'MDirect-status',
-            jobId: message.jobId,
-            status: true,
-            reason: null
-          }, _this3.options.retry).catch(function (e) {
+          _this3.send(peerId, new MDirectStatus(message.jobId, true, null)).catch(function (e) {
             console.error('Please report. (_direct MDirect)');
           });
         }).catch(function (e) {
-          _this3.send(peerId, {
-            type: 'MDirect-status',
-            jobId: message.jobId,
-            status: false,
-            reason: e
-          }, _this3.options.retry).catch(function (e) {
+          _this3.send(peerId, new MDirectStatus(message.jobId, false, e)).catch(function (e) {
             console.error('Please report. (_direct MDirect)');
           });
         });
       } else if (message.type === 'MRequest') {
         this.II.connect(function (res) {
-          _this3.send(peerId, res, _this3.options.retry).catch(function (e) {});
+          _this3.send(peerId, res).catch(function (e) {});
         }, message);
       } else if (message.type === 'MResponse') {
         this.IO.connect(message);
@@ -11047,7 +11112,7 @@ var N2N = function (_EventEmitter) {
     value: function send(peerId, message) {
       var _this4 = this;
 
-      var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+      var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.options.retry;
 
       var promise = void 0;
       // #1 normal behavior
@@ -11106,7 +11171,7 @@ var N2N = function (_EventEmitter) {
     value: function stream(peerId, media) {
       var _this5 = this;
 
-      var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+      var retry = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.options.retry;
 
       var promise = void 0;
       // #1 normal behavior
@@ -11370,7 +11435,7 @@ var N2N = function (_EventEmitter) {
       return new Promise(function (resolve, reject) {
         debug('[%s] %s =π= %s =π> %s', _this10.PID, from, _this10.PEER, to);
         var id = uuid();
-        _this10.send(from, new MConnectTo(from, to, id), _this10.options.retry).catch(function (e) {
+        _this10.send(from, new MConnectTo(from, to, id)).catch(function (e) {
           reject(e);
         });
         _this10._bus.once(id, function (message) {
@@ -11548,4 +11613,4 @@ var N2N = function (_EventEmitter) {
 
 module.exports = N2N;
 
-},{"./messages/mconnectto.js":1,"./messages/mdirect.js":2,"./messages/mforwarded.js":3,"./messages/mforwardto.js":4,"debug":8,"events":10,"lodash.merge":13,"neighborhood-wrtc":32,"uuid/v4":19}]},{},[]);
+},{"./messages/mbridge-status.js":1,"./messages/mconnectto.js":2,"./messages/mdirect-status.js":3,"./messages/mdirect.js":4,"./messages/mforwarded.js":5,"./messages/mforwardto.js":6,"debug":10,"events":12,"lodash.merge":15,"neighborhood-wrtc":34,"uuid/v4":21}]},{},[]);
