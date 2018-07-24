@@ -1,12 +1,12 @@
-const NO = require('n2n-overlay-wrtc')
+console.log(N2N) // eslint-disable-line
 localStorage.debug = 'n2n-overlay-wrtc' // eslint-disable-line
 // # create 3 peers+protocols
 const opts1 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '1', config: {trickle: true} }
-const n1 = new NO(opts1)
+const n1 = new N2N(opts1) // eslint-disable-line
 const opts2 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '2', config: {trickle: true} }
-const n2 = new NO(opts2)
+const n2 = new N2N(opts2) // eslint-disable-line
 const opts3 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '3', config: {trickle: true} }
-const n3 = new NO(opts3)
+const n3 = new N2N(opts3) // eslint-disable-line
 
 n1.on('close', (peer) => {
   console.log('[%s] A connection has just closed: %s', n1.PEER, peer)
@@ -26,12 +26,6 @@ n2.on('open', (peer) => {
 n3.on('open', (peer) => {
   console.log('[%s]A connection has just opened: %s', n3.PEER, peer)
 })
-
-const callback = (from, to) => {
-  return (offer) => {
-    to.connect((answer) => { from.connect(answer) }, offer)
-  }
-}
 
 n1.on('stream', (id, stream) => {
   console.log('Receive a stream from: %s', id, stream)
@@ -101,20 +95,6 @@ function now () { // eslint-disable-line
 function all () { // eslint-disable-line
   now().then(() => {
     behave()
-  })
-}
-
-function old () { // eslint-disable-line
-  // #1 establishing a connection from n1 to n2
-  n1.connect(callback(n1, n2)).then((peer) => {
-    console.log('* connected to ', peer)
-    // #2 establishing a connection from n1 to n3
-    n1.connect(callback(n1, n3)).then((peer) => {
-      n1.connect(null, n2.getOutviewId())
-      n1.connect(n2.getOutviewId(), null)
-      console.log('* connected to ', peer)
-      n1.connect(n2.II.peer, n3.II.peer)
-    })
   })
 }
 
