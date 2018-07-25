@@ -1,0 +1,10 @@
+.esdoc.json
+.gitignore
+.travis.yml
+.npmignore
+deploy_doc.sh
+webpack*
+docs/
+examples/
+img/
+node_modules/

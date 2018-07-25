@@ -35,15 +35,17 @@ browser-to-browser connection from ```:]``` to ```:|```.
 
 Peers already in the network do not need to use a signaling server to establish
 connections, for each of them can act as a signaling server, i.e. as a bridge
-from a neighbor to another. In the figure, ```:3```, ```:]```, and ```:|``` are
-in the network. ```:3``` can establish a WebRTC connection to ```:|``` using
-```:]```. Such neighbor-to-neighbor connections are common in distributed
+from a neighbor to another. In the figure, `:3`, `:]`, and `:|` are
+in the network. `:3` can establish a WebRTC connection to `:|` using
+`:]`. Such neighbor-to-neighbor connections are common in distributed
 peer-sampling protocols.
 
 
 ## Installation
 
-```$ npm install n2n-overlay-wrtc```
+```bash
+npm install n2n-overlay-wrtc
+```
 
 ## API
 
@@ -56,4 +58,3 @@ A live example is available
 
 The module [spray-wrtc](https://github.com/ran3d/spray-wrtc) extends
 n2n-overlay-wrtc to implement a random peer-sampling protocol.
-

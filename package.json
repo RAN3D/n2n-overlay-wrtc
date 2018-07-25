@@ -18,9 +18,9 @@
     "dependencies": {
         "debug": "^3.1.0",
         "lodash.merge": "^4.6.1",
-        "neighborhood-wrtc": "git+https://github.com/RAN3D/neighborhood-wrtc#new",
+        "neighborhood-wrtc": "git+https://github.com/RAN3D/neighborhood-wrtc.git#new",
         "remove": "^0.1.5",
-        "unicast-definition": "^2.0.2",
+        "unicast-definition": "^3.0.1",
         "uuid": "^3.2.1"
     },
     "bundledDependencies": [
@@ -33,7 +33,7 @@
         "babel-core": "^6.26.3",
         "babel-loader": "^7.1.5",
         "babel-preset-env": "^1.7.0",
-        "babelify": "^9.0.0",
+        "babelify": "^8.0.0",
         "esdoc": "^1.1.0",
         "esdoc-ecmascript-proposal-plugin": "^1.0.0",
         "esdoc-node": "^1.0.3",
@@ -52,6 +52,7 @@
         "all": "npm run lint && npm run all:build && npm run esdoc",
         "debug": "webpack --mode development",
         "build": "webpack --mode production --config webpack.config.min.js",
+        "dev": "webpack --mode development --watch",
         "all:build": "npm run build && npm run debug",
         "webpack": "webpack"
     }

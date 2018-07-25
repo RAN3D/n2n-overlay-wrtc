@@ -3,10 +3,13 @@ localStorage.debug = 'n2n-overlay-wrtc' // eslint-disable-line
 // # create 3 peers+protocols
 const opts1 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '1', config: {trickle: true} }
 const n1 = new N2N(opts1) // eslint-disable-line
+const c1 = n1.channel({pid: 'animal', retry: 2})
 const opts2 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '2', config: {trickle: true} }
 const n2 = new N2N(opts2) // eslint-disable-line
+const c2 = n2.channel({pid: 'animal', retry: 2})
 const opts3 = { pid: '1', timeout: 1000, pendingTimeout: 2000, peer: '3', config: {trickle: true} }
 const n3 = new N2N(opts3) // eslint-disable-line
+const c3 = n3.channel({pid: 'animal', retry: 2})
 
 n1.on('close', (peer) => {
   console.log('[%s] A connection has just closed: %s', n1.PEER, peer)
@@ -26,6 +29,10 @@ n2.on('open', (peer) => {
 n3.on('open', (peer) => {
   console.log('[%s]A connection has just opened: %s', n3.PEER, peer)
 })
+
+c1.on('meow', (from, i, am, a, cat) => console.log('[%s from %s] %s %s %s %s', n1.PEER, from, i, am, a, cat))
+c2.on('meow', (from, i, am, a, cat) => console.log('[%s from %s] %s %s %s %s', n2.PEER, from, i, am, a, cat))
+c3.on('meow', (from, i, am, a, cat) => console.log('[%s from %s] %s %s %s %s', n3.PEER, from, i, am, a, cat))
 
 n1.on('stream', (id, stream) => {
   console.log('Receive a stream from: %s', id, stream)
@@ -73,6 +80,18 @@ function now () { // eslint-disable-line
             console.log('* New connection established. from n2 to n1')
             n1.bridge(n2.getOutviewId(), n3.getOutviewId()).then(() => {
               console.log('* bridge finished between n2 and n3.')
+
+              c1.emit('meow', n2.getOutviewId(), 'I', 'am', 'a', 'cat').then(() => {
+                console.log('[%s] Message sent to %s', n1.PEER, n2.getInviewId())
+                c1.emit('meow', n3.getOutviewId(), 'I', 'am', 'a', 'cat').then(() => {
+                  console.log('[%s] Message sent to %s', n1.PEER, n3.getInviewId())
+                }).catch(e => {
+                  console.error(e)
+                })
+              }).catch(e => {
+                console.error(e)
+              })
+
               resolve()
             }).catch(e => {
               reject(e)

@@ -9,7 +9,7 @@ after_success:
 
 deploy:
   provider: npm
-  email: grumpy.chat.wane@gmail.com
+  email: folkvir@outlook.fr
   api_key: $NPM
   on:
     tags: true
