@@ -1021,7 +1021,13 @@ class N2N extends EventEmitter {
      */
   disconnect (peerId) {
     if (typeof peerId === 'undefined') {
-      return Promise.all([this.NI.disconnect(), this.NO.disconnect()])
+      const ni = this.NI.disconnect().then(() => {
+        console.log('ni finished')
+      })
+      const no = this.NO.disconnect().then(() => {
+        console.log('no finished')
+      })
+      return Promise.all([ni, no])
     } else {
       if (this.i.has(peerId)) return this.NI.disconnect(peerId)
       if (this.o.has(peerId)) return this.NO.disconnect(peerId)
@@ -7215,8 +7221,8 @@ class Neighborhood extends Events {
             }
             this._disconnected(entry.peer)
           }
-          resolve()
         })
+        resolve()
       } else {
         let entry = null
         // #2 remove one arc

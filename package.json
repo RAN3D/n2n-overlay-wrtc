@@ -38,10 +38,12 @@
         "esdoc-ecmascript-proposal-plugin": "^1.0.0",
         "esdoc-node": "^1.0.3",
         "esdoc-standard-plugin": "^1.0.0",
+        "mocha": "^5.2.0",
         "snazzy": "^7.1.1",
         "standard": "^11.0.1",
         "webpack": "^4.16.2",
-        "webpack-cli": "^3.1.0"
+        "webpack-cli": "^3.1.0",
+        "wrtc": "^0.1.6"
     },
     "scripts": {
         "lint": "standard \"./lib/**/*.js\" \"./example/*.js\" --verbose | snazzy",
@@ -49,11 +51,17 @@
         "esdoc": "esdoc && npm run esdoc:example",
         "esdoc:example": "cp -R ./build ./example ./img ./docs",
         "test": "npm run all",
+        "mocha": "mocha tests/**/*-test.js",
         "all": "npm run lint && npm run all:build && npm run esdoc",
         "debug": "webpack --mode development",
         "build": "webpack --mode production --config webpack.config.min.js",
         "dev": "webpack --mode development --watch",
         "all:build": "npm run build && npm run debug",
         "webpack": "webpack"
+    },
+    "standard": {
+        "env": [
+            "mocha"
+        ]
     }
 }
