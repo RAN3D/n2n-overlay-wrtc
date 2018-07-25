@@ -46,8 +46,8 @@
         "wrtc": "^0.1.6"
     },
     "scripts": {
-        "lint": "standard \"./lib/**/*.js\" \"./example/*.js\" --verbose | snazzy",
-        "fix": "standard --fix --verbose \"./example/*.js\" \"./lib/**/*.js\" | snazzy ",
+        "lint": "standard \"./lib/**/*.js\" \"./example/*.js\" \"./tests/**/*.js\" --verbose | snazzy",
+        "fix": "standard --fix --verbose \"./example/*.js\" \"./lib/**/*.js\" \"./tests/**/*.js\" | snazzy ",
         "esdoc": "esdoc && npm run esdoc:example",
         "esdoc:example": "cp -R ./build ./example ./img ./docs",
         "test": "npm run all",
