@@ -52,7 +52,7 @@
         "esdoc:example": "cp -R ./build ./example ./img ./docs",
         "test": "npm run all",
         "mocha": "mocha tests/**/*-test.js",
-        "all": "npm run lint && npm run all:build && npm run esdoc",
+        "all": "npm run mocha && npm run fix && npm run all:build && npm run esdoc",
         "debug": "webpack --mode development",
         "build": "webpack --mode production --config webpack.config.min.js",
         "dev": "webpack --mode development --watch",
