@@ -5,6 +5,6 @@
 deploy_doc.sh
 webpack*
 docs/
-examples/
+example/
 img/
 node_modules/
