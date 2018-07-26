@@ -8,7 +8,7 @@ describe('Tests for connection method', function () {
     let p1 = new N2N({ peer: '1', timeout: 2000, pendingTimeout: 2000, config: {wrtc} })
     let p2 = new N2N({ peer: '2', timeout: 2000, pendingTimeout: 2000, config: {wrtc} })
     return p1.connection(p2).then((peer) => {
-      console.log('[%s] Connected to [%s] ', p1.getOutviewId(), peer)
+      // console.log('[%s] Connected to [%s] ', p1.getOutviewId(), peer)
       assert.equal(peer, p2.getInviewId())
       p1.disconnect()
     }).catch(e => {
@@ -19,7 +19,7 @@ describe('Tests for connection method', function () {
     let p1 = new N2N({ peer: '1', timeout: 2000, pendingTimeout: 0, config: {wrtc} })
     let p2 = new N2N({ peer: '2', timeout: 2000, pendingTimeout: 2000, config: {wrtc} })
     return p1.connection(p2).catch(e => {
-      console.log(e)
+      // console.log(e)
       assert.equal(e.message, 'timeout exceeded.')
       p1.disconnect()
     })

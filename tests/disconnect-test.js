@@ -29,12 +29,12 @@ describe('Tests for connection method', function () {
     let p2 = new N2N({ peer: '2', timeout: 2000, pendingTimeout: 2000, config: {wrtc} })
     let p3 = new N2N({ peer: '3', timeout: 2000, pendingTimeout: 2000, config: {wrtc} })
     return p1.connection(p2).then(() => {
-      console.log('p1 <=> p2', p1.neighbours().inview.length, p1.neighbours().outview.length)
+      // console.log('p1 <=> p2', p1.neighbours().inview.length, p1.neighbours().outview.length)
       return p1.connection(p3).then(() => {
-        console.log('p1 <=> p3', p1.neighbours().inview.length, p1.neighbours().outview.length)
+        // console.log('p1 <=> p3', p1.neighbours().inview.length, p1.neighbours().outview.length)
         return p1.disconnect().then(() => {
-          console.log('p1 <break> p2')
-          console.log('p1 <break> p3')
+          // console.log('p1 <break> p2')
+          // console.log('p1 <break> p3')
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               // wait 3000 seconds to get the disconnection on p2 on p3 because we have a 2000 ms timeout

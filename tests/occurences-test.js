@@ -11,7 +11,7 @@ describe('Tests for occurences through connection and disconnection methods', fu
     const max = 2
     let current = 0
     p1.on('open', (peer) => {
-      console.log('%s connected to %s', p1.PEER, peer)
+      // // console.log('%s connected to %s', p1.PEER, peer)
       current++
       if (current > max) throw new Error('the number of event open is higher than expected...')
     })
@@ -20,31 +20,31 @@ describe('Tests for occurences through connection and disconnection methods', fu
         return new Promise((resolve, reject) => {
           setTimeout(() => {
             p1.neighbours().inview.forEach(e => {
-              console.log('p1 %s inview: %f', e.peer, e.counter)
+              // // console.log('p1 %s inview: %f', e.peer, e.counter)
               assert.equal(e.counter, 1)
             })
             p1.neighbours().outview.forEach(e => {
-              console.log('p1 %s outview: %i', e.peer, e.counter)
+              // // console.log('p1 %s outview: %i', e.peer, e.counter)
               assert.equal(e.counter, 1)
             })
             assert.equal(p1.neighbours().inview.length, 0)
             assert.equal(p1.neighbours().outview.length, 2)
             p2.neighbours().inview.forEach(e => {
-              console.log('p2 %s inview: %f', e.peer, e.counter)
+              // // console.log('p2 %s inview: %f', e.peer, e.counter)
               assert.equal(e.counter, 1)
             })
             p2.neighbours().outview.forEach(e => {
-              console.log('p2 %s outview: %f', e.peer, e.counter)
+              // // console.log('p2 %s outview: %f', e.peer, e.counter)
               assert.equal(e.counter, 1)
             })
             assert.equal(p2.neighbours().inview.length, 1)
             assert.equal(p2.neighbours().outview.length, 0)
             p3.neighbours().inview.forEach(e => {
-              console.log('p3 %s inview: %f', e.peer, e.counter)
+              // // console.log('p3 %s inview: %f', e.peer, e.counter)
               assert.equal(e.counter, 1)
             })
             p3.neighbours().outview.forEach(e => {
-              console.log('p3 %s outview: %f', e.peer, e.counter)
+              // console.log('p3 %s outview: %f', e.peer, e.counter)
               assert.equal(e.counter, 1)
             })
             assert.equal(p3.neighbours().inview.length, 1)
@@ -66,15 +66,15 @@ describe('Tests for occurences through connection and disconnection methods', fu
     const max = 2
     let current = 0
     p1.on('open', (peer) => {
-      console.log('%s connected to %s', p1.PEER, peer)
+      // console.log('%s connected to %s', p1.PEER, peer)
       current++
       if (current > max) throw new Error('the number of event open is higher than expected...')
     })
     return p1.connection(p2).then(() => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          console.log(p1.neighbours())
-          console.log(p2.neighbours())
+          // console.log(p1.neighbours())
+          // console.log(p2.neighbours())
           p1.neighbours().outview.forEach(e => {
             assert.equal(e.counter, 1)
           })
@@ -82,8 +82,8 @@ describe('Tests for occurences through connection and disconnection methods', fu
             assert.equal(e.counter, 1)
           })
           p1.connectionFromThisToPeer('2-I').then(() => {
-            console.log(p1.neighbours())
-            console.log(p2.neighbours())
+            // console.log(p1.neighbours())
+            // console.log(p2.neighbours())
             p1.neighbours().outview.forEach(e => {
               assert.equal(e.counter, 2)
             })
@@ -110,15 +110,15 @@ describe('Tests for occurences through connection and disconnection methods', fu
     const max = 2
     let current = 0
     p1.on('open', (peer) => {
-      console.log('%s connected to %s', p1.PEER, peer)
+      // console.log('%s connected to %s', p1.PEER, peer)
       current++
       if (current > max) throw new Error('the number of event open is higher than expected...')
     })
     return p1.connection(p2).then(() => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          console.log(p1.neighbours())
-          console.log(p2.neighbours())
+          // console.log(p1.neighbours())
+          // console.log(p2.neighbours())
           p1.neighbours().outview.forEach(e => {
             assert.equal(e.counter, 1)
           })
@@ -126,8 +126,8 @@ describe('Tests for occurences through connection and disconnection methods', fu
             assert.equal(e.counter, 1)
           })
           p1.connectionFromPeertoThis('2-I').then(() => {
-            console.log(p1.neighbours())
-            console.log(p2.neighbours())
+            // console.log(p1.neighbours())
+            // console.log(p2.neighbours())
             // inverse compared to the previous test
             p1.neighbours().inview.forEach(e => {
               assert.equal(e.counter, 1)
@@ -164,7 +164,7 @@ describe('Tests for occurences through connection and disconnection methods', fu
     const max = 2
     let current = 0
     p1.on('open', (peer) => {
-      console.log('%s connected to %s', p1.PEER, peer)
+      // console.log('%s connected to %s', p1.PEER, peer)
       current++
       if (current > max) throw new Error('the number of event open is higher than expected...')
     })
@@ -172,9 +172,9 @@ describe('Tests for occurences through connection and disconnection methods', fu
       return p2.connection(p3).then(() => {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            console.log(p1.neighbours())
-            console.log(p2.neighbours())
-            console.log(p3.neighbours())
+            // console.log(p1.neighbours())
+            // console.log(p2.neighbours())
+            // console.log(p3.neighbours())
             // test the outview
             p1.neighbours().outview.forEach(e => {
               assert.equal(e.counter, 1)
@@ -198,9 +198,9 @@ describe('Tests for occurences through connection and disconnection methods', fu
             // now do the bridge, use the .bridge method with id or use the connect method to choose for you
             p2.connect('3-I', '1-I').then(() => {
               setTimeout(() => {
-                console.log(p1.neighbours())
-                console.log(p2.neighbours())
-                console.log(p3.neighbours())
+                // console.log(p1.neighbours())
+                // console.log(p2.neighbours())
+                // console.log(p3.neighbours())
                 // test the outview
                 p1.neighbours().outview.forEach(e => {
                   assert.equal(e.counter, 1)
@@ -244,7 +244,7 @@ describe('Tests for occurences through connection and disconnection methods', fu
     const max = 2
     let current = 0
     p1.on('open', (peer) => {
-      console.log('%s connected to %s', p1.PEER, peer)
+      // console.log('%s connected to %s', p1.PEER, peer)
       current++
       if (current > max) throw new Error('the number of event open is higher than expected...')
     })
@@ -252,9 +252,9 @@ describe('Tests for occurences through connection and disconnection methods', fu
       return p2.connection(p3).then(() => {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            console.log(p1.neighbours())
-            console.log(p2.neighbours())
-            console.log(p3.neighbours())
+            // console.log(p1.neighbours())
+            // console.log(p2.neighbours())
+            // console.log(p3.neighbours())
             // test the outview
             p1.neighbours().outview.forEach(e => {
               assert.equal(e.counter, 1)
@@ -278,9 +278,9 @@ describe('Tests for occurences through connection and disconnection methods', fu
             // now do the bridge, use the .bridge method with id or use the connect method to choose for you
             p2.bridge('3-I', '1-I').then(() => {
               setTimeout(() => {
-                console.log(p1.neighbours())
-                console.log(p2.neighbours())
-                console.log(p3.neighbours())
+                // console.log(p1.neighbours())
+                // console.log(p2.neighbours())
+                // console.log(p3.neighbours())
                 // test the outview
                 p1.neighbours().outview.forEach(e => {
                   assert.equal(e.counter, 1)

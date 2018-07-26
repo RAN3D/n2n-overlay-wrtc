@@ -608,7 +608,7 @@ class N2N extends EventEmitter {
       this.NO.connect((req) => {
         this.send(peerId, new MForwardTo(msg.from, msg.to, req, msg.jobId)).catch((e) => {
           // send ACK that the connection do not succeed
-          this.send(peerId, new MBridgeStatus(msg.jobId, false, e)).catch(e => {
+          this.send(peerId, new MBridgeStatus(msg.jobId, false, e.message)).catch(e => {
             // need a proper way to dispatch the ACK
             console.error('Cant send an ACK to ' + peerId, e)
           })
@@ -621,7 +621,7 @@ class N2N extends EventEmitter {
         })
       }).catch(e => {
         // send ACK that the connection do not succeed
-        this.send(peerId, new MBridgeStatus(msg.jobId, false, e)).catch(e => {
+        this.send(peerId, new MBridgeStatus(msg.jobId, false, e.message)).catch(e => {
           // need a proper way to dispatch the ACK
           console.error('Cant send an ACK to ' + peerId, e)
         })
@@ -636,7 +636,7 @@ class N2N extends EventEmitter {
       // #3 we are the acceptor
       this.NI.connect((res) => {
         this.send(peerId, new MForwardTo(msg.to, msg.from, res, msg.jobId)).catch((e) => {
-          this.send(peerId, new MBridgeStatus(msg.jobId, false, e)).catch(e => {
+          this.send(peerId, new MBridgeStatus(msg.jobId, false, e.message)).catch(e => {
             // need a proper way to dispatch the ACK
             console.error('Cant send an ACK to ' + peerId, e)
           })
@@ -672,7 +672,7 @@ class N2N extends EventEmitter {
           console.error('Please report. (_direct MDirect)')
         })
       }).catch(e => {
-        this.send(peerId, new MDirectStatus(message.jobId, false, e)).catch((e) => {
+        this.send(peerId, new MDirectStatus(message.jobId, false, e.message)).catch((e) => {
           console.error('Please report. (_direct MDirect)')
         })
       })
@@ -863,9 +863,10 @@ class N2N extends EventEmitter {
         // send the offer to peerId
         this.send(peerId, req, this.options.retry).catch((e) => { reject(e) })
       }).then((peer) => {
+        debug('connectionFromThisToPeer succeeded:  %s', peer)
         resolve(peer)
       }).catch(e => {
-        reject(e)
+        reject(new Error('the connection between us and the peer has failed', e))
       })
     })
   }
@@ -897,7 +898,7 @@ class N2N extends EventEmitter {
           if (message.status === true) {
             resolve()
           } else {
-            reject(new Error('the connection between the peer and us has failed' + message.reason))
+            reject(new Error('the connection between the peer and us has failed', new Error(message.reason)))
           }
         })
       })
