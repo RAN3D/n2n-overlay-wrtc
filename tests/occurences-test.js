@@ -1,5 +1,5 @@
 const assert = require('assert')
-const N2N = require('../lib/n2n-overlay.js')
+const N2N = require('../lib/interface.js')
 const wrtc = require('wrtc')
 
 describe('Tests for occurences through connection and disconnection methods', function () {

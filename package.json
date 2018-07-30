@@ -2,7 +2,7 @@
     "name": "n2n-overlay-wrtc",
     "version": "2.1.0",
     "description": "A WebRTC peer is able to mediate the connection establishment between its neighbors, i.e., it becomes a signaling server for its neighbors. It allows peers to organize their overlay network.",
-    "main": "lib/n2n-overlay.js",
+    "main": "lib/interface.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/ran3d/n2n-overlay-wrtc"

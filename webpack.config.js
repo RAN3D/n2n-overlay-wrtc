@@ -1,6 +1,6 @@
 module.exports = {
   mode: 'development',
-  entry: './lib/n2n-overlay.js',
+  entry: './lib/interface.js',
   output: {
     'path': require('path').resolve(process.cwd(), 'build'),
     'filename': 'n2n-overlay-wrtc.bundle.debug.js',

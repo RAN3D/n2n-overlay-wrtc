@@ -1,5 +1,5 @@
 const assert = require('assert')
-const N2N = require('../lib/n2n-overlay.js')
+const N2N = require('../lib/interface.js')
 const wrtc = require('wrtc')
 
 describe('Tests for i/o Map with peer/age to see if age is equal to counter (neighborhood)', function () {
