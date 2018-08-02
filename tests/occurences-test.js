@@ -13,7 +13,12 @@ describe('Tests for occurences through connection and disconnection methods', fu
     p1.on('open', (peer) => {
       // // console.log('%s connected to %s', p1.PEER, peer)
       current++
-      if (current > max) throw new Error('the number of event open is higher than expected...')
+      if (current > max) {
+        p1.disconnect()
+        p2.disconnect()
+        p3.disconnect()
+        throw new Error('the number of event open is higher than expected...')
+      }
     })
     return p1.connection(p2).then(() => {
       return p1.connection(p3).then(() => {
@@ -50,12 +55,16 @@ describe('Tests for occurences through connection and disconnection methods', fu
             assert.equal(p3.neighbours().inview.length, 1)
             assert.equal(p3.neighbours().outview.length, 0)
             p1.disconnect()
+            p2.disconnect()
+            p3.disconnect()
             resolve()
           }, 1000)
         })
       })
     }).catch(e => {
       p1.disconnect()
+      p2.disconnect()
+      p3.disconnect()
       return Promise.reject(e)
     })
   })
@@ -68,7 +77,11 @@ describe('Tests for occurences through connection and disconnection methods', fu
     p1.on('open', (peer) => {
       // console.log('%s connected to %s', p1.PEER, peer)
       current++
-      if (current > max) throw new Error('the number of event open is higher than expected...')
+      if (current > max) {
+        p1.disconnect()
+        p2.disconnect()
+        throw new Error('the number of event open is higher than expected...')
+      }
     })
     return p1.connection(p2).then(() => {
       return new Promise((resolve, reject) => {
@@ -91,15 +104,18 @@ describe('Tests for occurences through connection and disconnection methods', fu
               assert.equal(e.counter, 2)
             })
             p1.disconnect()
+            p2.disconnect()
             resolve()
           }).catch(e => {
             p1.disconnect()
+            p2.disconnect()
             reject(e)
           })
         }, 1000)
       })
     }).catch(e => {
       p1.disconnect()
+      p2.disconnect()
       return Promise.reject(e)
     })
   })
@@ -112,7 +128,11 @@ describe('Tests for occurences through connection and disconnection methods', fu
     p1.on('open', (peer) => {
       // console.log('%s connected to %s', p1.PEER, peer)
       current++
-      if (current > max) throw new Error('the number of event open is higher than expected...')
+      if (current > max) {
+        p1.disconnect()
+        p2.disconnect()
+        throw new Error('the number of event open is higher than expected...')
+      }
     })
     return p1.connection(p2).then(() => {
       return new Promise((resolve, reject) => {
@@ -147,12 +167,14 @@ describe('Tests for occurences through connection and disconnection methods', fu
             resolve()
           }).catch(e => {
             p1.disconnect()
+            p2.disconnect()
             reject(e)
           })
         }, 1000)
       })
     }).catch(e => {
       p1.disconnect()
+      p2.disconnect()
       return Promise.reject(e)
     })
   })
@@ -166,7 +188,12 @@ describe('Tests for occurences through connection and disconnection methods', fu
     p1.on('open', (peer) => {
       // console.log('%s connected to %s', p1.PEER, peer)
       current++
-      if (current > max) throw new Error('the number of event open is higher than expected...')
+      if (current > max) {
+        p1.disconnect()
+        p2.disconnect()
+        p3.disconnect()
+        throw new Error('the number of event open is higher than expected...')
+      }
     })
     return p1.connection(p2).then(() => {
       return p2.connection(p3).then(() => {
@@ -223,6 +250,7 @@ describe('Tests for occurences through connection and disconnection methods', fu
                 })
                 p1.disconnect()
                 p2.disconnect()
+                p3.disconnect()
                 resolve()
               }, 1000)
             }).catch(e => {
@@ -234,6 +262,8 @@ describe('Tests for occurences through connection and disconnection methods', fu
       })
     }).catch(e => {
       p1.disconnect()
+      p2.disconnect()
+      p3.disconnect()
       return Promise.reject(e)
     })
   })
@@ -246,16 +276,17 @@ describe('Tests for occurences through connection and disconnection methods', fu
     p1.on('open', (peer) => {
       // console.log('%s connected to %s', p1.PEER, peer)
       current++
-      if (current > max) throw new Error('the number of event open is higher than expected...')
+      if (current > max) {
+        p1.disconnect()
+        p2.disconnect()
+        p3.disconnect()
+        throw new Error('the number of event open is higher than expected...')
+      }
     })
     return p1.connection(p2).then(() => {
       return p2.connection(p3).then(() => {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            // console.log(p1.neighbours())
-            // console.log(p2.neighbours())
-            // console.log(p3.neighbours())
-            // test the outview
             p1.neighbours().outview.forEach(e => {
               assert.equal(e.counter, 1)
             })
@@ -303,6 +334,7 @@ describe('Tests for occurences through connection and disconnection methods', fu
                 })
                 p1.disconnect()
                 p2.disconnect()
+                p3.disconnect()
                 resolve()
               }, 1000)
             }).catch(e => {
@@ -314,6 +346,8 @@ describe('Tests for occurences through connection and disconnection methods', fu
       })
     }).catch(e => {
       p1.disconnect()
+      p2.disconnect()
+      p3.disconnect()
       return Promise.reject(e)
     })
   })

@@ -720,7 +720,7 @@ class N2N extends EventEmitter {
         // send ACK that the connection do not succeed
         this.send(peerId, new MBridgeStatus(msg.jobId, false, e.message)).catch(e => {
           // same as before but we have to emit a BRIDGE_FAILED event
-          this._bus.emit('BRIDGE_FAILED')
+          this._bus.emit('BRIDGE_FAILED', peerId, this.getInviewId(), msg.to)
         })
       })
     } else if (msg.type && msg.type === 'MForwardTo') {
@@ -771,11 +771,11 @@ class N2N extends EventEmitter {
         this.send(peerId, req).catch((e) => { })
       }).then((peer) => {
         this.send(peerId, new MDirectStatus(message.jobId, true, null)).catch((e) => {
-          console.error('Please report. (_direct MDirect)')
+          // console.error('Please report. (_direct MDirect)')
         })
       }).catch(e => {
         this.send(peerId, new MDirectStatus(message.jobId, false, e.message)).catch((e) => {
-          console.error('Please report. (_direct MDirect)')
+          // console.error('Please report. (_direct MDirect)')
         })
       })
     } else if (message.type === 'MRequest') {
@@ -994,13 +994,23 @@ class N2N extends EventEmitter {
       const id = uuid()
       const m = new MDirect()
       m.jobId = id
+      const timeout = setTimeout(() => {
+        // check if the connection exists, if not, reject, resolve otherwise
+        if (this.o.has(peerId) || this.i.has(peerId)) {
+          this._bus.removeAllListeners(id)
+          resolve()
+        } else {
+          reject(new Error('timeout exceeded.'))
+        }
+      })
       this.send(peerId, m, this.options.retry).catch((e) => { reject(e) }).then(() => {
         this._bus.once(id, (message) => {
+          clearTimeout(timeout)
           debug('connectionFromPeertoThis: ', message)
           if (message.status === true) {
             resolve()
           } else {
-            reject(new Error('the connection between the peer and us has failed', new Error(message.reason)))
+            reject(new Error('the connection between the peer' + peerId + ' and us=' + this.PEER + ' has failed', new Error(message.reason)))
           }
         })
       })
@@ -1061,7 +1071,7 @@ class N2N extends EventEmitter {
    * const n1 = new NO(opts1)
    * const opts2 = { pid: '1', pendingTimeout: 2000, peer: '2', config: {trickle: true} }
    * const n2 = new NO(opts2)
-   * const opts3 = { pid: '1', pendingTimeout: 2000, peer: '3', config: {trickle: true} }
+   * const opts3 = { pid: '1', pending@: 2000, peer: '3', config: {trickle: true} }
    * const n3 = new NO(opts2)
    * // this listener is here in case of we do not receive the ack, because the promise will always be resolved after timeout
    * n2.onBridgeFailed = () => { console.log('bridge_failed') }
@@ -1078,7 +1088,7 @@ class N2N extends EventEmitter {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         // resolve just after timeout because, if we receive ack, its ok. But if not, it is because the connection is down between us and from peer. 2 choices: -The connection succeeded, so have to wait for the this timeout and it will resolved, - the connection has failed, we will resolve but an event will be emitted locally of the from peer.
-        debug('Bridge resolved after timeout: %f', this.pendingTimeout + 1)
+        debug('Bridge resolved after timeout: %f', this.options.pendingTimeout + 1)
         resolve()
       }, this.options.pendingTimeout + 1)
       debug('[%s] %s =π= %s =π> %s', this.PID, from, this.PEER, to)
@@ -1089,7 +1099,7 @@ class N2N extends EventEmitter {
         if (message.status === true) {
           resolve()
         } else {
-          reject(new Error('Bridge error: ', message.reason))
+          reject(new Error('Bridge error: from=' + from + '->to=' + to, message.reason))
         }
       })
     })
@@ -1137,7 +1147,7 @@ class N2N extends EventEmitter {
     } else {
       if (this.i.has(peerId)) return this.NI.disconnect(peerId)
       if (this.o.has(peerId)) return this.NO.disconnect(peerId)
-      return Promise.reject(new Error('peer not found'))
+      return Promise.reject(new Error('peer not found: ' + peerId))
     }
   }
 
