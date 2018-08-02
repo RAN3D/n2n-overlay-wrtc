@@ -996,13 +996,13 @@ class N2N extends EventEmitter {
       m.jobId = id
       const timeout = setTimeout(() => {
         // check if the connection exists, if not, reject, resolve otherwise
-        if (this.o.has(peerId) || this.i.has(peerId)) {
+        if (this.i.has(peerId)) {
           this._bus.removeAllListeners(id)
           resolve()
         } else {
           reject(new Error('timeout exceeded.'))
         }
-      })
+      }, this.options.pendingTimeout)
       this.send(peerId, m, this.options.retry).catch((e) => { reject(e) }).then(() => {
         this._bus.once(id, (message) => {
           clearTimeout(timeout)
